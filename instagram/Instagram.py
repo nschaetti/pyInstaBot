@@ -28,14 +28,14 @@ class Instagram(object):
     url_logout = 'https://www.instagram.com/accounts/logout/'
 
     # User agent
-    user_agent = ("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 "
+    _user_agent = ("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 "
                   "(KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36")
 
     # Accepted language
-    accept_language = 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4'
+    _accept_language = 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4'
 
     # Constructor
-    def __int__(self, username, password, debug=False):
+    def __init__(self, username, password, debug=False):
         """
         Constructor
         :param username: Instagram username
@@ -60,10 +60,10 @@ class Instagram(object):
         logging.getLogger(u"pyInstaBot").info(u"Trying to login as {}".format(self._username))
 
         # Request
-        req = requests.Session()
+        self._req = requests.Session()
 
         # Update cookies
-        req.cookies.update({'sessionid': '', 'mid': '', 'ig_pr': '1',
+        self._req.cookies.update({'sessionid': '', 'mid': '', 'ig_pr': '1',
                                'ig_vw': '1920', 'csrftoken': '',
                                's_network': '', 'ds_user_id': ''})
 
@@ -72,42 +72,42 @@ class Instagram(object):
                            'password': self._password}
 
         # Update headers
-        req.headers.update({'Accept-Encoding': 'gzip, deflate',
-                               'Accept-Language': self.accept_language,
+        self._req.headers.update({'Accept-Encoding': 'gzip, deflate',
+                               'Accept-Language': self._accept_language,
                                'Connection': 'keep-alive',
                                'Content-Length': '0',
                                'Host': 'www.instagram.com',
                                'Origin': 'https://www.instagram.com',
                                'Referer': 'https://www.instagram.com/',
-                               'User-Agent': self.user_agent,
+                               'User-Agent': self._user_agent,
                                'X-Instagram-AJAX': '1',
                                'X-Requested-With': 'XMLHttpRequest'})
 
         # Get main page
-        response = self.s.get(self.url)
+        get_response = self._req.get(self.url)
 
         # Update header
-        self._req.headers.update({'X-CSRFToken': response.cookies['csrftoken']})
+        self._req.headers.update({'X-CSRFToken': get_response.cookies['csrftoken']})
 
         # Wait some time
         time.sleep(5 * random.random())
 
         # Get login response
-        login = self._req.post(self.url_login, data=login_post_data, allow_redirects=True)
-
+        login_response = self._req.post(self.url_login, data=login_post_data, allow_redirects=True)
+        print(login_response.text)
         # Update headers
-        self._req.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
+        self._req.headers.update({'X-CSRFToken': login_response.cookies['csrftoken']})
 
         # Update CSRF token
-        self._csrftoken = login.cookies['csrftoken']
+        self._csrftoken = login_response.cookies['csrftoken']
 
         # Wait
         time.sleep(5 * random.random())
 
         # Check login
-        if login.status_code == 200:
+        if login_response.status_code == 200:
             # Request main page
-            r = self.s.get('https://www.instagram.com/')
+            r = self._req.get('https://www.instagram.com/')
             finder = r.text.find(self._username)
 
             # Try to find the username
