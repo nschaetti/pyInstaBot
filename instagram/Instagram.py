@@ -7,7 +7,7 @@ import logging
 import requests
 import time
 import random
-import datetime
+import json
 
 
 # Instagram connector
@@ -94,24 +94,27 @@ class Instagram(object):
 
         # Get login response
         login_response = self._req.post(self.url_login, data=login_post_data, allow_redirects=True)
-        print(login_response.text)
-        # Update headers
-        self._req.headers.update({'X-CSRFToken': login_response.cookies['csrftoken']})
-
-        # Update CSRF token
-        self._csrftoken = login_response.cookies['csrftoken']
-
-        # Wait
-        time.sleep(5 * random.random())
 
         # Check login
         if login_response.status_code == 200:
+            # Login JSON
+            login_json = json.loads(login_response.text)
+
+            # Update headers
+            self._req.headers.update({'X-CSRFToken': login_response.cookies['csrftoken']})
+
+            # Update CSRF token
+            self._csrftoken = login_response.cookies['csrftoken']
+
+            # Wait
+            time.sleep(5 * random.random())
+
             # Request main page
             r = self._req.get('https://www.instagram.com/')
             finder = r.text.find(self._username)
 
             # Try to find the username
-            if finder != -1:
+            if finder != -1 and login_json['authenticated'] and login_json['user'] and login_json['status'] == u"ok":
                 self._logged = True
                 logging.getLogger(u"pyInstaBot").info(u"{} login success!".format(self._username))
             else:
@@ -149,5 +152,93 @@ class Instagram(object):
             logging.getLogger(u"pyInstaBot").error(u"An error occurred while logging out!")
         # end try
     # end logout
+
+    # Like a media
+    def like(self, media_id):
+        """
+        Send http request to like media by ID
+        """
+        if self._logged:
+            # Like URL
+            url_likes = self.url_likes % media_id
+
+            # Try send a POST
+            try:
+                like = self.s.post(url_likes)
+            except:
+                logging.getLogger(u"pyInstaBot").error(u"Error on like!")
+            # end try
+        # end if
+    # end like
+
+    # Unlike a media
+    def unlike(self, media_id):
+        """
+        Send http request to unlike media by ID
+        """
+        if (self.login_status):
+            url_unlike = self.url_unlike % (media_id)
+            try:
+                unlike = self.s.post(url_unlike)
+            except:
+                self.write_log("Except on unlike!")
+                unlike = 0
+            # end
+            return unlike
+        # end if
+    # end unlike
+
+    # Post a comment
+    def comment(self, media_id, comment_text):
+        """
+        Send http request to comment
+        """
+        if self._logged:
+            comment_post = {'comment_text' : comment_text}
+            url_comment = self.url_comment % media_id
+            try:
+                comment = self.s.post(url_comment, data=comment_post)
+                if comment.status_code == 200:
+                    self.comments_counter += 1
+                    log_string = 'Write: "%s". #%i.' % (comment_text, self.comments_counter)
+                    self.write_log(log_string)
+                return comment
+            except:
+                self.write_log("Except on comment!")
+        return False
+    # end comment
+
+    # Follow
+    def follow(self, user_id):
+        """
+        Send http request to follow
+        """
+        if self._logged:
+            url_follow = self.url_follow % (user_id)
+            try:
+                follow = self.s.post(url_follow)
+                if follow.status_code == 200:
+                    self.follow_counter += 1
+                    log_string = "Followed: %s #%i." % (user_id, self.follow_counter)
+                    self.write_log(log_string)
+                return follow
+            except:
+                self.write_log("Except on follow!")
+        return False
+
+    def unfollow(self, user_id):
+        """ Send http request to unfollow """
+        if (self.login_status):
+            url_unfollow = self.url_unfollow % (user_id)
+            try:
+                unfollow = self.s.post(url_unfollow)
+                if unfollow.status_code == 200:
+                    self.unfollow_counter += 1
+                    log_string = "Unfollow: %s #%i." % (user_id, self.unfollow_counter)
+                    self.write_log(log_string)
+                return unfollow
+            except:
+                self.write_log("Exept on unfollow!")
+        return False
 
 # end Instagram
