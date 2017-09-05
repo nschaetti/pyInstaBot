@@ -8,6 +8,8 @@ import requests
 import time
 import random
 import json
+from FollowersCursor import FollowersCursor
+from FollowingCursor import FollowingCursor
 
 
 # Instagram connector
@@ -26,6 +28,8 @@ class Instagram(object):
     url_unfollow = 'https://www.instagram.com/web/friendships/%s/unfollow/'
     url_login = 'https://www.instagram.com/accounts/login/ajax/'
     url_logout = 'https://www.instagram.com/accounts/logout/'
+    url_followers = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=%7B"id"%3A"{}"%2C"first"%3A{}%7D'
+    url_followers_next = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=%7B"id"%3A"{}"%2C"first"%3A{}%2C"after"%3A"{}"%7D'
 
     # User agent
     _user_agent = ("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 "
@@ -35,7 +39,7 @@ class Instagram(object):
     _accept_language = 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4'
 
     # Constructor
-    def __init__(self, username, password, debug=False):
+    def __init__(self, user_id, username, password, debug=False):
         """
         Constructor
         :param username: Instagram username
@@ -43,6 +47,7 @@ class Instagram(object):
         :param debug: Debug mode?
         :return:
         """
+        self._user_id = user_id
         self._username = username
         self._password = password
         self._debug = debug
@@ -50,6 +55,46 @@ class Instagram(object):
         self._csrftoken = None
         self._logged = False
     # end __init__
+
+    ########################################################
+    # Public
+    ########################################################
+
+    # Logged?
+    def logged(self):
+        """
+        Logged
+        :return:
+        """
+        return self._logged
+    # end logged
+
+    # Get request
+    def request(self):
+        """
+        Get request
+        :return:
+        """
+        return self._req
+    # end request
+
+    # User's ID
+    def user_id(self):
+        """
+        User's ID
+        :return:
+        """
+        return self._user_id
+    # end user_id
+
+    # Username
+    def username(self):
+        """
+        Username
+        :return:
+        """
+        return self._username
+    # end username
 
     # Login
     def login(self):
@@ -164,7 +209,12 @@ class Instagram(object):
 
             # Try send a POST
             try:
-                like = self.s.post(url_likes)
+                like_response = self._req.post(url_likes)
+
+                # 200 Ok
+                if like_response.status_code == 200:
+                    logging.getLogger(u"pyInstabot").info(u"Liking {}".format(media_id))
+                # end if
             except:
                 logging.getLogger(u"pyInstaBot").error(u"Error on like!")
             # end try
@@ -176,35 +226,49 @@ class Instagram(object):
         """
         Send http request to unlike media by ID
         """
-        if (self.login_status):
+        if self._logged:
+            # Unlike URL
             url_unlike = self.url_unlike % (media_id)
+
             try:
-                unlike = self.s.post(url_unlike)
+                # Request
+                unlike_response = self._req.post(url_unlike)
+
+                # 200 OK
+                if unlike_response.status_code == 200:
+                    logging.getLogger(u"pyInstaBot").info(u"Unliking {}".format(media_id))
+                # end if
             except:
-                self.write_log("Except on unlike!")
-                unlike = 0
-            # end
-            return unlike
+                logging.getLogger(u"Exception while unliking {}".format(media_id))
+            # end try
         # end if
     # end unlike
 
     # Post a comment
     def comment(self, media_id, comment_text):
         """
-        Send http request to comment
+        Send http request to comment a media
         """
         if self._logged:
-            comment_post = {'comment_text' : comment_text}
+            # POST data
+            comment_post = {'comment_text': comment_text}
+
+            # Comment URL
             url_comment = self.url_comment % media_id
+
             try:
-                comment = self.s.post(url_comment, data=comment_post)
-                if comment.status_code == 200:
-                    self.comments_counter += 1
-                    log_string = 'Write: "%s". #%i.' % (comment_text, self.comments_counter)
-                    self.write_log(log_string)
-                return comment
+                # POST request
+                comment_response = self._req.post(url_comment, data=comment_post)
+
+                # 200 response
+                if comment_response.status_code == 200:
+                    logging.getLogger(u"pyInstaBot").info(u"Writing \"{}\" to {}".format(comment_text, media_id))
+                # end if
+                return comment_response
             except:
-                self.write_log("Except on comment!")
+                logging.getLogger(u"pyInstaBot").info(u"Error while posting a comment!")
+            # end try
+        # end if
         return False
     # end comment
 
@@ -214,31 +278,72 @@ class Instagram(object):
         Send http request to follow
         """
         if self._logged:
+            # URL for follow
             url_follow = self.url_follow % (user_id)
-            try:
-                follow = self.s.post(url_follow)
-                if follow.status_code == 200:
-                    self.follow_counter += 1
-                    log_string = "Followed: %s #%i." % (user_id, self.follow_counter)
-                    self.write_log(log_string)
-                return follow
-            except:
-                self.write_log("Except on follow!")
-        return False
 
-    def unfollow(self, user_id):
-        """ Send http request to unfollow """
-        if (self.login_status):
-            url_unfollow = self.url_unfollow % (user_id)
             try:
-                unfollow = self.s.post(url_unfollow)
-                if unfollow.status_code == 200:
-                    self.unfollow_counter += 1
-                    log_string = "Unfollow: %s #%i." % (user_id, self.unfollow_counter)
-                    self.write_log(log_string)
-                return unfollow
+                # POST request
+                follow_response = self._req.post(url_follow)
+
+                # 200 Ok
+                if follow_response.status_code == 200:
+                    logging.getLogger(u"pyInstaBot").info(u"Followeing {}".format(user_id))
+                    return True
+                # end if
             except:
-                self.write_log("Exept on unfollow!")
+                logging.getLogger(u"pyInstaBot").info(u"Exception while following {}!".format(user_id))
+            # end try
+        # end if
         return False
+    # end follow
+
+    # Unfollow
+    def unfollow(self, user_id):
+        """
+        Send http request to unfollow
+        """
+        if self._logged:
+            # Unfollow URL
+            url_unfollow = self.url_unfollow % user_id
+
+            try:
+                # POST request
+                unfollow_response = self._req.post(url_unfollow)
+
+                # 200 Ok
+                if unfollow_response.status_code == 200:
+                    logging.getLogger(u"pyInstaBot").info(u"Unfollowing {}".format(user_id))
+                    return True
+                # end if
+            except:
+                logging.getLogger(u"pyInstaBot").info(u"Exception while unfollowing {}".format(user_id))
+            # end try
+        # end if
+        return False
+    # end unfollow
+
+    # Get followers
+    def followers(self):
+        """
+        Get the followers
+        :param user_id:
+        :return:
+        """
+        if self._logged:
+            return FollowersCursor(self)
+        # end if
+    # end followers
+
+    # Get following
+    def following(self):
+        """
+        Get the following
+        :param user_id:
+        :return:
+        """
+        if self._logged:
+            return FollowingCursor(self)
+        # end if
+    # end followers
 
 # end Instagram
