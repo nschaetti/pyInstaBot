@@ -10,6 +10,7 @@ import random
 import json
 from FollowersCursor import FollowersCursor
 from FollowingCursor import FollowingCursor
+from EdgeDescriptor import EdgeDescription
 
 
 # Instagram connector
@@ -54,6 +55,10 @@ class Instagram(object):
         self._req = None
         self._csrftoken = None
         self._logged = False
+
+        # Descriptor
+        self.user_timeline = EdgeDescription(self, 'edge_owner_to_timeline_media',
+                                             'https://www.instagram.com/n.schaetti.public/')
     # end __init__
 
     ########################################################
