@@ -9,6 +9,7 @@ import datetime
 from db.DBConnector import DBConnector
 from instagram.Instagram import Instagram
 from db.obj.User import User
+from instagram.Cursor import Cursor
 
 
 if __name__ == "__main__":
@@ -18,14 +19,18 @@ if __name__ == "__main__":
     # Connection to MySQL
     mysql_connector = DBConnector(host="localhost", username="", password="", db_name="")
 
-    instagram = Instagram(user_id=2926312088, username="", password="")
+    instagram = Instagram(user_id=, username="", password="")
 
     instagram.login()
 
     time.sleep(2)
 
+    for media in Cursor(instagram.user_timeline):
+        print(media)
+    # end for
+
     # For each follower
-    for user in instagram.following():
+    """for user in instagram.following():
         if not User.exists(user.user_id):
             logging.getLogger(u"pyInstaBot").info(u"New following in the database : {}".format(user))
 
@@ -66,7 +71,7 @@ if __name__ == "__main__":
         mysql_connector.get_session().commit()
     # end for
 
-    time.sleep(2)
+    time.sleep(2)"""
 
     instagram.logout()
 # end if
