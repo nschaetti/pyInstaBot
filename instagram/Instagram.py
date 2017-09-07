@@ -11,6 +11,7 @@ import json
 from FollowersCursor import FollowersCursor
 from FollowingCursor import FollowingCursor
 from EdgeDescriptor import EdgeDescription
+from obj.Media import Media
 
 
 # Instagram connector
@@ -58,7 +59,9 @@ class Instagram(object):
 
         # Descriptor
         self.user_timeline = EdgeDescription(self, 'edge_owner_to_timeline_media',
-                                             'https://www.instagram.com/n.schaetti.public/')
+                                             'https://www.instagram.com/n.schaetti.public/', 17888483320059182, Media)
+        #self.followers = EdgeDescription(self, 'edge_followed_by',
+        #                                 'https://www.instagram.com/n.schaetti.public/followers/', 17851374694183129)
     # end __init__
 
     ########################################################
