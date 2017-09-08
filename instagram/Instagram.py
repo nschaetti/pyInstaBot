@@ -11,7 +11,10 @@ import json
 from FollowersCursor import FollowersCursor
 from FollowingCursor import FollowingCursor
 from EdgeDescriptor import EdgeDescription
+from obj.Hashtag import Hashtag
 from obj.Media import Media
+from obj.User import User
+from obj.Place import Place
 
 
 # Instagram connector
@@ -57,16 +60,137 @@ class Instagram(object):
         self._csrftoken = None
         self._logged = False
 
-        # Descriptor
-        self.user_timeline = EdgeDescription(self, 'edge_owner_to_timeline_media',
-                                             'https://www.instagram.com/n.schaetti.public/', 17888483320059182, Media)
-        #self.followers = EdgeDescription(self, 'edge_followed_by',
-        #                                 'https://www.instagram.com/n.schaetti.public/followers/', 17851374694183129)
+        # User timeline
+        self.home_timeline = EdgeDescription(
+                connector=self,
+                root='graphql',
+                data_type='user',
+                edge_type='edge_web_feed_timeline',
+                obj_class=Media,
+                query_id="",
+                variables={},
+                url='https://www.instagram.com/?__a=1'
+            )
+
+        # User timeline
+        self.user_timeline = EdgeDescription(
+                connector=self,
+                root='data',
+                data_type='user',
+                edge_type='edge_owner_to_timeline_media',
+                obj_class=Media,
+                query_id="17888483320059182",
+                variables={'id': user_id},
+                url='https://www.instagram.com/graphql/query/'
+            )
+
+        # Followers
+        self.followers = EdgeDescription(
+                connector=self,
+                root='data',
+                data_type='user',
+                edge_type='edge_followed_by',
+                obj_class=User,
+                query_id="17851374694183129",
+                variables={'id': user_id},
+                url='https://www.instagram.com/graphql/query/'
+            )
+
+        # Following
+        self.following = EdgeDescription(
+                connector=self,
+                root='data',
+                data_type='user',
+                edge_type='edge_follow',
+                obj_class=User,
+                query_id="17874545323001329",
+                variables={'id': user_id},
+                url="https://www.instagram.com/graphql/query/"
+            )
+
+        # Following
+        self.following = EdgeDescription(
+                connector=self,
+                root='data',
+                data_type='user',
+                edge_type='edge_web_discover_media',
+                obj_class=User,
+                query_id="17863787143139595",
+                variables={'id': user_id},
+                url="https://www.instagram.com/graphql/query/"
+            )
     # end __init__
 
     ########################################################
     # Public
     ########################################################
+
+    # Search
+    def search(self, keyword):
+        """
+        Search
+        :param keyword:
+        :return:
+        """
+        # Result
+        users = list()
+        places = list()
+        hashtags = list()
+
+        # Logged ?
+        if self._logged:
+            # URL
+            url = "https://www.instagram.com/web/search/topsearch/?context=blended&query={}".format(keyword)
+
+            # GET request
+            req = self._req
+            req.headers.update({'authority': u"www.instagram.com"})
+            req.headers.update({'method': u"GET"})
+            req.headers.update({'path': url.replace(u"https://www.instagram.com", u"")})
+            req.headers.update({'scheme': 'https'})
+            req.headers.update(
+                {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'})
+            req.headers.update({'accept-encoding': 'gzip, deflate, br'})
+            req.headers.update({'accept-language': 'en-US,en;q=0.8,et;q=0.6,fr;q=0.4'})
+            req.headers.update({'cache-control': 'no-cache'})
+            req.headers.update({
+                                   'cookie': u"mid=WRMdNAAEAAFPvuqh4JN4sLHQtwc3; fbm_124024574287414=base_domain=.instagram.com; ig_oia_dismiss=true; sessionid=IGSCf307fdc0fb36298a90efc94694b2de43158b500080592a4b2197ae6ce7096caa%3ACZWly9z3Xubg4Or9vzVwO9FOoQVwwDOm%3A%7B%22_auth_user_id%22%3A2926312088%2C%22_auth_user_backend%22%3A%22accounts.backends.CaseInsensitiveModelBackend%22%2C%22_auth_user_hash%22%3A%22%22%2C%22_token_ver%22%3A2%2C%22_token%22%3A%222926312088%3AH2LpNGEpJ3FfMeB6a4WHk6VWXsiCrdCD%3Afee4341ce963c84af3b75d02e0ab1fa645ba7cd2fab4cc3bef8ae9333eee433e%22%2C%22_platform%22%3A4%2C%22last_refreshed%22%3A1504734160.2970302105%2C%22asns%22%3A%7B%22time%22%3A1504734221%2C%222.37.52.220%22%3A30722%7D%7D; ig_vw=412; ig_pr=2.625; ig_vh=660; fbsr_124024574287414=2VSpYn7Khc60NFfDLIfkFYGNiO4pjrg-c6BtJ4Ln49M.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUNLZF9lN21fby1qQWxzaldmWExzaDJPRTN5OUJHTlpxYmQwS3A2WHVxcjNwYXIycERvUEMyMTNOUHN4T0FRNXowdHhqdVU5QzRSZE9jQWsyX3RmRXk2NlAtd3V5dkhJVjVYcERtY29CS1B1OEpXSUY3cGJsYkVXTHhrZGdPTnBJZFNleXloNDZWQ2dmS3o1Y3JxRk9KaGIyS0JJMWRCRjh2OXJGN1hpeEU4a2hGVHRLMEZ6eXB3VXhzZWNHS1RsRjNyOGV1ZEF1NnRmSWhIV3pqM1ZsUnIybXRrdTg2UndvajNvU3dFRUI4NmRvZVBWV3lSOGkzaUdVU01rQm93Q3pBUWlwd3ZWQTd6WG1lRThRa3VHaWMyWG1FLXUybVdsTzdMQjJEZ2wwVVpncms5dndXNEVUSzBWZWtXblZIRjRhTEhtdG5CVEoxMzd6UXdLRGdzUld6MiIsImlzc3VlZF9hdCI6MTUwNDgwNDc5NCwidXNlcl9pZCI6IjEwMTY4ODU4NzIifQ; csrftoken=nf8biutIZLEsN45mB31aYrLb5QmWvOq6; rur=ASH; ds_user_id=2926312088"})
+            req.headers.update({'pragma': 'no-cache'})
+            req.headers.update({'upgrade-insecure-requests': '1'})
+            req.headers.update({
+                                   'user-agent': u"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"})
+            items_response = req.get(url)
+
+            # 200 Ok
+            if items_response.status_code == 200:
+                # Wait 2 seconds
+                time.sleep(2)
+
+                # Parse to JSON
+                json_data = json.loads(items_response.text)
+
+                # For each users
+                for user in json_data['users']:
+                    user_obj = self._dict_to_obj(user['user'], User())
+                    users.insert(0, user_obj)
+                # end for
+
+                # For each places
+                for place in json_data['places']:
+                    place_obj = self._dict_to_obj(place['place'], Place())
+                    places.insert(0, place_obj)
+                # end for
+
+                # For each hashtags
+                for hashtag in json_data['hashtags']:
+                    hashtag_obj = self._dict_to_obj(hashtag['hashtag'], Hashtag())
+                    hashtags.insert(0, hashtag_obj)
+                # end for
+            # end if
+        # end if
+
+        return users, places, hashtags
+    # end search
 
     # Logged?
     def logged(self):
@@ -353,5 +477,23 @@ class Instagram(object):
             return FollowingCursor(self)
         # end if
     # end followers
+
+    ################################################
+    # Private
+    ################################################
+
+    # Dict to object
+    def _dict_to_obj(self, d, obj):
+        """
+        Dict to object
+        :param d:
+        :param obj:
+        :return:
+        """
+        for key in d.keys():
+            setattr(obj, key, d[key])
+        # end for
+        return obj
+    # end _dict_to_obj
 
 # end Instagram
