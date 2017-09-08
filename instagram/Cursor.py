@@ -71,15 +71,10 @@ class Cursor(object):
         """
         if self._descriptor.connector.logged():
             # Connector
-            con = self._descriptor.connector
             desc = self._descriptor
 
             # Get items URL
-            if self._end_cursor is None:
-                items_url = self._descriptor.url_items.format(desc.id, con.user_id(), 20)
-            else:
-                items_url = self._descriptor.url_items_next.format(desc.id, con.user_id(), 20, self._end_cursor)
-            # end if
+            items_url = desc.get_url(end_cursor=self._end_cursor, count=20)
 
             # GET request
             req = self._descriptor.connector.request()
@@ -95,24 +90,22 @@ class Cursor(object):
             req.headers.update({'pragma': 'no-cache'})
             req.headers.update({'upgrade-insecure-requests': '1'})
             req.headers.update({'user-agent': u"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"})
-            req.headers.update({'referer': self._descriptor.referer.format(self._descriptor.connector.username())})
             items_response = req.get(items_url)
 
             # 200 Ok
             if items_response.status_code == 200:
-                # Wait 10 seconds
-                time.sleep(10)
+                # Wait 2 seconds
+                time.sleep(2)
 
                 # Parse to JSON
                 json_data = json.loads(items_response.text)
 
                 # Next page cursor
-                self._end_cursor = json_data['data']['user'][self._descriptor.edge_type]['page_info'][
-                    'end_cursor']
+                self._end_cursor = desc.get_end_cursor(json_data)
 
                 # Add users
-                for node in json_data['data']['user'][self._descriptor.edge_type]['edges']:
-                    self._items.append(self._descriptor(node))
+                for node in desc.get_items(json_data):
+                    self._items.insert(0, self._descriptor(node))
                 # end for
                 return len(self._items)
             # end if
