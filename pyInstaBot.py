@@ -5,19 +5,65 @@
 # Imports
 import time
 import logging
-import datetime
+import argparse
 from db.DBConnector import DBConnector
 from instagram.Instagram import Instagram
-from db.obj.User import User
-from instagram.Cursor import Cursor
+from gui.ImageClassificationWindow import ImageClassificationWindow
 
+#########################################
+# Functions
+#########################################
+
+# Add default arguments
+def add_default_arguments(p):
+    """
+    Add default arguments
+    :param p: Parser object
+    :return:
+    """
+    # Configuration and log
+    p.add_argument("--config", type=str, help="Configuration file", required=True)
+    p.add_argument("--log-level", type=int, help="Log level", default=20)
+    p.add_argument("--log-file", type=str, help="Log file", default="")
+# end add_default_arguments
+
+#########################################
+# Main function
+#########################################
 
 if __name__ == "__main__":
+    # Argument parser
+    parser = argparse.ArgumentParser(prog="pyInstaBot",
+                                     description="pyInstaBot - A smart Instagram bot to replace yourself")
+
+    # Command subparser
+    command_subparser = parser.add_subparsers(dest="command")
+
+    # Learning
+    learning_parser = command_subparser.add_parser("learning")
+    learning_parser.add_argument("--task", type=str, help="Task to learn (post, like, comment, follow)")
+    learning_parser.add_argument("--gui", action='store_true', help="Show graphical user interface", default=False)
+    learning_parser.add_argument("--output", type=str, help="Output file where to store the dataset", required=True)
+    add_default_arguments(learning_parser)
+
+    # Parse
+    args = parser.parse_args()
+
     # Logging
     logging.basicConfig(level=20, format='%(asctime)s :: %(levelname)s :: %(message)s')
 
     # Connection to MySQL
-    mysql_connector = DBConnector(host="localhost", username="", password="", db_name="")
+    mysql_connector = DBConnector(host="localhost", username="root", password="1234", db_name="nilsbot")
+
+    # Test command
+    # Update statistics
+    if args.command == "learning":
+        # Which task
+        if args.task == "post":
+            window = ImageClassificationWindow()
+            window.show()
+        # end if
+    # Find tweets
 
     instagram = Instagram(user_id=, username="", password="")
 
@@ -25,9 +71,15 @@ if __name__ == "__main__":
 
     time.sleep(2)
 
-    for media in Cursor(instagram.user_timeline):
+    users, places, hashtags = instagram.search("blender")
+    for hashtag in hashtags:
+        print(hashtag)
+    # end for"""
+
+    # Test
+    """for media in Cursor(instagram.home_timeline):
         print(media)
-    # end for
+    # end for"""
 
     # For each follower
     """for user in instagram.following():
