@@ -34,7 +34,7 @@ def add_default_arguments(p):
 if __name__ == "__main__":
     # Argument parser
     parser = argparse.ArgumentParser(prog="pyInstaBot",
-                                     description="pyInstaBot - A smart Instagram bot to replace yourself")
+                                     description="pyInstaBot - A smart bot with a little bit of Computer Vision to replace yourself on Instagram")
 
     # Command subparser
     command_subparser = parser.add_subparsers(dest="command")
