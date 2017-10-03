@@ -65,7 +65,7 @@ if __name__ == "__main__":
         # end if
     # Find tweets
 
-    instagram = Instagram(user_id=, username="", password="")
+    instagram = Instagram(user_id=2926312088, username="n.schaetti.public", password="oB4JLE02YDbfB9uBlAaG")
 
     instagram.login()
 
