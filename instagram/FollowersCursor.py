@@ -21,6 +21,7 @@ class FollowersCursor(object):
     _referer = 'https://www.instagram.com/{}/followers/'
     _url_followers = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=%7B"id"%3A"{}"%2C"first"%3A{}%7D'
     _url_followers_next = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=%7B"id"%3A"{}"%2C"first"%3A{}%2C"after"%3A"{}"%7D'
+    _id = 17845312237175864
 
     # Constructor
     def __init__(self, connector, page_size=20):
