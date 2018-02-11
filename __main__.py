@@ -38,6 +38,7 @@ from create_database import create_database
 import codecs
 import datetime
 import InstagramAPI
+from .add_medias import add_medias
 
 
 ####################################################
@@ -187,7 +188,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        instagram.uploadPhoto(args.add, args.caption)
+        add_medias(args.add, args.caption)
     elif args.command == "tools":
         # Create database
         if args.create_database:
