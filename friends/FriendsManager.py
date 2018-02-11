@@ -34,6 +34,7 @@ import logging
 from datetime import timedelta
 import pyInstaBot.tools.strings as pystr
 import db.obj
+import pyInstaBot.instagram
 
 
 ##############################################
@@ -280,15 +281,14 @@ class FriendsManager(object):
         self._session.add(user)
     # end _add_user
 
-    # Update followers
-    def _update_follower(self):
+    # Update following
+    def _update_following(self):
         """
-        Update followers
+        Update following
         :return:
         """
-        print(self._instagram_con.following)
         # For each follower
-        for user in self._instagram_con.following:
+        for user in pyInstaBot.instagram.Cursor(self._instagram_con.following):
             if not db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user))
 
@@ -306,14 +306,14 @@ class FriendsManager(object):
         # end for
     # end _update_follower
 
-    # Update following
-    def _update_following(self):
+    # Update follower
+    def _update_follower(self):
         """
-        Update following
+        Update follower
         :return:
         """
         # For each follower
-        for user in self._instagram_con.followers:
+        for user in pyInstaBot.instagram.Cursor(self._instagram_con.followers):
             if not db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user))
 
