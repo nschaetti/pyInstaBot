@@ -454,30 +454,6 @@ class Instagram(object):
         return False
     # end unfollow
 
-    # Get followers
-    def followers(self):
-        """
-        Get the followers
-        :param user_id:
-        :return:
-        """
-        if self._logged:
-            return FollowersCursor(self)
-        # end if
-    # end followers
-
-    # Get following
-    def following(self):
-        """
-        Get the following
-        :param user_id:
-        :return:
-        """
-        if self._logged:
-            return FollowingCursor(self)
-        # end if
-    # end followers
-
     ################################################
     # Private
     ################################################
