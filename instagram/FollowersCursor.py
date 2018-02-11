@@ -7,7 +7,7 @@ import logging
 import time
 import datetime
 import json
-from db.obj.User import User
+import pyInstaBot.db.obj
 
 
 # Followers cursor
@@ -108,7 +108,7 @@ class FollowersCursor(object):
                 # Add users
                 for node in json_data['data']['user'][self._edge]['edges']:
                     user = node['node']
-                    self._users.append(User(user_id=user['id'], user_username=user['username'],
+                    self._users.append(pyInstaBot.db.obj.User(user_id=user['id'], user_username=user['username'],
                                             user_full_name=user['full_name'],
                                             user_profile_pic_url=user['profile_pic_url'],
                                             user_is_verified=user['is_verified'],
