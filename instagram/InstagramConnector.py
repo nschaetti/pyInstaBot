@@ -1,0 +1,125 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# File : twitter.TweetBotConnector.py
+# Description : Main class to connect with Twitter API.
+# Auteur : Nils Schaetti <n.schaetti@gmail.com>
+# Date : 01.05.2017 17:59:05
+# Lieu : Nyon, Suisse
+#
+# This file is part of the pyTweetBot.
+# The pyTweetBot is a set of free software:
+# you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# pyTweetBot is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with pyTweetBar.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import datetime
+import logging
+from pyInstaBot.patterns.singleton import singleton
+
+
+# Request limits reached.
+class RequestLimitReached(Exception):
+    """
+    Exception raised when some limits are reached.
+    """
+    pass
+# end RequestLimitReached
+
+
+# Main class to connect with Twitter API
+@singleton
+class InstagramConnector(object):
+    """
+    Twitter Connector
+    """
+
+    # Constructor
+    def __init__(self, instagram, bot_config=None):
+        """
+        Constructor
+        :param bot_config: Bot configuration object.
+        """
+        # Auth to Twitter
+        config = bot_config.instagram
+        self._instagram = instagram
+        self._page = None
+        self._followers = list()
+        self._current_follower = 0
+        self._config = config
+
+        # History
+        self._histories = {'follow': list(), 'unfollow': list(), 'tweet': list(), 'retweet': list(), 'like': list()}
+        self._counts = {'follow': 0, 'unfollow': 0, 'tweet': 0, 'retweet': 0, 'like': 0}
+
+        # Limits
+        self._limits = dict()
+        self._limits['follow'] = bot_config.friends['max_new_followers']
+        self._limits['unfollow'] = bot_config.friends['max_new_unfollow']
+        self._limits['post'] = bot_config.tweet['max_posts']
+        self._limits['comment'] = bot_config.retweet['max_comments']
+        self._limits['like'] = bot_config.retweet['max_likes']
+    # end __init__
+
+    ###########################################
+    # Public
+    ###########################################
+
+    # Post
+    def post(self, media_path, media_caption):
+        """
+        Post
+        :param media_path:
+        :param media_caption:
+        :return:
+        """
+        # Log
+        logging.getLogger(u"pyTweetBot").info(u"Posting {}".format(media_path))
+        self._instagram.uploadPhoto(media_path, media_caption)
+
+        # Inc counter
+        self._inc_counter('post')
+    # end retweet
+
+    ###########################################
+    # Override
+    ###########################################
+
+    ###########################################
+    # Private
+    ###########################################
+
+    # Increment counter
+    def _inc_counter(self, action_type):
+        """
+        Increment follow counter
+        :return:
+        """
+        # Add to history
+        self._histories[action_type].append(datetime.datetime.utcnow())
+
+        # Last 24h list
+        last_day = list()
+        last_day_counter = 0
+        for action_time in self._histories[action_type]:
+            if (datetime.datetime.utcnow() - action_time).total_seconds() <= 60 * 60 * 24:
+                last_day.append(action_time)
+                last_day_counter += 1
+            # end if
+        # end for
+
+        # History and counter
+        self._histories[action_type] = last_day
+        self._counts[action_type] = last_day_counter
+    # end _inc_follow_counter
+
+# end InstagramConnector
