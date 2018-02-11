@@ -48,7 +48,7 @@ def add_medias(directory_path, caption, action_scheduler):
         for file_path in os.listdir(directory_path):
             # If jpeg
             if ".jpg" in file_path or ".jpeg" in file_path:
-                action_scheduler.add_post(file_path, caption)
+                action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
             else:
                 logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(file_path))
             # end if
