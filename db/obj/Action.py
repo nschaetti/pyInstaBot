@@ -41,8 +41,9 @@ class Action(Base):
     action_id = Column(BigInteger, primary_key=True)
     action_type = Column(Enum('Post', 'Comment', 'Like', 'Follow', 'Unfollow'), nullable=False)
     action_order = Column(BigInteger, nullable=False)
-    action_post_text = Column(String(5000), nullable=False)
-    action_post_image = Column(String(500), nullable=False)
+    action_post_id = Column(BigInteger, nullable=True)
+    action_post_text = Column(String(5000), nullable=True)
+    action_post_image = Column(String(500), nullable=True)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
 
     ############################################
