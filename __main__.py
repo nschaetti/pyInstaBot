@@ -146,6 +146,7 @@ if __name__ == "__main__":
             config = BotConfig.load(args.config)
         except MissingRequiredField as e:
             sys.stderr.write(pystr.ERROR_PARSING_CONFIG_FILE.format(e))
+            exit()
         # end try
 
         # Connection to MySQL
