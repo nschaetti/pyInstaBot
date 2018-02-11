@@ -42,7 +42,7 @@ class Action(Base):
     action_type = Column(Enum('Post', 'Comment', 'Like', 'Follow', 'Unfollow'), nullable=False)
     action_order = Column(BigInteger, nullable=False)
     action_post_text = Column(String(5000), nullable=False)
-    action_post_image = Column(string(500), nullable=False)
+    action_post_image = Column(String(500), nullable=False)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
 
     ############################################
