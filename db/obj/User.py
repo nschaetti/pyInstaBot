@@ -23,7 +23,7 @@
 #
 
 # Import
-from db.DBConnector import DBConnector
+import pyInstaBot.db
 from sqlalchemy import Column, BigInteger, Boolean, Unicode, Date
 from .Base import Base
 
