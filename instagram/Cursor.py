@@ -91,15 +91,15 @@ class Cursor(object):
             req.headers.update({'upgrade-insecure-requests': '1'})
             req.headers.update({'user-agent': u"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"})
             items_response = req.get(items_url)
-
+            print(items_response)
             # 200 Ok
             if items_response.status_code == 200:
                 # Wait 2 seconds
-                time.sleep(2)
+                time.sleep(1)
 
                 # Parse to JSON
                 json_data = json.loads(items_response.text)
-
+                print(json_data)
                 # Next page cursor
                 self._end_cursor = desc.get_end_cursor(json_data)
 
