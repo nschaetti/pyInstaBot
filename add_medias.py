@@ -36,7 +36,7 @@ import tools.strings as pystr
 
 
 # Add media
-def add_medias(directory_path, caption):
+def add_medias(directory_path, caption, action_scheduler):
     """
     Add medias from directory or file
     :param directory_path:
@@ -48,7 +48,7 @@ def add_medias(directory_path, caption):
         for file_path in os.listdir(directory_path):
             # If jpeg
             if ".jpg" in file_path or ".jpeg" in file_path:
-                print(file_path)
+                action_scheduler.add_post(file_path, caption)
             else:
                 logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(file_path))
             # end if
@@ -56,7 +56,7 @@ def add_medias(directory_path, caption):
     else:
         # If jpeg
         if ".jpg" in directory_path or ".jpeg" in directory_path:
-            print(directory_path)
+            action_scheduler.add_post(directory_path, caption)
         else:
             logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(directory_path))
         # end if
