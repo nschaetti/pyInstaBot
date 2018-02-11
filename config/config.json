@@ -1,0 +1,25 @@
+{
+    "instagram" :
+    {
+        "user_id": {},
+        "username": {},
+        "password": {}
+    },
+	"scheduler" :
+	{
+		"sleep": [6, 13]
+	},
+	"hashtags":
+	[
+	],
+	"friends" :
+	{
+		"max_new_followers" : 40,
+		"max_new_unfollow" : 40,
+		"interval" : [30, 45],
+		"ratio" : 0.8
+	},
+	"forbidden_words" :
+	[
+	]
+}
