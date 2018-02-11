@@ -111,6 +111,16 @@ class BotConfig(object):
         return self['instagram']
     # end twitter
 
+    # Get post settings
+    @property
+    def post(self):
+        """
+        Get post settings
+        :return:
+        """
+        return self['post']
+    # end post
+
     # Get friends settings
     @property
     def friends(self):
@@ -172,10 +182,8 @@ class BotConfig(object):
         :param setting: Setting type (tweet, retweet, friend)
         :return: A random interval
         """
-        if setting == "tweet":
-            (min_time, max_time) = self.tweet['interval']
-        elif setting == "retweet" or setting == "like":
-            (min_time, max_time) = self.retweet['interval']
+        if setting == "post":
+            (min_time, max_time) = self.post['interval']
         elif setting == "follow" or setting == "unfollow":
             (min_time, max_time) = self.friends['interval']
         # end if
