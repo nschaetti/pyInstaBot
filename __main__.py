@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(args.add, args.caption)
+        add_medias(args.add, args.caption, action_scheduler)
     elif args.command == "tools":
         # Create database
         if args.create_database:
