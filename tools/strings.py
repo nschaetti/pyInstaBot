@@ -35,3 +35,10 @@ ERROR_PARSING_CONFIG_FILE = u"Error parsing configuration file : {}\n"
 
 # Unknown command
 ERROR_UNKNOWN_COMMAND = u"Unknown command {}\n"
+
+##########################################
+# INFO
+##########################################
+
+# ALSEEP
+INFO_ASLEEP = u"I'm asleep!"
