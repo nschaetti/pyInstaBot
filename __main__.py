@@ -187,7 +187,7 @@ if __name__ == "__main__":
         friends_manager = friends.FriendsManager(instagram)
 
         # Action scheduler
-        action_scheduler = ActionScheduler(config=config, stats=stats_manager)
+        action_scheduler = ActionScheduler(config=config)
     # end if
 
     # Different possible command
