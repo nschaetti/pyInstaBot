@@ -37,6 +37,7 @@ from config.BotConfig import BotConfig, MissingRequiredField
 from create_database import create_database
 import codecs
 import datetime
+import InstagramAPI
 
 
 ####################################################
@@ -136,6 +137,12 @@ if __name__ == "__main__":
     list_friends_parser.add_argument("--obsolete", action='store_true', help="Show only obsolete friends")
     list_friends_parser.add_argument("--friends", action='store_true', help="Show only friends")
 
+    # Add medias
+    medias_parser = command_subparser.add_parser("medias")
+    add_default_arguments(medias_parser)
+    medias_parser.add_argument("--add", type=str, help="A directory of medias or a file to add")
+    medias_parser.add_argument("--caption", type=str, help="The media's caption")
+
     # Parse
     args = parser.parse_args()
 
@@ -161,17 +168,26 @@ if __name__ == "__main__":
                                       db_name=dbc["database"])
 
         # Login to Instagram
-        instagram = Instagram(user_id=config.instagram['user_id'], username=config.instagram['username'],
+        """instagram = Instagram(user_id=config.instagram['user_id'], username=config.instagram['username'],
                               password=config.instagram['password'])
         instagram.login()
-        time.sleep(1)
+        time.sleep(1)"""
+        instagram = InstagramAPI.Instagram(config.instagram['username'], config.instagram['password'])
+        try:
+            instagram.login()
+        except Exception as e:
+            logger.error(u"Error while logging : {}".format(e))
+            exit()
+        # end try
 
         # Friends manager
         friends_manager = friends.FriendsManager(instagram)
     # end if
 
     # Different possible command
-    if args.command == "tools":
+    if args.command == "medias":
+        instagram.uploadPhoto(args.add, args.caption)
+    elif args.command == "tools":
         # Create database
         if args.create_database:
             create_database(config)
@@ -198,7 +214,7 @@ if __name__ == "__main__":
         print(media)
     # end for"""
 
-    if instagram is not None and instagram.logged():
+    if instagram is not None and instagram.isLoggedIn:
         instagram.logout()
     # end if
 
