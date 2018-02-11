@@ -173,7 +173,7 @@ if __name__ == "__main__":
                               password=config.instagram['password'])
         instagram.login()
         time.sleep(1)"""
-        print(config.instagram['data_path'])
+
         instagram = InstagramAPI.Instagram(username=config.instagram['username'], password=config.instagram['password'], IGDataPath=config.instagram['data_path'])
         try:
             instagram.login()

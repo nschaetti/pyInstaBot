@@ -58,7 +58,7 @@ def add_medias(directory_path, caption):
         if ".jpg" in directory_path or ".jpeg" in directory_path:
             print(directory_path)
         else:
-            logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(file_path))
+            logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(directory_path))
         # end if
     # end if
 # end add_medias
