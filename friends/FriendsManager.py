@@ -286,6 +286,7 @@ class FriendsManager(object):
         Update followers
         :return:
         """
+        print(self._instagram_con.following())
         # For each follower
         for user in self._instagram_con.following():
             if not db.obj.User.exists(user.user_id):
