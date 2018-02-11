@@ -172,7 +172,7 @@ if __name__ == "__main__":
                               password=config.instagram['password'])
         instagram.login()
         time.sleep(1)"""
-        instagram = InstagramAPI.Instagram(config.instagram['username'], config.instagram['password'])
+        instagram = InstagramAPI.Instagram(config.instagram['username'], config.instagram['password'], IGDataPath=config.instagram['data_path'])
         try:
             instagram.login()
         except Exception as e:

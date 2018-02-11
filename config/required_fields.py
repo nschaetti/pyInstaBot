@@ -12,8 +12,8 @@ required_fields = \
     },
     "instagram":
     {
-        "user_id": {},
         "username": {},
-        "password": {}
+        "password": {},
+        "data_path": {}
     }
 }

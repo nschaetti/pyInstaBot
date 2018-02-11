@@ -1,9 +1,9 @@
 {
     "instagram" :
-    {
-        "user_id": {},
-        "username": {},
-        "password": {}
+	{
+        "username": "",
+        "password": "",
+		"data_path": ""
     },
 	"scheduler" :
 	{
