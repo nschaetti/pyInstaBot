@@ -35,6 +35,7 @@ from instagram.Instagram import Instagram
 from executor.ActionScheduler import ActionScheduler
 from db.DBConnector import DBConnector
 from config.BotConfig import BotConfig, MissingRequiredField
+from execute_actions import execute_actions
 from create_database import create_database
 import codecs
 import datetime
@@ -139,6 +140,13 @@ if __name__ == "__main__":
     list_friends_parser.add_argument("--obsolete", action='store_true', help="Show only obsolete friends")
     list_friends_parser.add_argument("--friends", action='store_true', help="Show only friends")
 
+    # Executor
+    executor_parser = command_subparser.add_parser("execute")
+    add_default_arguments(executor_parser)
+    executor_parser.add_argument("--daemon", action='store_true', help="Run executor in daemon mode", default=False)
+    executor_parser.add_argument("--break-time", action='store_true',
+                                 help="Show break duration between execution for the current time", default=False)
+
     # Add medias
     medias_parser = command_subparser.add_parser("medias")
     add_default_arguments(medias_parser)
@@ -200,6 +208,9 @@ if __name__ == "__main__":
         elif args.create_config:
             create_config(args.config)
         # end if
+    # Executor
+    elif args.command == "execute":
+        execute_actions(config, action_scheduler)
     # List friends
     elif args.command == "friends":
         # Update friends
