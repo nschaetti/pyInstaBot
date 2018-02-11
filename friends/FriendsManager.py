@@ -33,7 +33,7 @@ import time
 import logging
 from datetime import timedelta
 import pyInstaBot.tools.strings as pystr
-import db.obj
+import pyInstaBot.db.obj
 import pyInstaBot.instagram
 
 
@@ -289,7 +289,7 @@ class FriendsManager(object):
         """
         # For each follower
         for user in pyInstaBot.instagram.Cursor(self._instagram_con.following):
-            if not db.obj.User.exists(user.user_id):
+            if not pyInstaBot.db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user))
 
                 # Following
@@ -298,7 +298,7 @@ class FriendsManager(object):
 
                 # Add
                 self._add_user(user)
-            elif not db.obj.User.get(user.user_id).is_following():
+            elif not pyInstaBot.db.obj.User.get(user.user_id).is_following():
                 # Update
                 user.user_is_following = True
                 user.user_following_date = datetime.datetime.utcnow()
@@ -314,7 +314,7 @@ class FriendsManager(object):
         """
         # For each follower
         for user in pyInstaBot.instagram.Cursor(self._instagram_con.followers):
-            if not db.obj.User.exists(user.user_id):
+            if not pyInstaBot.db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user))
 
                 # Follower
@@ -323,7 +323,7 @@ class FriendsManager(object):
 
                 # Add
                 self._add_user(user)
-            elif not db.obj.User.get(user.user_id).is_follower():
+            elif not pyInstaBot.db.obj.User.get(user.user_id).is_follower():
                 # Update
                 user.user_is_follower = True
                 user.user_follower_date = datetime.datetime.utcnow()
