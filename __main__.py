@@ -138,7 +138,8 @@ if __name__ == "__main__":
 
     # Logging
     logger = create_logger(pystr.LOGGER, log_level=args.log_level, log_file=args.log_file)
-
+    print(args.command)
+    print(args.create_config)
     # Need config and connect?
     if args.command != "tools" or not args.create_config:
         # Load configuration file
