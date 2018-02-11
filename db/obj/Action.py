@@ -35,7 +35,7 @@ class Action(Base):
     """
 
     # Table name
-    __tablename__ = "pytwb_actions"
+    __tablename__ = "pyinstb_actions"
 
     # Fields
     action_id = Column(BigInteger, primary_key=True)
