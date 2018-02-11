@@ -129,12 +129,12 @@ if __name__ == "__main__":
     tools_parser.add_argument("--create-config", action='store_true',
                               help="Create an empty configuration file", default=False)
 
-    # Learning
-    learning_parser = command_subparser.add_parser("learning")
-    learning_parser.add_argument("--task", type=str, help="Task to learn (post, like, comment, follow)")
-    learning_parser.add_argument("--gui", action='store_true', help="Show graphical user interface", default=False)
-    learning_parser.add_argument("--output", type=str, help="Output file where to store the dataset", required=True)
-    add_default_arguments(learning_parser)
+    # List and update followers/friends list
+    list_friends_parser = command_subparser.add_parser("friends")
+    add_default_arguments(list_friends_parser)
+    list_friends_parser.add_argument("--update", action='store_true', help="Update followers/friends in the DB")
+    list_friends_parser.add_argument("--obsolete", action='store_true', help="Show only obsolete friends")
+    list_friends_parser.add_argument("--friends", action='store_true', help="Show only friends")
 
     # Parse
     args = parser.parse_args()
