@@ -15,5 +15,9 @@ required_fields = \
         "username": {},
         "password": {},
         "data_path": {}
+    },
+    "pos":
+    {
+        "interval": {}
     }
 }

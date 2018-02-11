@@ -19,6 +19,10 @@
 		"interval" : [30, 45],
 		"ratio" : 0.8
 	},
+	"post":
+	{
+		"interval" : [30, 90]
+	},
 	"forbidden_words" :
 	[
 	]
