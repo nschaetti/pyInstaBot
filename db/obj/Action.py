@@ -23,6 +23,8 @@
 #
 
 # Import
+import pyInstaBot
+import pyInstaBot.instagram
 import datetime
 from sqlalchemy import Column, String, BigInteger, DateTime, Enum
 from .Base import Base
@@ -56,7 +58,22 @@ class Action(Base):
         Execute the action
         :return:
         """
-        pass
+        if self.action_type == "Follow":
+            # Follow
+            pass
+        elif self.action_type == "Unfollow":
+            # Unfollow
+            pass
+        elif self.action_type == "Like":
+            # Like
+            pass
+        elif self.action_type == "Post":
+            # Post
+            pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
+        elif self.action_type == "Comment":
+            # Comment
+            pass
+        # end if
     # end
 
     ############################################
