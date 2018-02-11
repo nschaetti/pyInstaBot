@@ -29,11 +29,14 @@ import sys
 import time
 import pkg_resources
 import tools.strings as pystr
+import db.obj
+import friends
 from instagram.Instagram import Instagram
 from db.DBConnector import DBConnector
 from config.BotConfig import BotConfig, MissingRequiredField
 from create_database import create_database
 import codecs
+import datetime
 
 
 ####################################################
@@ -162,6 +165,9 @@ if __name__ == "__main__":
                               password=config.instagram['password'])
         instagram.login()
         time.sleep(1)
+
+        # Friends manager
+        friends_manager = friends.FriendsManager(instagram)
     # end if
 
     # Different possible command
@@ -171,6 +177,12 @@ if __name__ == "__main__":
             create_database(config)
         elif args.create_config:
             create_config(args.config)
+        # end if
+    # List friends
+    elif args.command == "friends":
+        # Update friends
+        if args.update:
+            friends_manager.update()
         # end if
     else:
         sys.stderr.write(pystr.ERROR_UNKNOWN_COMMAND.format(args.command))
@@ -184,51 +196,7 @@ if __name__ == "__main__":
     # Test
     for media in Cursor(instagram.home_timeline):
         print(media)
-    # end for
-
-    # For each follower
-    for user in instagram.following():
-        if not User.exists(user.user_id):
-            logging.getLogger(u"pyInstaBot").info(u"New following in the database : {}".format(user))
-
-            # Following
-            user.user_is_following = True
-            user.user_following_date = datetime.datetime.utcnow()
-
-            # Add to DB
-            mysql_connector.get_session().add(user)
-        elif not User.get(user.user_id).is_following():
-            # Update
-            user.user_is_following = True
-            user.user_following_date = datetime.datetime.utcnow()
-        # end if
-
-        # Commit
-        mysql_connector.get_session().commit()
-        # end for
-
-    # For each follower
-    for user in instagram.followers():
-        if not User.exists(user.user_id):
-            logging.getLogger(u"pyInstaBot").info(u"New follower in the database : {}".format(user))
-
-            # Follower
-            user.user_is_follower = True
-            user.user_follower_date = datetime.datetime.utcnow()
-
-            # Add to DB
-            mysql_connector.get_session().add(user)
-        elif not User.get(user.user_id).is_follower():
-            # Update
-            user.user_is_follower = True
-            user.user_follower_date = datetime.datetime.utcnow()
-        # end if
-
-        # Commit
-        mysql_connector.get_session().commit()
-    # end for
-
-    time.sleep(2)"""
+    # end for"""
 
     if instagram is not None and instagram.logged():
         instagram.logout()
