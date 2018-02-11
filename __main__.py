@@ -32,6 +32,7 @@ import tools.strings as pystr
 import db.obj
 import friends
 from instagram.Instagram import Instagram
+from executor.ActionScheduler import ActionScheduler
 from db.DBConnector import DBConnector
 from config.BotConfig import BotConfig, MissingRequiredField
 from create_database import create_database
@@ -184,6 +185,9 @@ if __name__ == "__main__":
 
         # Friends manager
         friends_manager = friends.FriendsManager(instagram)
+
+        # Action scheduler
+        action_scheduler = ActionScheduler(config=config, stats=stats_manager)
     # end if
 
     # Different possible command
