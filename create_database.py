@@ -25,9 +25,23 @@
 import db
 from sqlalchemy import create_engine
 
-# Create an engine that stores data in the local directory's
-engine = create_engine("mysql://", )
 
-# Create all tables in  the engine. This is equivalent to "Create Table"
-# statements in raw SQL.
-db.obj.Base.metadata.create_all(engine, checkfirst=True)
+# Function to create the database
+def create_database(config):
+    """
+    Function to create the database.
+    :param config: The bot configuration object
+    """
+    # Settings
+    host = config.database['host']
+    user = config.database['username']
+    password = config.database['password']
+    db_name = config.database['database']
+
+    # Create an engine that stores data in the local directory's
+    engine = create_engine("mysql://{}:{}@{}/{}".format(user, password, host, db_name))
+
+    # Create all tables in  the engine. This is equivalent to "Create Table"
+    # statements in raw SQL.
+    db.obj.Base.metadata.create_all(engine, checkfirst=True)
+# end create_database
