@@ -58,11 +58,6 @@ class Action(Base):
         Execute the action
         :return:
         """
-        # Instagram connector
-        instagram_connector = pyInstaBot.instagram.InstagramConnector
-        print(type(instagram_connector))
-
-        # Execute
         if self.action_type == "Follow":
             # Follow
             pass
@@ -71,13 +66,13 @@ class Action(Base):
             pass
         elif self.action_type == "Like":
             # Like
-            instagram_connector.like(self.action_post_id)
+            pyInstaBot.instagram.InstagramConnector().like(self.action_post_id)
         elif self.action_type == "Post":
             # Post
-            instagram_connector.post(self.action_post_image, self.action_post_text)
+            pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
         elif self.action_type == "Comment":
             # Comment
-            instagram_connector.comment(self.action_post_id, self.action_post_text)
+            pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text)
         # end if
     # end
 

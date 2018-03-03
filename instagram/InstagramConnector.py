@@ -26,6 +26,7 @@ import datetime
 import logging
 from pyInstaBot.patterns.singleton import singleton
 import pyInstaBot.tools.strings as pystr
+import InstagramAPI
 
 
 # Request limits reached.
@@ -45,14 +46,16 @@ class InstagramConnector(object):
     """
 
     # Constructor
-    def __init__(self, instagram, bot_config=None):
+    def __init__(self, bot_config=None):
         """
         Constructor
         :param bot_config: Bot configuration object.
         """
-        # Auth to Twitter
+        # Auth to Instagram
         config = bot_config.instagram
-        self._instagram = instagram
+        self._instagram = InstagramAPI.Instagram(username=config.instagram['username'],
+                                                 password=config.instagram['password'],
+                                                 IGDataPath=config.instagram['data_path'])
         self._page = None
         self._followers = list()
         self._current_follower = 0
