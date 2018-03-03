@@ -269,7 +269,6 @@ class BotConfig(object):
         try:
             return self._config[item]
         except KeyError:
-            print(default_config.keys())
             if item not in default_config.keys():
                 raise FieldNotAvailable(u"The required field {} is not available in configuration file".format(item))
             else:
