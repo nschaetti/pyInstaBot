@@ -144,10 +144,15 @@ if __name__ == "__main__":
     tools_parser.add_argument("--create-config", action='store_true',
                               help="Create an empty configuration file", default=False)
 
-    # Find media
-    find_media_parser = command_subparser.add_parser("find-medias")
-    add_default_arguments(find_media_parser)
-    add_model_argument(find_media_parser, True)
+    # Find comments
+    find_comments_parser = command_subparser.add_parser("find-comments")
+    add_default_arguments(find_comments_parser)
+    add_model_argument(find_comments_parser, True)
+
+    # Find likes
+    find_likes_parser = command_subparser.add_parser("find-likes")
+    add_default_arguments(find_likes_parser)
+    add_model_argument(find_likes_parser, True)
 
     # List and update followers/friends list
     list_friends_parser = command_subparser.add_parser("friends")
@@ -206,9 +211,12 @@ if __name__ == "__main__":
     # Different possible command
     if args.command == "medias":
         add_medias(args.add, args.caption, action_scheduler)
-    # Find media
-    elif args.command == "find-medias":
-        find_medias(config, args.model, action_scheduler, args.threshold)
+    # Find comments
+    elif args.command == "find-comments":
+        find_medias(config, args.model, action_scheduler, args.threshold, action='comment')
+    # Find likes
+    elif args.command == "find-likes":
+        find_medias(config, args.model, action_scheduler, args.threshold, action='like')
     elif args.command == "tools":
         # Create database
         if args.create_database:
