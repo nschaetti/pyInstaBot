@@ -26,7 +26,8 @@
 		"comment_interval": [0, 8],
         "max_posts": 24,
         "max_likes": 700,
-        "max_comments": 300
+        "max_comments": 300,
+		"languages": ["en", "fr"]
 	},
 	"forbidden_words" :
 	[

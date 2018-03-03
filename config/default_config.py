@@ -55,6 +55,7 @@ default_config = \
 		"comment_interval": [0, 8],
         "max_posts": 24,
         "max_likes": 500,
-        "max_comments": 500
+        "max_comments": 500,
+		"languages": ["en", "fr"]
 	}
 }

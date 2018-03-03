@@ -23,6 +23,7 @@ required_fields = \
 		"comment_interval": {},
         "max_posts": {},
         "max_likes": {},
-        "max_comments": {}
+        "max_comments": {},
+        "languages": {}
     }
 }
