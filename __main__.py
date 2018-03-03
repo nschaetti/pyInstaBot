@@ -213,10 +213,10 @@ if __name__ == "__main__":
         add_medias(args.add, args.caption, action_scheduler)
     # Find comments
     elif args.command == "find-comments":
-        find_medias(config, args.model, action_scheduler, args.threshold, action='comment')
+        find_medias(config, args.model, action_scheduler, 'comment', args.threshold)
     # Find likes
     elif args.command == "find-likes":
-        find_medias(config, args.model, action_scheduler, args.threshold, action='like')
+        find_medias(config, args.model, action_scheduler, 'like', args.threshold)
     elif args.command == "tools":
         # Create database
         if args.create_database:
