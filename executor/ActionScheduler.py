@@ -168,13 +168,14 @@ class ActionScheduler(object):
         if not self.exists_like_action(action_post_id=media_id):
             action = pyInstaBot.db.obj.Action(action_type='Like', action_order=self._generate_random_order(),
                                               action_post_id=media_id, action_post_image=media_code)
-            logging.getLogger(pystr.LOGGER).info(u"New like {} action add to the database".format(media_id))
+            logging.getLogger(pystr.LOGGER).info(
+                u"New like {} ({}) action add to the database".format(media_id, media_code))
             self._session.add(action)
             self._session.commit()
         else:
-            logging.getLogger(pystr.LOGGER).warning(u"Like action for media {} already in database"
-                                                    .format(media_id))
-            raise ActionAlreadyExists(u"Like action for media {} already in database".format(media_id))
+            logging.getLogger(pystr.LOGGER).warning(u"Like action for media {} ({}) already in database"
+                                                    .format(media_id, media_code))
+            raise ActionAlreadyExists(u"Like action for media {} ({}) already in database".format(media_id, media_code))
         # end if
     # end add_like
 
@@ -211,13 +212,14 @@ class ActionScheduler(object):
             action = pyInstaBot.db.obj.Action(action_type='Comment', action_order=self._generate_random_order(),
                                               action_post_id=media_id, action_post_text=comment_text,
                                               action_post_image=media_code)
-            logging.getLogger(pystr.LOGGER).info(u"New comment {} action add to the database".format(media_id))
+            logging.getLogger(pystr.LOGGER).info(
+                u"New comment {} ({}) action add to the database".format(media_id, media_code))
             self._session.add(action)
             self._session.commit()
         else:
-            logging.getLogger(pystr.LOGGER).warning(u"Comment action for media {} already in database"
-                                                    .format(media_id))
-            raise ActionAlreadyExists(u"Post action for media {} already in database".format(media_id))
+            logging.getLogger(pystr.LOGGER).warning(u"Comment action for media {} ({}) already in database"
+                                                    .format(media_id, media_code))
+            raise ActionAlreadyExists(u"Post action for media {} ({}) already in database".format(media_id, media_code))
         # end if
     # end add_comment
 
