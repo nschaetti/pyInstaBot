@@ -104,7 +104,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                     pass
                 except ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(pystr.ERROR_COMMENT_ALREADY_DB.format(
-                        media_id.encode('ascii', errors='ignore')))
+                        media_id))
                     pass
                 # end try
         # end for
