@@ -160,14 +160,14 @@ class ActionScheduler(object):
     # end add_unfollow
 
     # Add a like action in the DB
-    def add_like(self, media_id):
+    def add_like(self, media_id, media_code):
         """
         Add a "like" action in the DB.
         :param media_id: Media's ID
         """
         if not self.exists_like_action(action_post_id=media_id):
             action = pyInstaBot.db.obj.Action(action_type='Like', action_order=self._generate_random_order(),
-                                              action_post_id=media_id)
+                                              action_post_id=media_id, action_post_image=media_code)
             logging.getLogger(pystr.LOGGER).info(u"New like {} action add to the database".format(media_id))
             self._session.add(action)
             self._session.commit()
@@ -200,7 +200,7 @@ class ActionScheduler(object):
     # end add_tweet
 
     # Add a "Comment" action in the DB
-    def add_comment(self, media_id, comment_text):
+    def add_comment(self, media_id, comment_text, media_code):
         """
         Add a "Comment" action in the DB
         :param media_id:
@@ -209,7 +209,8 @@ class ActionScheduler(object):
         """
         if not self.exists_comment_action(action_post_id=media_id):
             action = pyInstaBot.db.obj.Action(action_type='Comment', action_order=self._generate_random_order(),
-                                              action_post_id=media_id, action_post_text=comment_text)
+                                              action_post_id=media_id, action_post_text=comment_text,
+                                              action_post_image=media_code)
             logging.getLogger(pystr.LOGGER).info(u"New comment {} action add to the database".format(media_id))
             self._session.add(action)
             self._session.commit()

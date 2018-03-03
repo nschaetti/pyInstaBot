@@ -60,6 +60,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
         # For each media
         for media in MediaFinder(search_keywords=hashtag, shuffle=True):
             # Media's caption
+            media_code = media['code']
             media_caption = media['caption']['text']
             media_id = media['pk']
 
@@ -86,14 +87,16 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                     if action == 'comment':
                         logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
                             comment,
-                            media_id
+                            media_id,
+                            media_code
                         ))
-                        action_scheduler.add_comment(media_id, comment)
+                        action_scheduler.add_comment(media_id, comment, media_code)
                     else:
                         logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
-                            media_id
+                            media_id,
+                            media_code
                         ))
-                        action_scheduler.add_like(media_id)
+                        action_scheduler.add_like(media_id, media_code)
                     # end if
                 except ActionReservoirFullError:
                     logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
