@@ -26,8 +26,11 @@
 import pyInstaBot
 import pyInstaBot.instagram
 import datetime
-from sqlalchemy import Column, String, BigInteger, DateTime, Enum
+from sqlalchemy import Column, String, BigInteger, DateTime, Enum, Boolean
 from .Base import Base
+from sqlalchemy import update
+from sqlalchemy import and_
+import pyInstaBot.db
 
 
 # Action
@@ -47,6 +50,7 @@ class Action(Base):
     action_post_text = Column(String(5000), nullable=True)
     action_post_image = Column(String(500), nullable=True)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
+    action_executed = Column(Boolean, nullable=False, default=False)
 
     ############################################
     # Public Functions
@@ -67,6 +71,7 @@ class Action(Base):
         elif self.action_type == "Like":
             # Like
             pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
+            # update(Action).where(and_(Action.action_post_id == self.act))
         elif self.action_type == "Post":
             # Post
             pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
@@ -75,6 +80,10 @@ class Action(Base):
             pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
                                                               self.action_post_image)
         # end if
+
+        # Set executed
+        self.action_executed = True
+        pyInstaBot.db.DBConnector().get_session().commit()
     # end
 
     ############################################

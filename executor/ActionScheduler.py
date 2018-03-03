@@ -458,8 +458,10 @@ class ActionScheduler(object):
         :return: Action to execute as a list()
         """
         # Get all actions
-        exec_actions = self._session.query(pyInstaBot.db.obj.Action).filter(pyInstaBot.db.obj.Action.action_type == action_type)\
-            .order_by(pyInstaBot.db.obj.Action.action_order).all()
+        exec_actions = self._session.query(pyInstaBot.db.obj.Action).filter(
+            and_(pyInstaBot.db.obj.Action.action_type == action_type,
+                 pyInstaBot.db.obj.Action.action_executed == True)).order_by(
+            pyInstaBot.db.obj.Action.action_order).all()
 
         # Log debug
         logging.getLogger(pystr.LOGGER).debug(u"_get_exec_action : {}".format(exec_actions))
