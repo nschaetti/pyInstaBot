@@ -42,3 +42,9 @@ ERROR_UNKNOWN_COMMAND = u"Unknown command {}\n"
 
 # ALSEEP
 INFO_ASLEEP = u"I'm asleep!"
+
+############################################
+# DEBUG
+############################################
+
+DEBUG_NEW_MEDIA_FOUND = u"New media found for hashtag {} : {}\n"
