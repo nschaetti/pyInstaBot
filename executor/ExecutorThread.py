@@ -24,6 +24,7 @@
 
 # Imports
 import pyInstaBot.friends.FriendsManager
+from pyInstaBot.instagram.InstagramConnector import RequestLimitReached
 import pyInstaBot.tools.strings as pystr
 import logging
 import tweepy
@@ -112,20 +113,30 @@ class ExecutorThread(Thread):
         Execute the next action
         """
         # Try to execute
-        # Lock
-        with mutex:
-            # Get next action
-            action = self._scheduler.next_action_to_execute(self._action_type)
+        try:
+            # Lock
+            with mutex:
+                # Get next action
+                action = self._scheduler.next_action_to_execute(self._action_type)
 
-            # Execute if found
-            if action is not None:
-                # Execute
-                action.execute()
+                # Execute if found
+                if action is not None:
+                    # Execute
+                    action.execute()
 
-                # Delete
-                self._scheduler.delete(action)
-            # end if
-        # end mutex
+                    # Delete
+                    self._scheduler.delete(action)
+                # end if
+            # end mutex
+        except RequestLimitReached as e:
+            # Log error
+            logging.getLogger(pystr.LOGGER).error(
+                u"Limit reached while executing action {} : {}".format(action, e)
+            )
+
+            # Wait
+            self._wait_next_action()
+        # end try
 
         # Wait
         self._wait_next_action()
