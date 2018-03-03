@@ -60,6 +60,5 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
             print(media['caption']['text'])
             print(u"")
         # end for
-        exit()
     # end for
 # end
