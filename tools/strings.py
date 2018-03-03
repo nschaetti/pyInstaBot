@@ -36,9 +36,20 @@ ERROR_PARSING_CONFIG_FILE = u"Error parsing configuration file : {}\n"
 # Unknown command
 ERROR_UNKNOWN_COMMAND = u"Unknown command {}\n"
 
+# Reservoir full
+ERROR_RESERVOIR_FULL = u"Reservoir full for Tweet action, exiting..."
+
+# Comment/like already in DB
+ERROR_COMMENT_ALREADY_DB = u"Comment \"{}\" already exists in the database"
+ERROR_LIKE_ALREADY_DB = u"Like \"{}\" already exists in the database"
+
 ##########################################
 # INFO
 ##########################################
+
+# Adding like/comment to DB
+INFO_ADD_COMMENT_SCHEDULER = u"Adding comment \"{}\" to the scheduler"
+INFO_ADD_LIKE_SCHEDULER = u"Adding like \"{}\" to the scheduler"
 
 # ALSEEP
 INFO_ASLEEP = u"I'm asleep!"
