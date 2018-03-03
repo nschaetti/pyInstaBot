@@ -75,13 +75,16 @@ def find_medias(config, model_file, action_scheduler, min_length=50, threshold=0
             # Pass the censor
             if len(media_caption) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
                     config.post['languages']:
+                # Comment
+                comment = u"Nice!"
+
                 # Try to add
                 try:
                     logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
-                        hashtag,
+                        comment,
                         media_id
                     ))
-                    action_scheduler.add_comment(media_id, "Nice!")
+                    action_scheduler.add_comment(media_id, comment)
                 except ActionReservoirFullError:
                     logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
                     exit()
