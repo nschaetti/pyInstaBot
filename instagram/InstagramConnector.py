@@ -52,10 +52,10 @@ class InstagramConnector(object):
         :param bot_config: Bot configuration object.
         """
         # Auth to Instagram
-        config = bot_config.instagram
-        self._instagram = InstagramAPI.Instagram(username=config.instagram['username'],
-                                                 password=config.instagram['password'],
-                                                 IGDataPath=config.instagram['data_path'])
+        config = bot_config.instagra
+        self._instagram = InstagramAPI.Instagram(username=config['username'],
+                                                 password=config['password'],
+                                                 IGDataPath=config['data_path'])
         self._page = None
         self._followers = list()
         self._current_follower = 0
