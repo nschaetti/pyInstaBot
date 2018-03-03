@@ -49,7 +49,7 @@ ERROR_LIKE_ALREADY_DB = u"Like \"{}\" already exists in the database"
 
 # Adding like/comment to DB
 INFO_ADD_COMMENT_SCHEDULER = u"Adding comment \"{}\" for media {} to the scheduler"
-INFO_ADD_LIKE_SCHEDULER = u"Adding like \"{}\" for media {} to the scheduler"
+INFO_ADD_LIKE_SCHEDULER = u"Adding like for media {} to the scheduler"
 
 # ALSEEP
 INFO_ASLEEP = u"I'm asleep!"
