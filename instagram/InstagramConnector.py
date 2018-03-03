@@ -125,6 +125,17 @@ class InstagramConnector(object):
         self._inc_counter('comment')
     # end like
 
+    # Get hashtag feed
+    def hashtag_feed(self, hashtag, maxid=''):
+        """
+        Get hashtag feed
+        :param hashtag:
+        :param maxid:
+        :return:
+        """
+        return self._instagram.getHashtagFeed(hashtag, maxid)
+    # end hashtag_feed
+
     ###########################################
     # Override
     ###########################################
