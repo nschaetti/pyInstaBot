@@ -39,10 +39,10 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
     :return:
     """
     # Load censor
-    """censor = learning.CensorModel.load_censor(config)
+    censor = learning.CensorModel.load_censor(config)
 
     # Load model
-    if os.path.exists(model_file):
+    """if os.path.exists(model_file):
         model = pickle.load(open(model_file, 'rb'))
     else:
         logging.getLogger(pystr.LOGGER).error(u"Cannot find model {}".format(model_file))
@@ -56,9 +56,19 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
     for hashtag in config.hashtags:
         # For each media
         for media in MediaFinder(search_keywords=hashtag, shuffle=True):
-            print(media['user']['username'])
-            print(media['caption']['text'])
-            print(u"")
+            # Media's caption
+            media_caption = media['caption']['text']
+            media_id = media['pk']
+
+            # Predict class
+            censor_prediction, _ = censor(media_caption)
+
+            # Debug
+            logging.getLogger(pystr.LOGGER).debug(
+                pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
+            )
+
+
         # end for
     # end for
 # end
