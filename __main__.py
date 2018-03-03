@@ -174,12 +174,7 @@ if __name__ == "__main__":
                                       db_name=dbc["database"])
 
         # Login instagram
-        try:
-            instagram_connector = InstagramConnector(config)
-        except Exception as e:
-            logger.error(u"Error while logging : {}".format(e))
-            exit()
-        # end try
+        instagram_connector = InstagramConnector(config)
 
         # Friends manager
         friends_manager = friends.FriendsManager(instagram)
