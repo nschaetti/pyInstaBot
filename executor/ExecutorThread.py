@@ -98,7 +98,7 @@ class ExecutorThread(Thread):
         elif self._action_type == "Like":
             self._config.wait_next_action("like")
         elif self._action_type == "Comment":
-            self._config.wait_next_action("Comment")
+            self._config.wait_next_action("comment")
         # end if
     # end wait_next_action
 
