@@ -64,7 +64,7 @@ class InstagramConnector(object):
         # History
         self._histories = {'follow': list(), 'unfollow': list(), 'tweet': list(), 'retweet': list(), 'like': list()}
         self._counts = {'follow': 0, 'unfollow': 0, 'tweet': 0, 'retweet': 0, 'like': 0}
-        print(bot_config)
+        print(bot_config.post)
         # Limits
         self._limits = dict()
         self._limits['follow'] = bot_config.friends['max_new_followers']
