@@ -30,6 +30,7 @@ import logging
 import time
 from .default_config import default_config
 from .required_fields import required_fields
+import pyInstaBot.tools.strings as pystr
 
 
 #############################################
@@ -206,7 +207,7 @@ class BotConfig(object):
         waiting_seconds = self.get_random_interval(setting)
 
         # Log
-        logging.getLogger(u"pyTweetBot").info(
+        logging.getLogger(pystr.LOGGER).info(
             u"Waiting {0:.{1}f} minutes for next run of {2}".format(waiting_seconds / 60.0, 1, setting))
 
         # Wait
