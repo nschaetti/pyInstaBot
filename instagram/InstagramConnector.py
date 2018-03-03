@@ -104,7 +104,7 @@ class InstagramConnector(object):
         """
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Commenting {} : \"{}\"".format(media_id, comment))
-        self._instagram.comment(mediaId=media_id, commentText=comment)
+        self._instagram.comment(mediaId=str(media_id), commentText=comment)
 
         # Inc count
         self._inc_counter('comment')
@@ -119,7 +119,7 @@ class InstagramConnector(object):
         """
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Liking {}".format(media_id))
-        self._instagram.like(mediaId=media_id)
+        self._instagram.like(mediaId=str(media_id))
 
         # Inc count
         self._inc_counter('comment')
