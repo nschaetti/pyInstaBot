@@ -18,6 +18,9 @@ required_fields = \
     },
     "post":
     {
-        "interval": {}
+        "interval": {},
+        "max_posts": {},
+        "max_likes": {},
+        "max_comments": {}
     }
 }
