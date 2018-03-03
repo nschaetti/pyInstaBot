@@ -58,6 +58,7 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
     # For each tags
     for hashtag in config.hashtags:
         # Get hashtag feed
+        print(hashtag)
         hashtag_feed = instagram.InstagramConnector().hashtag_feed(hashtag)
         print(hashtag_feed)
     # end for
