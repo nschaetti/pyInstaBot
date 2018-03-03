@@ -37,6 +37,7 @@ from create_database import create_database
 from instagram.InstagramConnector import InstagramConnector
 import codecs
 from .add_medias import add_medias
+from .find_medias import find_medias
 
 
 ####################################################
@@ -56,6 +57,20 @@ def add_default_arguments(p):
     p.add_argument("--log-level", type=int, help="Log level", default=20)
     p.add_argument("--log-file", type=str, help="Log file", default="")
 # end add_default_arguments
+
+
+# Add model argument
+def add_model_argument(p, required):
+    """
+    Add model argument
+    :param p: Parser object
+    :param required: Is the model argument required?
+    """
+    # Model
+    p.add_argument("--model", type=str, help="Classification model's file", required=required)
+    p.add_argument("--threshold", type=float, help="Probability threshold for the prediction to be positive",
+                   default=0.5, required=False)
+# end add_model_argument
 
 
 # Create logger
@@ -129,6 +144,11 @@ if __name__ == "__main__":
     tools_parser.add_argument("--create-config", action='store_true',
                               help="Create an empty configuration file", default=False)
 
+    # Find media
+    find_media_parser = command_subparser.add_parser("find-medias")
+    add_default_arguments(find_media_parser)
+    add_model_argument(find_media_parser, True)
+
     # List and update followers/friends list
     list_friends_parser = command_subparser.add_parser("friends")
     add_default_arguments(list_friends_parser)
@@ -186,6 +206,9 @@ if __name__ == "__main__":
     # Different possible command
     if args.command == "medias":
         add_medias(args.add, args.caption, action_scheduler)
+    # Find media
+    elif args.command == "find-medias":
+        find_medias(config, args.model, action_scheduler, args.threshold)
     elif args.command == "tools":
         # Create database
         if args.create_database:
