@@ -30,8 +30,8 @@ class MediaFinder(object):
         self._languages = languages
 
         # Feed
-        self._medias = pyInstaBot.instagram.InstagramConnector().hashtag_feed(search_keywords)['ranked_items']
-
+        self._medias = pyInstaBot.instagram.InstagramConnector().hashtag_feed(search_keywords)
+        print(type(self._medias))
         # Shuffle
         if shuffle:
             random.shuffle(self._medias)
