@@ -183,7 +183,11 @@ class BotConfig(object):
         :return: A random interval
         """
         if setting == "post":
-            (min_time, max_time) = self.post['interval']
+            (min_time, max_time) = self.post['post_interval']
+        elif setting == 'like':
+            (min_time, max_time) = self.friends['like_interval']
+        elif setting == 'comment':
+            (min_time, max_time) = self.friends['comment_interval']
         elif setting == "follow" or setting == "unfollow":
             (min_time, max_time) = self.friends['interval']
         # end if

@@ -50,7 +50,9 @@ default_config = \
 	],
 	"post" :
 	{
-		"interval": [30, 90],
+		"post_interval": [30, 90],
+		"like_interval": [0, 4],
+		"comment_interval": [0, 8],
         "max_posts": 24,
         "max_likes": 500,
         "max_comments": 500
