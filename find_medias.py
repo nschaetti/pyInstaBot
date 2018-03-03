@@ -56,7 +56,7 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
     for hashtag in config.hashtags:
         # For each media
         for media in MediaFinder(search_keywords=hashtag, shuffle=True):
-            print(type(media))
+            print(media)
         # end for
         exit()
     # end for

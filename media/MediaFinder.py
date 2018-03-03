@@ -31,9 +31,8 @@ class MediaFinder(object):
 
         # Feed
         self._medias = pyInstaBot.instagram.InstagramConnector().hashtag_feed(search_keywords)
-        print(type(self._medias))
-        print(self._medias['ranked_items'])
         self._medias = self._medias['ranked_items']
+
         # Shuffle
         if shuffle:
             random.shuffle(self._medias)
