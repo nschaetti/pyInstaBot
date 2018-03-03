@@ -6,6 +6,7 @@
 import logging
 from executor.ActionScheduler import ActionReservoirFullError, ActionAlreadyExists
 from media.MediaFinder import MediaFinder
+from  textblob import TextBlob
 import instagram
 import learning
 import media as md
@@ -29,7 +30,7 @@ import os
 
 
 # Find new medias from various sources
-def find_medias(config, model_file, action_scheduler, threshold=0.5):
+def find_medias(config, model_file, action_scheduler, min_length=50, threshold=0.5):
     """
 
     :param config:
@@ -68,7 +69,28 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
                 pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
             )
 
-
+            # TextBlob
+            media_text_blob = TextBlob(media_caption)
+            print(media_text_blob.detect_language())
+            # Pass the censor
+            if len(media_caption) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
+                    config.post['languages']:
+                # Try to add
+                try:
+                    logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
+                        hashtag,
+                        media_id
+                    ))
+                    action_scheduler.add_comment(media_id, "Nice!")
+                except ActionReservoirFullError:
+                    logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
+                    exit()
+                    pass
+                except ActionAlreadyExists:
+                    logging.getLogger(pystr.LOGGER).error(pystr.ERROR_COMMENT_ALREADY_DB.format(
+                        media_id.encode('ascii', errors='ignore')))
+                    pass
+                # end try
         # end for
     # end for
 # end
