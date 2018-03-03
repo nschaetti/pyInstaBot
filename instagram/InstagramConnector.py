@@ -69,9 +69,9 @@ class InstagramConnector(object):
         self._limits = dict()
         self._limits['follow'] = bot_config.friends['max_new_followers']
         self._limits['unfollow'] = bot_config.friends['max_new_unfollow']
-        self._limits['post'] = bot_config.tweet['max_posts']
-        self._limits['comment'] = bot_config.retweet['max_comments']
-        self._limits['like'] = bot_config.retweet['max_likes']
+        self._limits['post'] = bot_config.post['max_posts']
+        self._limits['comment'] = bot_config.post['max_comments']
+        self._limits['like'] = bot_config.post['max_likes']
     # end __init__
 
     ###########################################
