@@ -30,12 +30,14 @@ import os
 
 
 # Find new medias from various sources
-def find_medias(config, model_file, action_scheduler, min_length=50, threshold=0.5):
+def find_medias(config, model_file, action_scheduler, action='comment', min_length=50, threshold=0.5):
     """
-
+    Find new medias from various sources
     :param config:
     :param model_file:
     :param action_scheduler:
+    :param action:
+    :param min_length:
     :param threshold:
     :return:
     """
@@ -71,7 +73,7 @@ def find_medias(config, model_file, action_scheduler, min_length=50, threshold=0
 
             # TextBlob
             media_text_blob = TextBlob(media_caption)
-            print(media_text_blob.detect_language())
+
             # Pass the censor
             if len(media_caption) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
                     config.post['languages']:
@@ -80,11 +82,19 @@ def find_medias(config, model_file, action_scheduler, min_length=50, threshold=0
 
                 # Try to add
                 try:
-                    logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
-                        comment,
-                        media_id
-                    ))
-                    action_scheduler.add_comment(media_id, comment)
+                    # Add action
+                    if action == 'comment':
+                        logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
+                            comment,
+                            media_id
+                        ))
+                        action_scheduler.add_comment(media_id, comment)
+                    else:
+                        logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
+                            media_id
+                        ))
+                        action_scheduler.add_like(media_id)
+                    # end if
                 except ActionReservoirFullError:
                     logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
                     exit()
