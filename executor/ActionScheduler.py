@@ -460,7 +460,7 @@ class ActionScheduler(object):
         # Get all actions
         exec_actions = self._session.query(pyInstaBot.db.obj.Action).filter(
             and_(pyInstaBot.db.obj.Action.action_type == action_type,
-                 pyInstaBot.db.obj.Action.action_executed == True)).order_by(
+                 pyInstaBot.db.obj.Action.action_executed == False)).order_by(
             pyInstaBot.db.obj.Action.action_order).all()
 
         # Log debug
