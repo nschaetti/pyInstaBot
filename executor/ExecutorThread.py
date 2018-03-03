@@ -94,7 +94,7 @@ class ExecutorThread(Thread):
         elif self._action_type == "Unfollow":
             self._config.wait_next_action("unfollow")
         elif self._action_type == "Post":
-            self._config.wait_next_action("Post")
+            self._config.wait_next_action("post")
         elif self._action_type == "Like":
             self._config.wait_next_action("like")
         elif self._action_type == "Comment":
