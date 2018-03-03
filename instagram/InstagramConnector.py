@@ -87,7 +87,7 @@ class InstagramConnector(object):
         :return:
         """
         # Log
-        logging.getLogger(u"pyTweetBot").info(u"Posting {}".format(media_path))
+        logging.getLogger(pystr.LOGGER).info(u"Posting {}".format(media_path))
         self._instagram.uploadPhoto(media_path, media_caption)
 
         # Inc counter
