@@ -39,7 +39,7 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
     :return:
     """
     # Media finder
-    # media_finder = MediaFinder(shuffle=True)
+    media_finder = MediaFinder(shuffle=True)
 
     # Load censor
     """censor = learning.CensorModel.load_censor(config)
@@ -57,9 +57,10 @@ def find_medias(config, model_file, action_scheduler, threshold=0.5):
 
     # For each tags
     for hashtag in config.hashtags:
-        # Get hashtag feed
-        print(hashtag)
-        hashtag_feed = instagram.InstagramConnector().hashtag_feed(hashtag)
-        print(hashtag_feed)
+        # For each media
+        for media in MediaFinder(search_keywords=hashtag, shuffle=True):
+            print(media)
+        # end for
+        exit()
     # end for
 # end
