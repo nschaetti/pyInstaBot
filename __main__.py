@@ -26,20 +26,16 @@
 import argparse
 import logging
 import sys
-import time
 import pkg_resources
 import tools.strings as pystr
-import db.obj
 import friends
-from instagram.Instagram import Instagram
 from executor.ActionScheduler import ActionScheduler
 from db.DBConnector import DBConnector
 from config.BotConfig import BotConfig, MissingRequiredField
 from execute_actions import execute_actions
 from create_database import create_database
+from instagram.InstagramConnector import InstagramConnector
 import codecs
-import datetime
-import InstagramAPI
 from .add_medias import add_medias
 
 
@@ -177,15 +173,9 @@ if __name__ == "__main__":
         mysql_connector = DBConnector(host=dbc["host"], username=dbc["username"], password=dbc["password"],
                                       db_name=dbc["database"])
 
-        # Login to Instagram
-        """instagram = Instagram(user_id=config.instagram['user_id'], username=config.instagram['username'],
-                              password=config.instagram['password'])
-        instagram.login()
-        time.sleep(1)"""
-
-        instagram = InstagramAPI.Instagram(username=config.instagram['username'], password=config.instagram['password'], IGDataPath=config.instagram['data_path'])
+        # Login instagram
         try:
-            instagram.login()
+            instagram_connector = InstagramConnector(config)
         except Exception as e:
             logger.error(u"Error while logging : {}".format(e))
             exit()
@@ -220,16 +210,6 @@ if __name__ == "__main__":
     else:
         sys.stderr.write(pystr.ERROR_UNKNOWN_COMMAND.format(args.command))
     # end if
-
-    """users, places, hashtags = instagram.search("blender")
-    for hashtag in hashtags:
-        print(hashtag)
-    # end for
-
-    # Test
-    for media in Cursor(instagram.home_timeline):
-        print(media)
-    # end for"""
 
     if instagram is not None and instagram.isLoggedIn:
         instagram.logout()
