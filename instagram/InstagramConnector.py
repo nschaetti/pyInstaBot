@@ -25,6 +25,7 @@
 import datetime
 import logging
 from pyInstaBot.patterns.singleton import singleton
+import pyInstaBot.tools.strings as pystr
 
 
 # Request limits reached.
@@ -88,7 +89,38 @@ class InstagramConnector(object):
 
         # Inc counter
         self._inc_counter('post')
-    # end retweet
+    # end post
+
+    # Comment
+    def comment(self, media_id, comment):
+        """
+        Comment a post
+        :param media_id: Post's ID
+        :param comment: Comment to post
+        :return:
+        """
+        # Log
+        logging.getLogger(pystr.LOGGER).info(u"Commenting {} : \"{}\"".format(media_id, comment))
+        self._instagram.comment(mediaID=media_id, commentText=comment)
+
+        # Inc count
+        self._inc_counter('comment')
+    # end comment
+
+    # Like
+    def like(self, media_id):
+        """
+        Like a post
+        :param media_id: Post's ID
+        :return:
+        """
+        # Log
+        logging.getLogger(pystr.LOGGER).info(u"Liking {}".format(media_id))
+        self._instagram.like(mediaID=media_id)
+
+        # Inc count
+        self._inc_counter('comment')
+    # end like
 
     ###########################################
     # Override
