@@ -66,13 +66,14 @@ class Action(Base):
             pass
         elif self.action_type == "Like":
             # Like
-            pyInstaBot.instagram.InstagramConnector().like(self.action_post_id)
+            pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
             # Post
             pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
         elif self.action_type == "Comment":
             # Comment
-            pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text)
+            pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
+                                                              self.action_post_image)
         # end if
     # end
 

@@ -95,7 +95,7 @@ class InstagramConnector(object):
     # end post
 
     # Comment
-    def comment(self, media_id, comment):
+    def comment(self, media_id, comment, media_code):
         """
         Comment a post
         :param media_id: Post's ID
@@ -103,7 +103,7 @@ class InstagramConnector(object):
         :return:
         """
         # Log
-        logging.getLogger(pystr.LOGGER).info(u"Commenting {} : \"{}\"".format(media_id, comment))
+        logging.getLogger(pystr.LOGGER).info(u"Commenting {} : \"{}\" ({})".format(media_id, comment, media_code))
         self._instagram.comment(mediaId=str(media_id), commentText=comment)
 
         # Inc count
@@ -111,14 +111,14 @@ class InstagramConnector(object):
     # end comment
 
     # Like
-    def like(self, media_id):
+    def like(self, media_id, media_code):
         """
         Like a post
         :param media_id: Post's ID
         :return:
         """
         # Log
-        logging.getLogger(pystr.LOGGER).info(u"Liking {}".format(media_id))
+        logging.getLogger(pystr.LOGGER).info(u"Liking {} ({})".format(media_id, media_code))
         self._instagram.like(mediaId=str(media_id))
 
         # Inc count
