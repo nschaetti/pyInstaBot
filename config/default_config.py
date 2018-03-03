@@ -47,5 +47,9 @@ default_config = \
 	},
 	"forbidden_words" :
 	[
-	]
+	],
+	"post" :
+	{
+		"interval" : [30, 90]
+	}
 }
