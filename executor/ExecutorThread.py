@@ -125,7 +125,7 @@ class ExecutorThread(Thread):
                     action.execute()
 
                     # Delete
-                    self._scheduler.delete(action)
+                    # self._scheduler.delete(action)
                 # end if
             # end mutex
         except RequestLimitReached as e:
