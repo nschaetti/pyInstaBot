@@ -31,7 +31,7 @@ class FriendsFinder(object):
 
         # Feed
         self._users = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
-        print(self._users)
+        print(self._users['ranked_items'])
         exit()
         self._users = self._users['ranked_items']
 
