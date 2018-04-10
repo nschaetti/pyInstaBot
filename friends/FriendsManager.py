@@ -288,7 +288,7 @@ class FriendsManager(object):
         :return:
         """
         # For each follower
-        for user in pyInstaBot.instagram.Cursor(self._instagram_con.following):
+        for user in pyInstaBot.instagram.InstagramConnector().following():
             if not pyInstaBot.db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user))
 
@@ -313,10 +313,11 @@ class FriendsManager(object):
         :return:
         """
         # For each follower
-        for user in pyInstaBot.instagram.Cursor(self._instagram_con.followers):
+        for user in pyInstaBot.instagram.InstagramConnector().followers():
             if not pyInstaBot.db.obj.User.exists(user.user_id):
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user))
-
+                print(user)
+                exit()
                 # Follower
                 user.user_is_follower = True
                 user.user_follower_date = datetime.datetime.utcnow()
