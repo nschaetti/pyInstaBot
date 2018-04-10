@@ -181,7 +181,7 @@ class InstagramConnector(object):
         Get followers
         :return:
         """
-        return self._instagram.getTotalFollowers(self._instagram.username_id)
+        return self._instagram.getTotalSelfFollowers()
     # end followers
 
     # Get following
