@@ -30,7 +30,7 @@ class FriendsFinder(object):
         self._languages = languages
 
         # Feed
-        self._users = pyInstaBot.instagram.InstagramConnector().hashtag_feed(search_keywords)
+        self._users = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
         print(self._users)
         exit()
         self._users = self._users['ranked_items']
