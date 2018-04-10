@@ -42,6 +42,7 @@ ERROR_RESERVOIR_FULL = u"Reservoir full for Tweet action, exiting..."
 # Comment/like already in DB
 ERROR_COMMENT_ALREADY_DB = u"Comment \"{}\" already exists in the database"
 ERROR_LIKE_ALREADY_DB = u"Like \"{}\" already exists in the database"
+ERROR_FOLLOW_ALREADY_DB = u"Follow \"{}\" already exists in the database"
 
 ##########################################
 # INFO
@@ -50,6 +51,7 @@ ERROR_LIKE_ALREADY_DB = u"Like \"{}\" already exists in the database"
 # Adding like/comment to DB
 INFO_ADD_COMMENT_SCHEDULER = u"Adding comment \"{}\" for media {} to the scheduler"
 INFO_ADD_LIKE_SCHEDULER = u"Adding like for media {} to the scheduler"
+INFO_ADD_FOLLOW_SCHEDULER = u"Adding follow for user {} to the scheduler"
 
 # ALSEEP
 INFO_ASLEEP = u"I'm asleep!"
@@ -59,3 +61,4 @@ INFO_ASLEEP = u"I'm asleep!"
 ############################################
 
 DEBUG_NEW_MEDIA_FOUND = u"New media found for hashtag {} : {}\n"
+DEBUG_NEW_USER_FOUND = u"New user found : {}\n"
