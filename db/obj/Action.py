@@ -64,10 +64,10 @@ class Action(Base):
         """
         if self.action_type == "Follow":
             # Follow
-            pass
+            pyInstaBot.instagram.InstagramConnector().follow(self.action_post_id)
         elif self.action_type == "Unfollow":
             # Unfollow
-            pass
+            pyInstaBot.instagram.InstagramConnector().unfollow(self.action_post_id)
         elif self.action_type == "Like":
             # Like
             pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
