@@ -66,7 +66,7 @@ class User(Base):
         :param user_id:
         :return:
         """
-        return DBConnector().get_session().query(User).filter(user_id == user_id).count() > 0
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).count() > 0
     # end exists
 
     # Is follower
@@ -109,7 +109,7 @@ class User(Base):
         :param user_id:
         :return:
         """
-        return DBConnector().get_session().query(User).filter(user_id == user_id).all()[0]
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).all()[0]
     # end get
 
     ############################################
