@@ -316,7 +316,7 @@ class FriendsManager(object):
         for user in pyInstaBot.instagram.InstagramConnector().followers():
             print(user)
             exit()
-            if not pyInstaBot.db.obj.User.exists(user[]):
+            if not pyInstaBot.db.obj.User.exists(user):
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user))
                 print(user)
                 exit()
