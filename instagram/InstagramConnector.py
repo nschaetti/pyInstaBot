@@ -61,6 +61,9 @@ class InstagramConnector(object):
         self._current_follower = 0
         self._config = config
 
+        # Login
+        self._instagram.login()
+
         # History
         self._histories = {'follow': list(), 'unfollow': list(), 'post': list(), 'comment': list(), 'like': list()}
         self._counts = {'follow': 0, 'unfollow': 0, 'post': 0, 'comment': 0, 'like': 0}
