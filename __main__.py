@@ -38,6 +38,7 @@ from instagram.InstagramConnector import InstagramConnector
 import codecs
 from .add_medias import add_medias
 from .apply_filter import apply_filter
+from .find_follows import find_follows
 from .find_medias import find_medias
 
 
@@ -145,6 +146,14 @@ if __name__ == "__main__":
     tools_parser.add_argument("--create-config", action='store_true',
                               help="Create an empty configuration file", default=False)
 
+    # Find follow
+    find_follow_parser = command_subparser.add_parser("find-follows")
+    add_default_arguments(find_follow_parser)
+    add_model_argument(find_follow_parser, True)
+    find_follow_parser.add_argument("--text-size", type=int,
+                                    help="Minimum test size to take into account for the test",
+                                    default=50)
+
     # Find comments
     find_comments_parser = command_subparser.add_parser("find-comments")
     add_default_arguments(find_comments_parser)
@@ -222,6 +231,9 @@ if __name__ == "__main__":
     # Different possible command
     if args.command == "medias":
         add_medias(args.add, args.caption, args.filter, args.hashtags, action_scheduler)
+    # Find follows
+    elif args.command == "find-follows":
+        find_follows(config, args.model, action_scheduler, args.text_size)
     # Find comments
     elif args.command == "find-comments":
         find_medias(config, args.model, action_scheduler, 'comment', args.threshold)
