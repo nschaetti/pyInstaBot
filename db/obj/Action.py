@@ -62,6 +62,7 @@ class Action(Base):
         Execute the action
         :return:
         """
+        print(self.action_type)
         if self.action_type == "Follow":
             # Follow
             pyInstaBot.instagram.InstagramConnector().follow(self.action_post_id)
