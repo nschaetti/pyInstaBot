@@ -136,6 +136,16 @@ class InstagramConnector(object):
         return self._instagram.getHashtagFeed(hashtag, maxid)
     # end hashtag_feed
 
+    # Get username info
+    def username_info(self, username_id):
+        """
+        Get username info
+        :param username_id:
+        :return:
+        """
+        return self._instagram.getUsernameInfo(username_id)
+    # end username_info
+
     ###########################################
     # Override
     ###########################################
