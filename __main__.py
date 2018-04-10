@@ -40,6 +40,7 @@ from .add_medias import add_medias
 from .apply_filter import apply_filter
 from .find_follows import find_follows
 from .find_medias import find_medias
+from .find_unfollows import find_unfollows
 
 
 ####################################################
@@ -154,6 +155,11 @@ if __name__ == "__main__":
                                     help="Minimum test size to take into account for the test",
                                     default=50)
 
+    # Find unfollow
+    find_unfollow_parser = command_subparser.add_parser("find-unfollows")
+    add_default_arguments(find_unfollow_parser)
+    add_model_argument(find_unfollow_parser, True)
+
     # Find comments
     find_comments_parser = command_subparser.add_parser("find-comments")
     add_default_arguments(find_comments_parser)
@@ -234,6 +240,9 @@ if __name__ == "__main__":
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)
+    # Find unfollows
+    elif args.command == "find-unfollows":
+        find_unfollows(config, action_scheduler, friends_manager, args.model)
     # Find comments
     elif args.command == "find-comments":
         find_medias(config, args.model, action_scheduler, 'comment', args.threshold)
