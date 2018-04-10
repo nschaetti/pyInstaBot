@@ -189,9 +189,9 @@ if __name__ == "__main__":
     # Apply filters
     filters_parser = command_subparser.add_parser("filters")
     add_default_arguments(filters_parser)
-    medias_parser.add_argument("--input", type=str, help="Path to input image")
-    medias_parser.add_argument("--output", type=str, help="Path to output image")
-    medias_parser.add_argument("--fitler", type=str,
+    filters_parser.add_argument("--input", type=str, help="Path to input image")
+    filters_parser.add_argument("--output", type=str, help="Path to output image")
+    filters_parser.add_argument("--filter", type=str,
                                help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays")
 
     # Parse
