@@ -25,24 +25,21 @@
 # Import
 import os
 import logging
-import threading
-from Queue import Queue
-from config.BotConfig import BotConfig
 import tools.strings as pystr
-
-####################################################
-# Main function
-####################################################
 
 
 # Add media
-def add_medias(directory_path, caption, action_scheduler):
+def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
     """
     Add medias from directory or file
     :param directory_path:
     :param caption:
     :return:
     """
+    # Hashtags
+    hashtags = hashtags.split(u',')
+
+    # List directory
     if os.path.isdir(directory_path):
         # List dir
         for file_path in os.listdir(directory_path):
