@@ -30,11 +30,19 @@ class FriendsFinder(object):
         self._languages = languages
 
         # Feed
-        self._users = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
-        print(self._users['ranked_items'][0]['user'])
-        exit()
-        self._users = self._users['ranked_items']
+        feed = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
 
+        # Load users
+        self._users = dict()
+        for user in feed['ranked_items'][0]['user']:
+            if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and user['friendship_status']['outgoing_request']:
+                if user['username'] not in self._users:
+                    self._users[user['username']] = user
+                # end if
+            # end if
+        # end for
+        print(self._users)
+        exit()
         # Shuffle
         if shuffle:
             random.shuffle(self._medias)
