@@ -38,8 +38,8 @@ class FriendsFinder(object):
             user = media['user']
             print(user)
             print(user['friendship_status']['outgoing_request'])
-            if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and user['friendship_status']['outgoing_request']:
-                if user['username'] not in self._users:
+            if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and not user['friendship_status']['outgoing_request']:
+                if user['username'] not in self._users.keys():
                     self._users[user['username']] = user
                 # end if
             # end if
