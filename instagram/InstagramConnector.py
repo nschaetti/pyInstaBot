@@ -175,6 +175,24 @@ class InstagramConnector(object):
         return self._instagram.getUsernameInfo(username_id)
     # end username_info
 
+    # Get followers
+    def followers(self):
+        """
+        Get followers
+        :return:
+        """
+        return self._instagram.getTotalSelfFollowers()
+    # end followers
+
+    # Get following
+    def following(self):
+        """
+        Get following
+        :return:
+        """
+        return self._instagram.getTotalSelfFollowing()
+    # end following
+
     ###########################################
     # Override
     ###########################################
