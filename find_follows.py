@@ -53,8 +53,42 @@ def find_follows(config, model_file, action_scheduler, min_length=50):
     for hashtag in config.hashtags:
         # For each media
         for user in FriendsFinder(hashtag=hashtag, shuffle=True):
-            # User
-            print(user)
+            # Media's caption
+            user_name = user['username']
+            user_bio = user['biography']
+            user_id = user['pk']
+
+            # Predict class
+            censor_prediction, _ = censor(user_bio)
+
+            # Debug
+            logging.getLogger(pystr.LOGGER).debug(
+                pystr.DEBUG_NEW_USER_FOUND.format(hashtag, user_name)
+            )
+
+            # TextBlob
+            media_text_blob = TextBlob(user_bio)
+
+            # Pass the censor
+            if len(user_bio) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
+                    config.post['languages']:
+                # Try to add
+                try:
+                    # Add action
+                    logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_FOLLOW_SCHEDULER.format(
+                        user_name
+                    ))
+                    action_scheduler.add_follow(user_id)
+                except ActionReservoirFullError:
+                    logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
+                    exit()
+                    pass
+                except ActionAlreadyExists:
+                    logging.getLogger(pystr.LOGGER).error(pystr.ERROR_FOLLOW_ALREADY_DB.format(
+                        user_name))
+                    pass
+                # end try
+            # end if
         # end for
     # end for
 # end
