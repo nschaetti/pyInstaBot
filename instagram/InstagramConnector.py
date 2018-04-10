@@ -125,6 +125,35 @@ class InstagramConnector(object):
         self._inc_counter('comment')
     # end like
 
+    # Follow
+    def follow(self, user_id):
+        """
+        Follow
+        :param user_id:
+        :return:
+        """
+        # Log
+        logging.getLogger(pystr.LOGGER).info(u"Following {}".format(user_id))
+        self._instagram.follow(user_id)
+
+        # Inc count
+        self._inc_counter('follow')
+    # end follow
+
+    # Unfollow
+    def unfollow(self, user_id):
+        """
+        Unfollow
+        :param user_id:
+        :return:
+        """
+        # Log
+        logging.getLogger(pystr.LOGGER).info(u"Unfollow {}".format(user_id))
+
+        # Inc count
+        self._inc_counter('unfollow')
+    # end unfollow
+
     # Get hashtag feed
     def hashtag_feed(self, hashtag, maxid=''):
         """

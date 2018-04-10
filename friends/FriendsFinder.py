@@ -19,15 +19,12 @@ class FriendsFinder(object):
     """
 
     # Constructor
-    def __init__(self, hashtag="", shuffle=True, polarity=0.0, subjectivity=0.5, languages=['en']):
+    def __init__(self, hashtag="", shuffle=True):
         """
         Constructor
         """
         # Properties
         self._hashtag = hashtag
-        self._polarity = polarity
-        self._subjectivity = subjectivity
-        self._languages = languages
 
         # Feed
         feed = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
