@@ -107,6 +107,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                         media_id))
                     pass
                 # end try
+            # end if
         # end for
     # end for
 # end
