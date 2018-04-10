@@ -53,9 +53,9 @@ class InstagramConnector(object):
         """
         # Auth to Instagram
         config = bot_config.instagram
-        self._instagram = InstagramAPI.Instagram(username=config['username'],
-                                                 password=config['password'],
-                                                 IGDataPath=config['data_path'])
+        self._instagram = InstagramAPI(username=config['username'],
+                                       password=config['password'],
+                                       IGDataPath=config['data_path'])
         self._page = None
         self._followers = list()
         self._current_follower = 0
