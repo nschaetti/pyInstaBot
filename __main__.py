@@ -37,6 +37,7 @@ from create_database import create_database
 from instagram.InstagramConnector import InstagramConnector
 import codecs
 from .add_medias import add_medias
+from .apply_filter import apply_filter
 from .find_medias import find_medias
 
 
@@ -173,6 +174,16 @@ if __name__ == "__main__":
     add_default_arguments(medias_parser)
     medias_parser.add_argument("--add", type=str, help="A directory of medias or a file to add")
     medias_parser.add_argument("--caption", type=str, help="The media's caption")
+    medias_parser.add_argument("--fitler", type=str, help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays, random")
+    medias_parser.add_argument("--hashtags", type=str, help="List of filters to add separated by comma")
+
+    # Apply filters
+    filters_parser = command_subparser.add_parser("filters")
+    add_default_arguments(medias_parser)
+    medias_parser.add_argument("--input", type=str, help="Path to input image")
+    medias_parser.add_argument("--output", type=str, help="Path to output image")
+    medias_parser.add_argument("--fitler", type=str,
+                               help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays")
 
     # Parse
     args = parser.parse_args()
@@ -210,7 +221,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(args.add, args.caption, action_scheduler)
+        add_medias(args.add, args.caption, args.filter, args.hashtags, action_scheduler)
     # Find comments
     elif args.command == "find-comments":
         find_medias(config, args.model, action_scheduler, 'comment', args.threshold)
@@ -233,6 +244,9 @@ if __name__ == "__main__":
         if args.update:
             friends_manager.update()
         # end if
+    # Apply filter to an image
+    elif args.command == "filter":
+        apply_filter(args.input, args.output, args.fitler)
     else:
         sys.stderr.write(pystr.ERROR_UNKNOWN_COMMAND.format(args.command))
     # end if
