@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
     # Find follow
     find_follow_parser = command_subparser.add_parser("find-follows")
-    # add_default_arguments(find_follow_parser)
+    add_default_arguments(find_follow_parser)
     add_model_argument(find_follow_parser, True)
     find_follow_parser.add_argument("--text-size", type=int,
                                     help="Minimum test size to take into account for the test",
@@ -188,7 +188,7 @@ if __name__ == "__main__":
 
     # Apply filters
     filters_parser = command_subparser.add_parser("filters")
-    add_default_arguments(medias_parser)
+    add_default_arguments(filters_parser)
     medias_parser.add_argument("--input", type=str, help="Path to input image")
     medias_parser.add_argument("--output", type=str, help="Path to output image")
     medias_parser.add_argument("--fitler", type=str,
