@@ -97,11 +97,12 @@ class Action(Base):
         To string
         :return:
         """
-        return "Action(id={}, type={}, tweet_id={}, tweet_text={}, tweet_date={})".format(
+        return "Action(id={}, type={}, post_id={}, post_text={}, post_image={}, date={})".format(
             self.action_id,
             self.action_type,
-            self.action_tweet_id,
-            self.action_tweet_text,
+            self.action_post_id,
+            self.action_post_text,
+            self.action_post_image,
             self.action_date)
     # end __str__
 
@@ -111,11 +112,12 @@ class Action(Base):
         To unicode
         :return:
         """
-        return u"Action(id={}, type={}, tweet_id={}, tweet_text={}, tweet_date={})".format(
+        return u"Action(id={}, type={}, post_id={}, post_text={}, post_image={}, date={})".format(
             self.action_id,
             self.action_type,
-            self.action_tweet_id,
-            self.action_tweet_text,
+            self.action_post_id,
+            self.action_post_text,
+            self.action_post_image,
             self.action_date)
     # end __unicode__
 
