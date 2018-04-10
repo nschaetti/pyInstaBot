@@ -37,7 +37,7 @@ class FriendsFinder(object):
         for media in feed['ranked_items']:
             user = media['user']
             print(user)
-            print(pyInstaBot.instagram.InstagramConnector().username_info(user['username']))
+            print(pyInstaBot.instagram.InstagramConnector().username_info(user['pk']))
             if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and not user['friendship_status']['outgoing_request']:
                 if user['username'] not in self._users.keys():
                     self._users[user['username']] = user
