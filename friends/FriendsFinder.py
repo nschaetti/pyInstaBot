@@ -33,14 +33,16 @@ class FriendsFinder(object):
         feed = pyInstaBot.instagram.InstagramConnector().hashtag_feed(hashtag)
 
         # Load users
-        self._users = dict()
+        self._users = list()
+        self._user_names = list()
         for media in feed['ranked_items']:
             user = media['user']
             if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and not user['friendship_status']['outgoing_request']:
-                if user['username'] not in self._users.keys():
+                if user['username'] not in self._user_names:
                     info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
                     user['biography'] = info['user']['biography']
-                    self._users[user['username']] = user
+                    self._users.append(user)
+                    self._user_names.append(user['username'])
                 # end if
             # end if
         # end for
