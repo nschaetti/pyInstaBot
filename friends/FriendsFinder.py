@@ -44,11 +44,10 @@ class FriendsFinder(object):
                 # end if
             # end if
         # end for
-        print(self._users)
-        exit()
+
         # Shuffle
         if shuffle:
-            random.shuffle(self._medias)
+            random.shuffle(self._users)
         # end if
     # end __init__
 
@@ -71,15 +70,15 @@ class FriendsFinder(object):
         Next element
         :return:
         """
-        if len(self._medias) <= 0:
+        if len(self._users) <= 0:
             raise StopIteration()
         # end if
 
         # Current media
-        current_media = self._medias[0]
+        current_media = self._users[0]
 
         # Remove
-        self._medias.remove(current_media)
+        self._users.remove(current_media)
 
         # Return
         return current_media
@@ -91,7 +90,7 @@ class FriendsFinder(object):
         To unicode
         :return:
         """
-        return u"FriendsFinder({})".format(self._search_keywords)
+        return u"FriendsFinder({})".format(self._hashtag)
     # end __unicode__
 
     # To str
@@ -100,7 +99,7 @@ class FriendsFinder(object):
         To str
         :return:
         """
-        return "FriendsFinder({})".format(self._search_keywords)
+        return "FriendsFinder({})".format(self._hashtag)
     # end __str__
 
     ############################################
