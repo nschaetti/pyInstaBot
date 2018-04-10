@@ -34,7 +34,8 @@ class FriendsFinder(object):
 
         # Load users
         self._users = dict()
-        for user in feed['ranked_items'][0]['user']:
+        for media in feed['ranked_items']:
+            user = media['user']
             if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and user['friendship_status']['outgoing_request']:
                 if user['username'] not in self._users:
                     self._users[user['username']] = user
