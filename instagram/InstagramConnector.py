@@ -26,7 +26,7 @@ import datetime
 import logging
 from pyInstaBot.patterns.singleton import singleton
 import pyInstaBot.tools.strings as pystr
-import InstagramAPI
+from InstagramAPI import InstagramAPI
 
 
 # Request limits reached.
