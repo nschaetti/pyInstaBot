@@ -62,13 +62,12 @@ class Action(Base):
         Execute the action
         :return:
         """
-        print(self.action_type)
         if self.action_type == "Follow":
             # Follow
-            pyInstaBot.instagram.InstagramConnector().follow(self.action_post_id)
+            pyInstaBot.instagram.InstagramConnector().follow(str(self.action_post_id))
         elif self.action_type == "Unfollow":
             # Unfollow
-            pyInstaBot.instagram.InstagramConnector().unfollow(self.action_post_id)
+            pyInstaBot.instagram.InstagramConnector().unfollow(str(self.action_post_id))
         elif self.action_type == "Like":
             # Like
             pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
