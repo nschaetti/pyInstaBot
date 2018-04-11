@@ -62,7 +62,9 @@ class InstagramConnector(object):
         self._config = config
 
         # Login
+        print(u"1")
         self._instagram.login()
+        print(u"2")
 
         # History
         self._histories = {'follow': list(), 'unfollow': list(), 'post': list(), 'comment': list(), 'like': list()}
