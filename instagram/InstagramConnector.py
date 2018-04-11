@@ -134,6 +134,7 @@ class InstagramConnector(object):
             # end for
             self._instagram.USER_AGENT = session['user_agent']
             self._instagram.device_id = session['device_id']
+            self._instagram.usLoggedIn = True
         # end if
     # end login
 
