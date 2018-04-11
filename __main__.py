@@ -56,6 +56,7 @@ def add_default_arguments(p):
     :return:
     """
     # Configuration and log
+    p.add_argument("--session", type=str, help="Session file", required=True)
     p.add_argument("--config", type=str, help="Configuration file", required=True)
     p.add_argument("--log-level", type=int, help="Log level", default=20)
     p.add_argument("--log-file", type=str, help="Log file", default="")
@@ -225,7 +226,7 @@ if __name__ == "__main__":
                                       db_name=dbc["database"])
 
         # Login instagram
-        instagram_connector = InstagramConnector(config)
+        instagram_connector = InstagramConnector(args.session, config)
 
         # Friends manager
         friends_manager = friends.FriendsManager(instagram)

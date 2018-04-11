@@ -27,6 +27,8 @@ import logging
 from pyInstaBot.patterns.singleton import singleton
 import pyInstaBot.tools.strings as pystr
 from InstagramAPI import InstagramAPI
+import os
+import json
 
 
 # Request limits reached.
@@ -46,12 +48,13 @@ class InstagramConnector(object):
     """
 
     # Constructor
-    def __init__(self, bot_config=None):
+    def __init__(self, session_file, bot_config=None):
         """
         Constructor
         :param bot_config: Bot configuration object.
         """
         # Auth to Instagram
+        self.session_file = session_file
         config = bot_config.instagram
         self._instagram = InstagramAPI(username=config['username'],
                                        password=config['password'],
@@ -62,9 +65,7 @@ class InstagramConnector(object):
         self._config = config
 
         # Login
-        print(u"1")
-        self._instagram.login()
-        print(u"2")
+        self.login()
 
         # History
         self._histories = {'follow': list(), 'unfollow': list(), 'post': list(), 'comment': list(), 'like': list()}
@@ -82,6 +83,59 @@ class InstagramConnector(object):
     ###########################################
     # Public
     ###########################################
+
+    # Get session information
+    def session(self):
+        """
+        Get session information
+        :return:
+        """
+        # Check if file exists
+        if os.path.exists(self.session_file):
+            return json.load(open(self.session_file, 'r'))
+        else:
+            return None
+        # end if
+    # end session
+
+    # Login
+    def login(self):
+        """
+        Login
+        :return:
+        """
+        # Get session information
+        session = self.session()
+
+        # Login
+        if session is None:
+            # Try login
+            if self._instagram.login():
+                # Session
+                save_session = {'token': self._instagram.token,
+                                'username_id': self._instagram.username_id,
+                                'rank_token': self._instagram.rank_token,
+                                'uuid': self._instagram.uuid,
+                                'session': self._instagram.s.cookies.get_dict(),
+                                'user_agent': self._instagram.USER_AGENT,
+                                'device_id': self._instagram.device_id}
+
+                # Save
+                json.dump(save_session, open(self.session_file, 'w'))
+            # end if
+        else:
+            self._instagram.token = session['token']
+            self._instagram.username_id = session['username_id']
+            self._instagram.rank_token = session['rank_token']
+            self._instagram.uuid = session['uuid']
+            for cookie in session['session'].keys():
+                value = session['session'][cookie]
+                self._instagram.s.cookies[cookie] = value
+            # end for
+            self._instagram.USER_AGENT = session['user_agent']
+            self._instagram.device_id = session['device_id']
+        # end if
+    # end login
 
     # Post
     def post(self, media_path, media_caption):
