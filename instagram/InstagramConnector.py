@@ -124,6 +124,7 @@ class InstagramConnector(object):
                 json.dump(save_session, open(self.session_file, 'w'))
             # end if
         else:
+            print(u"ok")
             self._instagram.token = session['token']
             self._instagram.username_id = session['username_id']
             print(self._instagram.username_id)
