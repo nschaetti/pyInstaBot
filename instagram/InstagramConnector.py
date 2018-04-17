@@ -126,6 +126,7 @@ class InstagramConnector(object):
         else:
             self._instagram.token = session['token']
             self._instagram.username_id = session['username_id']
+            print(self._instagram.username_id)
             self._instagram.rank_token = session['rank_token']
             self._instagram.uuid = session['uuid']
             for cookie in session['session'].keys():
