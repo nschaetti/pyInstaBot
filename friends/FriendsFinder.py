@@ -37,7 +37,6 @@ class FriendsFinder(object):
             if not user['has_anonymous_profile_picture'] and not user['friendship_status']['following'] and not user['friendship_status']['outgoing_request']:
                 if user['username'] not in self._user_names:
                     info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
-                    print(info)
                     user['biography'] = info['user']['biography']
                     self._users.append(user)
                     self._user_names.append(user['username'])
