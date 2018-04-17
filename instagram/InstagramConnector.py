@@ -65,7 +65,6 @@ class InstagramConnector(object):
         self._config = config
 
         # Login
-        print(u"instagram connector")
         self.login()
 
         # History
@@ -107,7 +106,7 @@ class InstagramConnector(object):
         """
         # Get session information
         session = self.session()
-        print(u"login")
+
         # Login
         if session is None:
             # Try login
@@ -125,10 +124,8 @@ class InstagramConnector(object):
                 json.dump(save_session, open(self.session_file, 'w'))
             # end if
         else:
-            print(u"ok")
             self._instagram.token = session['token']
             self._instagram.username_id = session['username_id']
-            print(self._instagram.username_id)
             self._instagram.rank_token = session['rank_token']
             self._instagram.uuid = session['uuid']
             for cookie in session['session'].keys():
