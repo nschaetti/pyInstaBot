@@ -65,6 +65,7 @@ class InstagramConnector(object):
         self._config = config
 
         # Login
+        print(u"instagram connector")
         self.login()
 
         # History
@@ -106,7 +107,7 @@ class InstagramConnector(object):
         """
         # Get session information
         session = self.session()
-
+        print(u"login")
         # Login
         if session is None:
             # Try login
