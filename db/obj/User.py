@@ -59,13 +59,13 @@ class User(Base):
 
     # Exists
     @staticmethod
-    def exists(user_id):
+    def exists(user_username):
         """
         Exists
-        :param user_id:
+        :param user_username:
         :return:
         """
-        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).count() > 0
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_username == user_username).count() > 0
     # end exists
 
     # Is follower
