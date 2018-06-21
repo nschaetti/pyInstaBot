@@ -322,21 +322,18 @@ class FriendsManager(object):
                 info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
 
                 # New user
-                new_user = pyInstaBot.db.obj.User()
-
-                # Info
-                """new_user.user_username = user['username']
-                new_user.user_full_name = user['full_name']
-                new_user.user_biography = info['user']['biography']
-                new_user.user_profile_pic_url = user['profile_pic_url']
-                new_user.user_is_verified = user['is_verified']
-
-                # Follower
-                new_user.user_is_follower = True
-                new_user.user_follower_date = datetime.datetime.utcnow()"""
+                new_user = pyInstaBot.db.obj.User(
+                    user_username=user['username'],
+                    user_full_name=user['full_name'],
+                    user_biography=info['user']['biography'],
+                    user_profile_pic_url=user['profile_pic_url'],
+                    user_is_verified=user['is_verified'],
+                    user_is_follower=True,
+                    user_follower_date=datetime.datetime.utcnow()
+                )
 
                 # Add
-                self._add_user(user)
+                self._add_user(new_user)
             elif not pyInstaBot.db.obj.User.get(user.user_id).is_follower():
                 # Update
                 user.user_is_follower = True
