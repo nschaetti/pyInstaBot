@@ -106,7 +106,7 @@ class InstagramConnector(object):
         """
         # Get session information
         session = self.session()
-        print(session)
+
         # Login
         if session is None:
             # Try login
@@ -232,7 +232,8 @@ class InstagramConnector(object):
         :param username_id:
         :return:
         """
-        return self._instagram.getUsernameInfo(username_id)
+        return self._instagram.getUsernameInfo('n.schaetti.public')
+        # return self._instagram.getUsernameInfo(username_id)
     # end username_info
 
     # Get followers
