@@ -291,7 +291,7 @@ class FriendsManager(object):
         # For each following
         for user in pyInstaBot.instagram.InstagramConnector().following():
             if not pyInstaBot.db.obj.User.exists(user['username']):
-                logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user))
+                logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user['username']))
 
                 # User info
                 info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
@@ -309,7 +309,7 @@ class FriendsManager(object):
 
                 # Add
                 self._add_user(new_user)
-            elif not pyInstaBot.db.obj.User.get(user.user_id).user_is_following:
+            elif not pyInstaBot.db.obj.User.get(user['username']).user_is_following:
                 # Update
                 user.user_is_following = True
                 user.user_following_date = datetime.datetime.utcnow()
