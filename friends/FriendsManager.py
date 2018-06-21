@@ -325,7 +325,7 @@ class FriendsManager(object):
                 new_user = pyInstaBot.db.obj.User()
 
                 # Info
-                new_user.user_username = user['username']
+                """new_user.user_username = user['username']
                 new_user.user_full_name = user['full_name']
                 new_user.user_biography = info['user']['biography']
                 new_user.user_profile_pic_url = user['profile_pic_url']
@@ -333,7 +333,7 @@ class FriendsManager(object):
 
                 # Follower
                 new_user.user_is_follower = True
-                # new_user.user_follower_date = datetime.datetime.utcnow()
+                new_user.user_follower_date = datetime.datetime.utcnow()"""
 
                 # Add
                 self._add_user(user)
