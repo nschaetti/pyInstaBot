@@ -24,7 +24,7 @@
 
 # Import
 import pyInstaBot.db
-from sqlalchemy import Column, BigInteger, Boolean, Unicode, Date
+from sqlalchemy import Column, BigInteger, Boolean, Unicode, DateTime
 from .Base import Base
 
 
@@ -46,8 +46,8 @@ class User(Base):
     user_is_verified = Column(Boolean, nullable=False)
     user_is_follower = Column(Boolean, nullable=True, default=False)
     user_is_following = Column(Boolean, nullable=True, default=False)
-    user_follower_date = Column(Date, nullable=True)
-    user_following_date = Column(Date, nullable=True)
+    user_follower_date = Column(DateTime, nullable=True)
+    user_following_date = Column(DateTime, nullable=True)
 
     ############################################
     # Public
