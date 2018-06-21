@@ -232,7 +232,7 @@ class InstagramConnector(object):
         :param username_id:
         :return:
         """
-        return self._instagram.getUsernameInfo('n.schaetti.public')
+        return self._instagram.getUsernameInfo('3A224243855')
         # return self._instagram.getUsernameInfo(username_id)
     # end username_info
 
