@@ -11,8 +11,7 @@ import instagram
 import learning
 import media as md
 import tools.strings as pystr
-import pickle
-import os
+import time
 
 ####################################################
 # Globals
@@ -109,5 +108,9 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 # end try
             # end if
         # end for
+
+        # Log and wait
+        logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
+        time.sleep(60)
     # end for
 # end
