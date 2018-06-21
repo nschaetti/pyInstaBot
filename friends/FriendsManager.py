@@ -23,18 +23,15 @@
 #
 
 import datetime
-# import pyTweetBot.executor
 from pyInstaBot.patterns.singleton import singleton
 import pyInstaBot.db.obj
-from sqlalchemy import update, delete
-from sqlalchemy.orm import load_only
 from sqlalchemy import and_, not_
-import time
 import logging
 from datetime import timedelta
 import pyInstaBot.tools.strings as pystr
 import pyInstaBot.db.obj
 import pyInstaBot.instagram
+import time
 
 
 ##############################################
@@ -312,6 +309,9 @@ class FriendsManager(object):
 
                     # Add
                     self._add_user(new_user)
+                else:
+                    logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
+                    time.sleep(60)
                 # end if
             elif not pyInstaBot.db.obj.User.get(user['username']).user_is_following:
                 # Log
@@ -342,19 +342,25 @@ class FriendsManager(object):
                 # User info
                 info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
 
-                # New user
-                new_user = pyInstaBot.db.obj.User(
-                    user_username=user['username'],
-                    user_full_name=user['full_name'],
-                    user_biography=info['user']['biography'],
-                    user_profile_pic_url=user['profile_pic_url'],
-                    user_is_verified=user['is_verified'],
-                    user_is_follower=True,
-                    user_follower_date=datetime.datetime.now()
-                )
+                # Check response
+                if type(info) is dict:
+                    # New user
+                    new_user = pyInstaBot.db.obj.User(
+                        user_username=user['username'],
+                        user_full_name=user['full_name'],
+                        user_biography=info['user']['biography'],
+                        user_profile_pic_url=user['profile_pic_url'],
+                        user_is_verified=user['is_verified'],
+                        user_is_follower=True,
+                        user_follower_date=datetime.datetime.now()
+                    )
 
-                # Add
-                self._add_user(new_user)
+                    # Add
+                    self._add_user(new_user)
+                else:
+                    logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
+                    time.sleep(60)
+                # end if
             elif not pyInstaBot.db.obj.User.get(user['username']).user_is_follower:
                 # Log
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user['username']))
