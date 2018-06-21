@@ -297,19 +297,22 @@ class FriendsManager(object):
                 # User info
                 info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
 
-                # New user
-                new_user = pyInstaBot.db.obj.User(
-                    user_username=user['username'],
-                    user_full_name=user['full_name'],
-                    user_biography=info['user']['biography'],
-                    user_profile_pic_url=user['profile_pic_url'],
-                    user_is_verified=user['is_verified'],
-                    user_is_following=True,
-                    user_follower_date=datetime.datetime.now()
-                )
+                # Check response
+                if type(info) is dict:
+                    # New user
+                    new_user = pyInstaBot.db.obj.User(
+                        user_username=user['username'],
+                        user_full_name=user['full_name'],
+                        user_biography=info['user']['biography'],
+                        user_profile_pic_url=user['profile_pic_url'],
+                        user_is_verified=user['is_verified'],
+                        user_is_following=True,
+                        user_follower_date=datetime.datetime.now()
+                    )
 
-                # Add
-                self._add_user(new_user)
+                    # Add
+                    self._add_user(new_user)
+                # end if
             elif not pyInstaBot.db.obj.User.get(user['username']).user_is_following:
                 # Log
                 logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user['username']))
