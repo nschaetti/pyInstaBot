@@ -231,7 +231,12 @@ class InstagramConnector(object):
         :return:
         """
         self._inc_queries()
-        return self._instagram.getHashtagFeed(hashtag, maxid)
+        response = self._instagram.getHashtagFeed(hashtag, maxid)
+        if response:
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
     # end hashtag_feed
 
     # Get username info
