@@ -47,8 +47,8 @@ class User(Base):
     user_is_verified = Column(Boolean, nullable=False)
     user_is_follower = Column(Boolean, nullable=True, default=False)
     user_is_following = Column(Boolean, nullable=True, default=False)
-    user_follower_date = Column(DateTime, nullable=True, default=datetime.datetime.now())
-    user_following_date = Column(DateTime, nullable=True, default=datetime.datetime.now())
+    user_follower_date = Column(DateTime, nullable=True, default=None)
+    user_following_date = Column(DateTime, nullable=True, default=None)
 
     ############################################
     # Public
