@@ -254,7 +254,7 @@ class InstagramConnector(object):
         Get following
         :return:
         """
-        return self._instagram.getTotalSelfFollowing()
+        return self._instagram.getTotalSelfFollowings()
     # end following
 
     ###########################################
