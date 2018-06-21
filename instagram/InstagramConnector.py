@@ -232,8 +232,11 @@ class InstagramConnector(object):
         :param username_id:
         :return:
         """
-        return self._instagram.getUsernameInfo('3A224243855')
-        # return self._instagram.getUsernameInfo(username_id)
+        if self._instagram.getUsernameInfo(username_id):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
     # end username_info
 
     # Get followers
