@@ -264,7 +264,7 @@ class FriendsManager(object):
         self._update_follower()
 
         # Update following
-        self._update_following()
+        # self._update_following()
     # end update
 
     ######################################################
