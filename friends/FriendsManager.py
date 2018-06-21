@@ -268,6 +268,16 @@ class FriendsManager(object):
     # PRIVATE FUNCTIONS
     ######################################################
 
+    # Wait
+    def _wait(self):
+        """
+        Wait
+        :return:
+        """
+        logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
+        time.sleep(60)
+    # end _wait
+
     # Add a user
     def _add_user(self, user):
         """
@@ -286,7 +296,7 @@ class FriendsManager(object):
         :return:
         """
         # For each following
-        for user in pyInstaBot.instagram.InstagramConnector().following():
+        for index, user in enumerate(pyInstaBot.instagram.InstagramConnector().following()):
             if not pyInstaBot.db.obj.User.exists(user['username']):
                 # Log
                 logging.getLogger(pystr.LOGGER).info(u"New following in the database : {}".format(user['username']))
@@ -310,8 +320,7 @@ class FriendsManager(object):
                     # Add
                     self._add_user(new_user)
                 else:
-                    logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
-                    time.sleep(60)
+                    self._wait()
                 # end if
             elif not pyInstaBot.db.obj.User.get(user['username']).user_is_following:
                 # Log
@@ -324,6 +333,11 @@ class FriendsManager(object):
                 user_obj.user_is_following = True
                 user_obj.user_following_date = datetime.datetime.utcnow()
             # end if
+
+            # Wait
+            if index % 15 == 0 and index != 0:
+                self._wait()
+            # end if
         # end for
     # end _update_follower
 
@@ -334,7 +348,7 @@ class FriendsManager(object):
         :return:
         """
         # For each follower
-        for user in pyInstaBot.instagram.InstagramConnector().followers():
+        for index, user in enumerate(pyInstaBot.instagram.InstagramConnector().followers()):
             if not pyInstaBot.db.obj.User.exists(user['username']):
                 # Log
                 logging.getLogger(pystr.LOGGER).info(u"New follower in the database : {}".format(user['username']))
@@ -358,8 +372,7 @@ class FriendsManager(object):
                     # Add
                     self._add_user(new_user)
                 else:
-                    logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
-                    time.sleep(60)
+                    self._wait()
                 # end if
             elif not pyInstaBot.db.obj.User.get(user['username']).user_is_follower:
                 # Log
@@ -371,6 +384,11 @@ class FriendsManager(object):
                 # Update
                 user_obj.user_is_follower = True
                 user_obj.user_follower_date = datetime.datetime.now()
+            # end if
+
+            # Wait
+            if index % 15 == 0 and index != 0:
+                self._wait()
             # end if
         # end for
     # end _update_following
