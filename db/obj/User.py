@@ -66,8 +66,6 @@ class User(Base):
         :param user_username:
         :return:
         """
-        print(user_username)
-        print(pyInstaBot.db.DBConnector().get_session().query(User).filter(user_username == user_username).count())
         return pyInstaBot.db.DBConnector().get_session().query(User).filter(User.user_username == user_username).count() > 0
     # end exists
 
