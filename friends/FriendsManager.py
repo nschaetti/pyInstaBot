@@ -278,7 +278,8 @@ class FriendsManager(object):
         :param user:
         :return:
         """
-        print(self._session.add(user))
+        self._session.add(user)
+        self._session.commit()
     # end _add_user
 
     # Update following
