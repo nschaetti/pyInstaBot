@@ -102,13 +102,13 @@ class User(Base):
 
     # Get user
     @staticmethod
-    def get(user_id):
+    def get(user_username):
         """
         Get user
-        :param user_id:
+        :param user_username:
         :return:
         """
-        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).all()[0]
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_username == user_username).all()[0]
     # end get
 
     ############################################
