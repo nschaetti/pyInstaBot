@@ -224,7 +224,7 @@ if __name__ == "__main__":
         dbc = config.database
         mysql_connector = DBConnector(host=dbc["host"], username=dbc["username"], password=dbc["password"],
                                       db_name=dbc["database"])
-
+        
         # Login instagram
         instagram_connector = InstagramConnector(args.session, config)
 

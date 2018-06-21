@@ -106,7 +106,7 @@ class InstagramConnector(object):
         """
         # Get session information
         session = self.session()
-
+        print(session)
         # Login
         if session is None:
             # Try login
