@@ -41,6 +41,7 @@ class User(Base):
     user_id = Column(BigInteger, primary_key=True)
     user_username = Column(Unicode(500), nullable=False)
     user_full_name = Column(Unicode(2000), nullable=False)
+    user_biography = Column(Unicode(5000), nullable=True)
     user_profile_pic_url = Column(Unicode(5000), nullable=False)
     user_is_verified = Column(Boolean, nullable=False)
     user_followed_by_viewer = Column(Boolean, nullable=False)
