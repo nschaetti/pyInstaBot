@@ -329,7 +329,7 @@ class FriendsManager(object):
                     user_profile_pic_url=user['profile_pic_url'],
                     user_is_verified=user['is_verified'],
                     user_is_follower=True,
-                    user_follower_date=datetime.datetime.utcnow()
+                    user_follower_date=datetime.datetime.now()
                 )
 
                 # Add
