@@ -46,8 +46,8 @@ class User(Base):
     user_is_verified = Column(Boolean, nullable=False)
     user_followed_by_viewer = Column(Boolean, nullable=False)
     user_requested_by_viewer = Column(Boolean, nullable=False)
-    user_is_follower = Column(Boolean, nullable=True)
-    user_is_following = Column(Boolean, nullable=True)
+    user_is_follower = Column(Boolean, nullable=True, default=False)
+    user_is_following = Column(Boolean, nullable=True, default=False)
     user_follower_date = Column(Date, nullable=True)
     user_following_date = Column(Date, nullable=True)
 
