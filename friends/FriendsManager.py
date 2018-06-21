@@ -334,7 +334,7 @@ class FriendsManager(object):
 
                 # Add
                 self._add_user(new_user)
-            elif not pyInstaBot.db.obj.User.get(user['username']).is_follower():
+            elif not pyInstaBot.db.obj.User.get(user['username']).user_is_follower:
                 # Update
                 user.user_is_follower = True
                 user.user_follower_date = datetime.datetime.utcnow()
