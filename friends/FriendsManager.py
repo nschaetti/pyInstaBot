@@ -320,9 +320,7 @@ class FriendsManager(object):
 
                 # User info
                 info = pyInstaBot.instagram.InstagramConnector().username_info(user['pk'])
-                print(user)
-                print(info)
-                exit()
+
                 # New user
                 new_user = pyInstaBot.db.obj.User(
                     user_username=user['username'],

@@ -44,8 +44,6 @@ class User(Base):
     user_biography = Column(Unicode(5000), nullable=True)
     user_profile_pic_url = Column(Unicode(5000), nullable=False)
     user_is_verified = Column(Boolean, nullable=False)
-    user_followed_by_viewer = Column(Boolean, nullable=False)
-    user_requested_by_viewer = Column(Boolean, nullable=False)
     user_is_follower = Column(Boolean, nullable=True, default=False)
     user_is_following = Column(Boolean, nullable=True, default=False)
     user_follower_date = Column(Date, nullable=True)
@@ -148,4 +146,4 @@ class User(Base):
                    self.user_following_date)
     # end __str__
 
-# end Action
+# end User
