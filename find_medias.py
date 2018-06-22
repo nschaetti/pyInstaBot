@@ -62,7 +62,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
             media_code = media['code']
             media_caption = media['caption']['text']
             media_id = media['pk']
-            print(media_caption)
+
             # Predict class
             censor_prediction, _ = censor(media_caption)
 
@@ -108,9 +108,5 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 # end try
             # end if
         # end for
-
-        # Log and wait
-        logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
-        time.sleep(60)
     # end for
 # end
