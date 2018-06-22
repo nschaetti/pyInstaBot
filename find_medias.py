@@ -58,8 +58,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
     for hashtag in config.hashtags:
         # For each media
         for media in MediaFinder(search_keywords=hashtag, shuffle=True):
-            if media is not None:
-                print(media)
+            if media is not None and media['caption'] is not None:
                 # Media's caption
                 media_code = media['code']
                 media_caption = media['caption']['text']
