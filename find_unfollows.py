@@ -65,7 +65,7 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
     # end if"""
 
     # Unfollow interval in days
-    unfollow_day = int(config.friends['interval'] / 86400.0)
+    unfollow_day = int(config.friends['unfollow_interval'] / 86400.0)
 
     # First find friends who are not following back after defined period
     logging.getLogger(pystr.LOGGER).info(u"Searching obsolete friends to unfollow")
