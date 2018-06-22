@@ -62,7 +62,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
             media_code = media['code']
             media_caption = media['caption']['text']
             media_id = media['pk']
-
+            print(media_caption)
             # Predict class
             censor_prediction, _ = censor(media_caption)
 
@@ -71,7 +71,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
             )
 
-            # TextBlob
+            # Text
             media_text_blob = TextBlob(media_caption)
 
             # Pass the censor
