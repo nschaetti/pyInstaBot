@@ -257,11 +257,11 @@ class FriendsManager(object):
         Update followers and following
         :return: New follower count, Lost follower count, New following count, Lost following count
         """
-        # Update followers
-        self._update_follower()
-
         # Update following
         self._update_following()
+
+        # Update followers
+        self._update_follower()
     # end update
 
     ######################################################
