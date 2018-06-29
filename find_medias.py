@@ -6,12 +6,11 @@
 import logging
 from executor.ActionScheduler import ActionReservoirFullError, ActionAlreadyExists
 from media.MediaFinder import MediaFinder
-from  textblob import TextBlob
-import instagram
+from textblob import TextBlob
 import learning
-import media as md
 import tools.strings as pystr
-import time
+import random
+
 
 ####################################################
 # Globals
@@ -79,7 +78,9 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 if len(media_caption) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
                         config.post['languages']:
                     # Comment
-                    comment = u"Nice!"
+
+                    # Select random comment
+                    comment = random.choice(config.post['comments'])
 
                     # Try to add
                     try:

@@ -73,7 +73,7 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
         try:
             logging.getLogger(pystr.LOGGER).info(
                 u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
-            action_scheduler.add_unfollow(friend.friend_screen_name)
+            action_scheduler.add_unfollow(friend.user_username)
         except ActionReservoirFullError:
             logging.getLogger(pystr.LOGGER).error(u"Reservoir full for Unfollow action, exiting...")
             exit()

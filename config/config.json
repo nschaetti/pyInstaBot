@@ -27,7 +27,8 @@
         "max_posts": 24,
         "max_likes": 700,
         "max_comments": 300,
-		"languages": ["en", "fr"]
+		"languages": ["en", "fr"],
+		"comments": ["Nice!", "Nice feed!", "Keep going", "Good work", "👊🏻😎", "😅😅😅", "❤❤❤❤", "Nice! 😅😅😅", "Keep going 😅😅😅"]
 	},
 	"forbidden_words" :
 	[
