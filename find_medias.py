@@ -10,6 +10,7 @@ from textblob import TextBlob
 import learning
 import tools.strings as pystr
 import random
+from langdetect import detect
 
 
 ####################################################
@@ -71,14 +72,8 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                     pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
                 )
 
-                # Text
-                media_text_blob = TextBlob(media_caption)
-
                 # Pass the censor
-                if len(media_caption) > min_length and censor_prediction == 'pos' and media_text_blob.detect_language() in \
-                        config.post['languages']:
-                    # Comment
-
+                if len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
                     # Select random comment
                     comment = random.choice(config.post['comments'])
 
