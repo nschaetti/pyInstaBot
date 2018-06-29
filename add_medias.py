@@ -36,9 +36,6 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
     :param caption:
     :return:
     """
-    # Hashtags
-    hashtags = hashtags.split(u',')
-
     # List directory
     if os.path.isdir(directory_path):
         # List dir
