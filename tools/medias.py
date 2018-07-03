@@ -34,10 +34,16 @@ def reframe_picture(path_to_image):
     Arguments:
         path_to_image (str): Path to the image to reframe.
     """
+    print(path_to_image)
     # Load image
     im = skimage.io.imread(path_to_image)
 
-    # Paysage or landscape
+    # Portrait or landscape
+    if im.shape[0] > im.shape[1]:
+        print(u"Paysage")
+    else:
+        print(u"Portrait")
+    # end if
     print(im)
     print(type(im))
     exit()
