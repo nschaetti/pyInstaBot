@@ -26,6 +26,7 @@
 import os
 import logging
 import tools.strings as pystr
+import tools.medias as med
 
 
 # Add media
@@ -42,6 +43,10 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
         for file_path in os.listdir(directory_path):
             # If jpeg
             if ".jpg" in file_path or ".jpeg" in file_path:
+                # Make sure it is compatible with Instagram
+                med.reframe_picture(os.path.join(directory_path, file_path))
+
+                # Add post
                 action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
             else:
                 logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(file_path))
@@ -50,6 +55,10 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
     else:
         # If jpeg
         if ".jpg" in directory_path or ".jpeg" in directory_path:
+            # Make sure it is compatible with Instagram
+            med.reframe_picture(directory_path)
+
+            # Add post
             action_scheduler.add_post(directory_path, caption)
         else:
             logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(directory_path))
