@@ -53,19 +53,19 @@ def reframe_picture(path_to_image):
         # Apply if ok
         if new_height < height:
             # Size
-            new_height_half = int(new_height / 2.0)
+            padding_half = int((height - new_height) / 2.0)
 
             # New image
-            im = im[new_height_half:-new_height_half, :]
+            im = im[padding_half:-padding_half, :]
         else:
             # New width
             new_width = int(math.ceil(height * 0.8))
             print(u"New width : {}".format(new_width))
             # Size
-            new_width_half = int(new_width / 2.0)
+            padding_half = int((width - new_width) / 2.0)
 
             # New image
-            im = im[:, new_width_half:-new_width_half]
+            im = im[:, padding_half:-padding_half]
         # end if
     else:
         print(u"Landscape")
@@ -75,19 +75,19 @@ def reframe_picture(path_to_image):
         # Apply if ok
         if new_width < width:
             # Size
-            new_width_half = int(new_width / 2.0)
+            padding_half = int((width - new_width) / 2.0)
 
             # New image
-            im = im[:, new_width_half:-new_width_half]
+            im = im[:, padding_half:-padding_half]
         else:
             # New height
             new_height = int(math.ceil(width * 0.5235602094))
             print(u"New height : {}".format(new_height))
             # Size
-            new_height_half = int(new_height / 2.0)
+            padding_half = int((height - new_height) / 2.0)
 
             # New image
-            im = im[new_height_half:-new_height_half, :]
+            im = im[padding_half:-padding_half, :]
         # end if
     # end if
 
