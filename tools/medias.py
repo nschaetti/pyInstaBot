@@ -42,12 +42,14 @@ def reframe_picture(path_to_image):
     # Size
     height = im.shape[0]
     width = im.shape[1]
-
+    print(u"Height : {}".format(height))
+    print(u"Width : {}".format(width))
     # Portrait or landscape
     if height > width:
+        print(u"Portrait")
         # Height for 4:5
         new_height = int(math.ceil(width * 1.25))
-
+        print(u"New height : {}".format(new_height))
         # Apply if ok
         if new_height < height:
             # Size
@@ -58,7 +60,7 @@ def reframe_picture(path_to_image):
         else:
             # New width
             new_width = int(math.ceil(height * 0.8))
-
+            print(u"New width : {}".format(new_width))
             # Size
             new_width_half = int(new_width / 2.0)
 
@@ -66,9 +68,10 @@ def reframe_picture(path_to_image):
             im = im[:, new_width_half:-new_width_half]
         # end if
     else:
+        print(u"Landscape")
         # Width for 1.91:1
         new_width = int(math.ceil(height * 1.91))
-
+        print(u"New width : {}".format(new_width))
         # Apply if ok
         if new_width < width:
             # Size
@@ -79,7 +82,7 @@ def reframe_picture(path_to_image):
         else:
             # New height
             new_height = int(math.ceil(width * 0.5235602094))
-
+            print(u"New height : {}".format(new_height))
             # Size
             new_height_half = int(new_height / 2.0)
 
