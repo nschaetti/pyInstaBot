@@ -35,6 +35,7 @@ def reframe_picture(path_to_image):
     Arguments:
         path_to_image (str): Path to the image to reframe.
     """
+
     # print(path_to_image)
     # Load image
     im = skimage.io.imread(path_to_image)
@@ -46,6 +47,10 @@ def reframe_picture(path_to_image):
     # print(u"Width : {}".format(width))
     # Portrait or landscape
     if height > width:
+        # Check ratio
+        if height == int(math.ceil(width * 1.25)):
+            return
+        # end if
         # print(u"Portrait")
         # Height for 4:5
         new_height = int(math.ceil(width * 1.25))
@@ -68,6 +73,10 @@ def reframe_picture(path_to_image):
             im = im[:, padding_half:-padding_half]
         # end if
     else:
+        # Check ratio
+        if width == int(math.ceil(height * 1.91)):
+            return
+        # end if
         # print(u"Landscape")
         # Width for 1.91:1
         new_width = int(math.ceil(height * 1.91))
@@ -92,6 +101,6 @@ def reframe_picture(path_to_image):
     # end if
 
     # Save
-    print(u"Changing aspect ration to {}".format(path_to_image))
+    print(u"Changing aspect ratio to {}".format(path_to_image))
     skimage.io.imsave(path_to_image, im)
 # end reframe_picture
