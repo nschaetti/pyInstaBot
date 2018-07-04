@@ -48,6 +48,7 @@ def reframe_picture(path_to_image):
     # Portrait or landscape
     if height > width:
         # Check ratio
+        print(round(height / width, 2))
         if round(height / width, 2) == 1.25:
             return
         # end if
@@ -73,6 +74,7 @@ def reframe_picture(path_to_image):
             im = im[:, padding_half:-padding_half-1]
         # end if
     else:
+        print(round(width / height, 2))
         # Check ratio
         if round(width / height, 2) == 1.91:
             return
