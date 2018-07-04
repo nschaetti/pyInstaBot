@@ -48,7 +48,7 @@ def reframe_picture(path_to_image):
     # Portrait or landscape
     if height > width:
         # Check ratio
-        if height == int(math.ceil(width * 1.25)):
+        if round(height / width, 2) == 1.25:
             return
         # end if
         print(u"Portrait")
@@ -74,7 +74,7 @@ def reframe_picture(path_to_image):
         # end if
     else:
         # Check ratio
-        if width == int(math.ceil(height * 1.91)):
+        if round(width / height, 2) == 1.91:
             return
         # end if
         print(u"Landscape")
