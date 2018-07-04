@@ -93,6 +93,6 @@ def reframe_picture(path_to_image):
 
     # Save
     print(u"Saving to {}".format(path_to_image))
-    skimage.io.imsave(path_to_image, im)
+    # skimage.io.imsave(path_to_image, im)
     exit()
 # end reframe_picture
