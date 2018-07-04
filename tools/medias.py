@@ -24,6 +24,7 @@
 
 # Imports
 import skimage.io
+import math
 
 
 # Reframe a picture to be compatible with Instagram
@@ -38,13 +39,56 @@ def reframe_picture(path_to_image):
     # Load image
     im = skimage.io.imread(path_to_image)
 
+    # Size
+    height = im.shape[0]
+    width = im.shape[1]
+
     # Portrait or landscape
-    if im.shape[0] > im.shape[1]:
-        print(u"Paysage")
+    if height > width:
+        # Height for 4:5
+        new_height = int(math.ceil(width * 1.25))
+
+        # Apply if ok
+        if new_height < height:
+            # Size
+            new_height_half = int(new_height / 2.0)
+
+            # New image
+            im = im[new_height_half:-new_height_half, :]
+        else:
+            # New width
+            new_width = int(math.ceil(height * 0.8))
+
+            # Size
+            new_width_half = int(new_width / 2.0)
+
+            # New image
+            im = im[:, new_width_half:-new_width_half]
+        # end if
     else:
-        print(u"Portrait")
+        # Width for 1.91:1
+        new_width = int(math.ceil(height * 1.91))
+
+        # Apply if ok
+        if new_width < width:
+            # Size
+            new_width_half = int(new_width / 2.0)
+
+            # New image
+            im = im[:, new_width_half:-new_width_half]
+        else:
+            # New height
+            new_height = int(math.ceil(width * 0.5235602094))
+
+            # Size
+            new_height_half = int(new_height / 2.0)
+
+            # New image
+            im = im[new_height_half:-new_height_half, :]
+        # end if
     # end if
-    print(im)
-    print(type(im))
+
+    # Save
+    skimage.io.imsave(path_to_image, im)
     exit()
 # end reframe_picture
