@@ -41,8 +41,8 @@ def reframe_picture(path_to_image):
     im = skimage.io.imread(path_to_image)
 
     # Size
-    height = im.shape[0]
-    width = im.shape[1]
+    height = float(im.shape[0])
+    width = float(im.shape[1])
     print(u"Height : {}".format(height))
     print(u"Width : {}".format(width))
     # Portrait or landscape
