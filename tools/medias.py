@@ -61,7 +61,7 @@ def reframe_picture(path_to_image):
             padding_half = int((height - new_height) / 2.0)
 
             # New image
-            im = im[padding_half:-padding_half+1, :]
+            im = im[padding_half:-padding_half-1, :]
         else:
             # New width
             new_width = int(math.ceil(height * 0.8))
@@ -70,7 +70,7 @@ def reframe_picture(path_to_image):
             padding_half = int((width - new_width) / 2.0)
 
             # New image
-            im = im[:, padding_half:-padding_half+1]
+            im = im[:, padding_half:-padding_half-1]
         # end if
     else:
         # Check ratio
@@ -87,7 +87,7 @@ def reframe_picture(path_to_image):
             padding_half = int((width - new_width) / 2.0)
 
             # New image
-            im = im[:, padding_half:-padding_half+1]
+            im = im[:, padding_half:-padding_half-1]
         else:
             # New height
             new_height = int(math.ceil(width * 0.5235602094))
@@ -96,7 +96,7 @@ def reframe_picture(path_to_image):
             padding_half = int((height - new_height) / 2.0)
 
             # New image
-            im = im[padding_half:-padding_half+1, :]
+            im = im[padding_half:-padding_half-1, :]
         # end if
     # end if
 
