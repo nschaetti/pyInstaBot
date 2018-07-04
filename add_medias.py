@@ -47,7 +47,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
                 med.reframe_picture(os.path.join(directory_path, file_path))
 
                 # Add post
-                # action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
+                action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
             else:
                 logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(file_path))
             # end if
@@ -59,7 +59,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
             med.reframe_picture(directory_path)
 
             # Add post
-            # action_scheduler.add_post(directory_path, caption)
+            action_scheduler.add_post(directory_path, caption)
         else:
             logging.getLogger(pystr.LOGGER).warning(u"File {} is not JPEG, rejected".format(directory_path))
         # end if

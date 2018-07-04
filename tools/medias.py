@@ -35,21 +35,21 @@ def reframe_picture(path_to_image):
     Arguments:
         path_to_image (str): Path to the image to reframe.
     """
-    print(path_to_image)
+    # print(path_to_image)
     # Load image
     im = skimage.io.imread(path_to_image)
 
     # Size
     height = im.shape[0]
     width = im.shape[1]
-    print(u"Height : {}".format(height))
-    print(u"Width : {}".format(width))
+    # print(u"Height : {}".format(height))
+    # print(u"Width : {}".format(width))
     # Portrait or landscape
     if height > width:
-        print(u"Portrait")
+        # print(u"Portrait")
         # Height for 4:5
         new_height = int(math.ceil(width * 1.25))
-        print(u"New height : {}".format(new_height))
+        # print(u"New height : {}".format(new_height))
         # Apply if ok
         if new_height < height:
             # Size
@@ -60,7 +60,7 @@ def reframe_picture(path_to_image):
         else:
             # New width
             new_width = int(math.ceil(height * 0.8))
-            print(u"New width : {}".format(new_width))
+            # print(u"New width : {}".format(new_width))
             # Size
             padding_half = int((width - new_width) / 2.0)
 
@@ -68,10 +68,10 @@ def reframe_picture(path_to_image):
             im = im[:, padding_half:-padding_half]
         # end if
     else:
-        print(u"Landscape")
+        # print(u"Landscape")
         # Width for 1.91:1
         new_width = int(math.ceil(height * 1.91))
-        print(u"New width : {}".format(new_width))
+        # print(u"New width : {}".format(new_width))
         # Apply if ok
         if new_width < width:
             # Size
@@ -82,7 +82,7 @@ def reframe_picture(path_to_image):
         else:
             # New height
             new_height = int(math.ceil(width * 0.5235602094))
-            print(u"New height : {}".format(new_height))
+            # print(u"New height : {}".format(new_height))
             # Size
             padding_half = int((height - new_height) / 2.0)
 
@@ -92,6 +92,6 @@ def reframe_picture(path_to_image):
     # end if
 
     # Save
-    print(u"Saving to {}".format(path_to_image))
+    print(u"Changing aspect ration to {}".format(path_to_image))
     skimage.io.imsave(path_to_image, im)
 # end reframe_picture
