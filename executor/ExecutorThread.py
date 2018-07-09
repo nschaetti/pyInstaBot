@@ -122,7 +122,12 @@ class ExecutorThread(Thread):
                 # Execute if found
                 if action is not None:
                     # Execute
-                    action.execute()
+                    response = action.execute()
+
+                    # Log
+                    if not response:
+                        logging.getLogger(pystr.LOGGER).error(u"Executing action failed...")
+                    # end if
 
                     # If loop, add again
                     if action.action_loop and action.action_type == 'Post':
