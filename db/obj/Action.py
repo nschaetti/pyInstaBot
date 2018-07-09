@@ -49,6 +49,7 @@ class Action(Base):
     action_post_id = Column(BigInteger, nullable=True)
     action_post_text = Column(String(5000), nullable=True)
     action_post_image = Column(String(500), nullable=True)
+    action_post_thumbnail = Column(String(500), nullable=True)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
     action_executed = Column(Boolean, nullable=False, default=False)
 

@@ -141,7 +141,7 @@ class InstagramConnector(object):
     # end login
 
     # Post
-    def post(self, media_path, media_caption):
+    def post(self, media_path, media_caption, media_thumbnail=""):
         """
         Post
         :param media_path: Media's path
@@ -155,7 +155,7 @@ class InstagramConnector(object):
         if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
             response = self._instagram.uploadPhoto(media_path, media_caption)
         elif ".mp4" in media_path:
-            response = self._instagram.uploadVideo(media_path, media_caption)
+            response = self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
         elif type(media_path) is list:
             response = self._instagram.uploadAlbum(media_path, media_caption)
         else:
