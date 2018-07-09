@@ -155,9 +155,6 @@ class InstagramConnector(object):
         if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
             response = self._instagram.uploadPhoto(media_path, media_caption)
         elif ".mp4" in media_path:
-            print(media_path)
-            print(media_thumbnail)
-            print(media_caption)
             response = self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
         elif type(media_path) is list:
             response = self._instagram.uploadAlbum(media_path, media_caption)

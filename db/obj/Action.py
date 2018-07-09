@@ -76,7 +76,7 @@ class Action(Base):
             # update(Action).where(and_(Action.action_post_id == self.act))
         elif self.action_type == "Post":
             # Post
-            pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
+            pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text, self.action_post_thumbnail)
         elif self.action_type == "Comment":
             # Comment
             pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
