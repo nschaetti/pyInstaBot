@@ -193,6 +193,7 @@ if __name__ == "__main__":
     medias_parser.add_argument("--fitler", type=str, help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays, random")
     medias_parser.add_argument("--hashtags", type=str, help="List of filters to add separated by comma")
     medias_parser.add_argument("--album", action='store_true', help="Create an album with the medias", default=False)
+    medias_parser.add_argument("--loop", action='store_true', help="Post medias again and again", default=False)
 
     # Apply filters
     filters_parser = command_subparser.add_parser("filters")
