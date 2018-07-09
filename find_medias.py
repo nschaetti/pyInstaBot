@@ -73,7 +73,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 )
 
                 # Pass the censor
-                if len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
+                if len(media_caption) > 0 and len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
                     # Select random comment
                     comment = random.choice(config.post['comments'])
 
