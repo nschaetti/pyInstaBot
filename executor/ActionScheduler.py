@@ -185,7 +185,7 @@ class ActionScheduler(object):
     # end add_like
 
     # Add a post action in the DB
-    def add_post(self, media_path, media_caption, media_thumbnail, action_loop=False):
+    def add_post(self, media_path, media_thumbnail, media_caption, action_loop=False):
         """
         Add a post action in the DB
         :param media_path:
