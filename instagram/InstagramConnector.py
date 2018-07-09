@@ -142,16 +142,34 @@ class InstagramConnector(object):
     def post(self, media_path, media_caption):
         """
         Post
-        :param media_path:
-        :param media_caption:
-        :return:
+        :param media_path: Media's path
+        :param media_caption: Media's caption
+        :return: True if ok, False if error
         """
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Posting {}".format(media_path))
-        self._instagram.uploadPhoto(media_path, media_caption)
+
+        # Check file
+        if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
+            response = self._instagram.uploadPhoto(media_path, media_caption)
+        elif ".mp4" in media_path:
+            response = self._instagram.uploadVideo(media_path, media_caption)
+        elif type(media_path) is list:
+            response = self._instagram.uploadAlbum(media_path, media_caption)
+        else:
+            logging.getLogger(pystr.LOGGER).info(u"Invalid media type {}".format(media_path))
+            return False
+        # end if
+
+        # Check response
+        if not response:
+            return False
+        # end if
 
         # Inc counter
         self._inc_counter('post')
+
+        return True
     # end post
 
     # Comment
