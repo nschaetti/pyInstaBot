@@ -178,6 +178,7 @@ class InstagramConnector(object):
             # end if
 
             # Sleep
+            logging.getLogger(pystr.LOGGER).info(u"Post failed, waiting 15 seconds to retry...")
             time.sleep(15)
         # end for
 
