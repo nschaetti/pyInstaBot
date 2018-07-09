@@ -71,7 +71,7 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 logging.getLogger(pystr.LOGGER).debug(
                     pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
                 )
-
+                print(u"[{}]".format(media_caption))
                 # Pass the censor
                 if len(media_caption) > 0 and len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
                     # Select random comment
