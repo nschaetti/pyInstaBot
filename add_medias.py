@@ -51,10 +51,11 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
             # If jpeg
             if ".jpg" in file_path or ".jpeg" in file_path:
                 # Make sure it is compatible with Instagram
-                med.reframe_picture(os.path.join(directory_path, file_path))
+                pass
+                """med.reframe_picture(os.path.join(directory_path, file_path))
 
                 # Add post
-                """try:
+                try:
                     action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
@@ -82,10 +83,11 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
         # If jpeg
         if ".jpg" in directory_path or ".jpeg" in directory_path:
             # Make sure it is compatible with Instagram
-            med.reframe_picture(directory_path)
+            pass
+            """med.reframe_picture(directory_path)
 
             # Add post
-            """try:
+            try:
                 action_scheduler.add_post(directory_path, caption)
             except executor.ActionScheduler.ActionAlreadyExists:
                 logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
