@@ -100,6 +100,6 @@ def reframe_picture(path_to_image):
     # end if
 
     # Save
-    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio of {}".format(path_to_image.encode('utf-8')))
+    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio of {}".format(path_to_image.encode('utf-8', errors='ignore')))
     skimage.io.imsave(path_to_image, im)
 # end reframe_picture
