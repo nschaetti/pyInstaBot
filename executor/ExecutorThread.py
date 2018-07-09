@@ -125,12 +125,19 @@ class ExecutorThread(Thread):
                     action.execute()
 
                     # If loop, add again
-                    if action.action_loop:
+                    if action.action_loop and action.action_type == 'Post':
                         logging.getLogger(pystr.LOGGER).info(u"Adding action {}/{} as a loop".format(
                             action.action_id,
                             action.action_type)
                         )
-                        self._scheduler.add(action, generate_order=True)
+
+                        # Add post
+                        self._scheduler.add_post(
+                            action.action_post_image,
+                            action.action_post_thumbnail,
+                            action.action_post_text,
+                            action_loop=True
+                        )
                     # end if
 
                     # Delete
