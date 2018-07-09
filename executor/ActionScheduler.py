@@ -102,12 +102,17 @@ class ActionScheduler(object):
     ##############################################
 
     # Add an action to the DB
-    def add(self, action):
+    def add(self, action, generate_order=False):
         """
         Add an action to the DB
         :param action:
         :return:
         """
+        # Generate order
+        if generate_order:
+            action.action_order = self._generate_random_order()
+        # end if
+
         # Check that the reservoir is not full
         if not self.full(action.action_type):
             # Add action
