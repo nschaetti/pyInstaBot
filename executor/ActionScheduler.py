@@ -180,7 +180,7 @@ class ActionScheduler(object):
     # end add_like
 
     # Add a post action in the DB
-    def add_post(self, media_path, media_caption):
+    def add_post(self, media_path, media_caption, media_thumbnail, action_loop=False):
         """
         Add a post action in the DB
         :param media_path:
@@ -189,7 +189,8 @@ class ActionScheduler(object):
         """
         if not self.exists_post_action(action_post_image=media_path, action_post_text=media_caption):
             action = pyInstaBot.db.obj.Action(action_type='Post', action_order=self._generate_random_order(),
-                                              action_post_image=media_path, action_post_text=media_caption)
+                                              action_post_image=media_path, action_post_text=media_caption,
+                                              action_thumbnail=media_thumbnail, action_loop=action_loop)
             logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path))
             self._session.add(action)
             self._session.commit()
