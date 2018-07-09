@@ -153,18 +153,21 @@ class InstagramConnector(object):
 
         # Check file
         if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
-            response = self._instagram.uploadPhoto(media_path, media_caption)
+            self._instagram.uploadPhoto(media_path, media_caption)
+            response = self._instagram.LastResponse
         elif ".mp4" in media_path:
-            response = self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
+            self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
+            response = self._instagram.LastResponse
         elif type(media_path) is list:
-            response = self._instagram.uploadAlbum(media_path, media_caption)
+            self._instagram.uploadAlbum(media_path, media_caption)
+            response = self._instagram.LastResponse
         else:
             logging.getLogger(pystr.LOGGER).info(u"Invalid media type {}".format(media_path))
             return False
         # end if
 
         # Check response
-        if not response:
+        if response.status_code != 200:
             print(response)
             return False
         # end if
