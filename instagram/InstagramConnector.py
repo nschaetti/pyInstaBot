@@ -165,6 +165,7 @@ class InstagramConnector(object):
 
         # Check response
         if not response:
+            print(response)
             return False
         # end if
 
