@@ -215,9 +215,13 @@ class ActionScheduler(object):
         :return:
         """
         if not self.exists_comment_action(action_post_id=media_id):
-            action = pyInstaBot.db.obj.Action(action_type='Comment', action_order=self._generate_random_order(),
-                                              action_post_id=media_id, action_post_text=comment_text,
-                                              action_post_image=media_code)
+            action = pyInstaBot.db.obj.Action(
+                action_type='Comment',
+                action_order=self._generate_random_order(),
+                action_post_id=media_id,
+                action_post_text=comment_text,
+                action_post_image=media_code
+            )
             logging.getLogger(pystr.LOGGER).info(
                 u"New comment {} ({}) action add to the database".format(media_id, media_code))
             self._session.add(action)

@@ -7,6 +7,7 @@ import logging
 from executor.ActionScheduler import ActionReservoirFullError, ActionAlreadyExists
 from media.MediaFinder import MediaFinder
 from textblob import TextBlob
+import langdetect.lang_detect_exception
 import learning
 import tools.strings as pystr
 import random
@@ -71,39 +72,43 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 logging.getLogger(pystr.LOGGER).debug(
                     pystr.DEBUG_NEW_MEDIA_FOUND.format(hashtag, media_id)
                 )
-                print(u"[{}]".format(media_caption))
-                # Pass the censor
-                if len(media_caption) > 0 and len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
-                    # Select random comment
-                    comment = random.choice(config.post['comments'])
 
-                    # Try to add
-                    try:
-                        # Add action
-                        if action == 'comment':
-                            logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
-                                comment,
-                                media_id,
-                                media_code
-                            ))
-                            action_scheduler.add_comment(media_id, comment, media_code)
-                        else:
-                            logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
-                                media_id,
-                                media_code
-                            ))
-                            action_scheduler.add_like(media_id, media_code)
-                        # end if
-                    except ActionReservoirFullError:
-                        logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
-                        exit()
-                        pass
-                    except ActionAlreadyExists:
-                        logging.getLogger(pystr.LOGGER).error(pystr.ERROR_COMMENT_ALREADY_DB.format(
-                            media_id))
-                        pass
-                    # end try
-                # end if
+                # Pass the censor
+                try:
+                    if len(media_caption) > min_length and censor_prediction == 'pos' and detect(media_caption) in config.post['languages']:
+                        # Select random comment
+                        comment = random.choice(config.post['comments'])
+
+                        # Try to add
+                        try:
+                            # Add action
+                            if action == 'comment':
+                                logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
+                                    comment,
+                                    media_id,
+                                    media_code
+                                ))
+                                action_scheduler.add_comment(media_id, comment, media_code)
+                            else:
+                                logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
+                                    media_id,
+                                    media_code
+                                ))
+                                action_scheduler.add_like(media_id, media_code)
+                            # end if
+                        except ActionReservoirFullError:
+                            logging.getLogger(pystr.LOGGER).error(pystr.ERROR_RESERVOIR_FULL)
+                            exit()
+                            pass
+                        except ActionAlreadyExists:
+                            logging.getLogger(pystr.LOGGER).error(pystr.ERROR_COMMENT_ALREADY_DB.format(
+                                media_id))
+                            pass
+                        # end try
+                    # end if
+                except langdetect.lang_detect_exception.LangDetectException:
+                    pass
+                # end try
             # end if
         # end for
     # end for
