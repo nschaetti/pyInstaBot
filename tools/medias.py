@@ -37,15 +37,13 @@ def reframe_picture(path_to_image):
     Arguments:
         path_to_image (str): Path to the image to reframe.
     """
-    # print(path_to_image)
     # Load image
     im = skimage.io.imread(path_to_image)
 
     # Size
     height = float(im.shape[0])
     width = float(im.shape[1])
-    # print(u"Height : {}".format(height))
-    # print(u"Width : {}".format(width))
+
     # Portrait or landscape
     if height > width:
         # Check ratio
@@ -104,8 +102,6 @@ def reframe_picture(path_to_image):
     # end if
 
     # Save
-    print(path_to_image)
-    print(type(path_to_image))
-    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio of {}".format(path_to_image))
+    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio of {}".format(path_to_image.encode('utf-8')))
     skimage.io.imsave(path_to_image, im)
 # end reframe_picture
