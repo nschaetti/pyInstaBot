@@ -63,7 +63,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
             elif ".mp4" in file_path:
                 # Thumbnail path
                 thumbnail_path = os.path.join(directory_path, file_path)
-                thumbnail_path = thumbnail_path[:-4] + "_thumbnail.jpeg"
+                thumbnail_path = thumbnail_path[:-4] + u"_thumbnail.jpeg"
 
                 # Create thumbnail
                 clip = VideoFileClip(os.path.join(directory_path, file_path))
