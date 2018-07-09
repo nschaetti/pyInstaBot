@@ -196,7 +196,7 @@ class ActionScheduler(object):
             action = pyInstaBot.db.obj.Action(action_type='Post', action_order=self._generate_random_order(),
                                               action_post_image=media_path, action_post_text=media_caption,
                                               action_post_thumbnail=media_thumbnail, action_loop=action_loop)
-            logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path))
+            logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path.decode('utf-8')))
             self._session.add(action)
             self._session.commit()
         else:
