@@ -55,7 +55,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption, action_loop)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try
@@ -86,7 +86,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
 
             # Add post
             try:
-                action_scheduler.add_post(directory_path, caption)
+                action_scheduler.add_post(directory_path, u"", caption, action_loop)
             except executor.ActionScheduler.ActionAlreadyExists:
                 logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
             # end try
