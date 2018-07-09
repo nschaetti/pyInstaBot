@@ -72,15 +72,15 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
     for friend in friends_manager.get_obsolete_friends(unfollow_day):
         try:
             logging.getLogger(pystr.LOGGER).info(
-                u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.friend_screen_name))
-            action_scheduler.add_unfollow(friend.friend_screen_name)
+                u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
+            action_scheduler.add_unfollow(friend.user_username)
         except ActionReservoirFullError:
             logging.getLogger(pystr.LOGGER).error(u"Reservoir full for Unfollow action, exiting...")
             exit()
             pass
         except ActionAlreadyExists:
             logging.getLogger(pystr.LOGGER).error(
-                u"Unfollow action for \"{}\" already exists in the database".format(friend.friend_screen_name))
+                u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
             pass
         # end try
     # end for
@@ -99,7 +99,7 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
             if censor_prediction == 'neg':
                 try:
                     logging.getLogger(pystr.LOGGER).info(
-                        u"Adding Friend \"{}\" to unfollow to the scheduler".format(friend.friend_screen_name))
+                        u"Adding Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
                     action_scheduler.add_unfollow(friend.friend_screen_name)
                 except ActionReservoirFullError:
                     logging.getLogger(pystr.LOGGER).error(u"Reservoir full for unfollow action, exiting...")
@@ -107,7 +107,7 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
                     pass
                 except ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(
-                        u"Unfollow action for \"{}\" already exists in the database".format(friend.friend_screen_name))
+                        u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
                     pass
                 # end try
             # end if

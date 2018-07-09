@@ -23,8 +23,9 @@
 #
 
 # Import
+import datetime
 import pyInstaBot.db
-from sqlalchemy import Column, BigInteger, Boolean, Unicode, Date
+from sqlalchemy import Column, BigInteger, Boolean, Unicode, DateTime
 from .Base import Base
 
 
@@ -41,14 +42,13 @@ class User(Base):
     user_id = Column(BigInteger, primary_key=True)
     user_username = Column(Unicode(500), nullable=False)
     user_full_name = Column(Unicode(2000), nullable=False)
+    user_biography = Column(Unicode(5000), nullable=True)
     user_profile_pic_url = Column(Unicode(5000), nullable=False)
     user_is_verified = Column(Boolean, nullable=False)
-    user_followed_by_viewer = Column(Boolean, nullable=False)
-    user_requested_by_viewer = Column(Boolean, nullable=False)
-    user_is_follower = Column(Boolean, nullable=True)
-    user_is_following = Column(Boolean, nullable=True)
-    user_follower_date = Column(Date, nullable=True)
-    user_following_date = Column(Date, nullable=True)
+    user_is_follower = Column(Boolean, nullable=True, default=False)
+    user_is_following = Column(Boolean, nullable=True, default=False)
+    user_follower_date = Column(DateTime, nullable=True, default=None)
+    user_following_date = Column(DateTime, nullable=True, default=None)
 
     ############################################
     # Public
@@ -60,13 +60,13 @@ class User(Base):
 
     # Exists
     @staticmethod
-    def exists(user_id):
+    def exists(user_username):
         """
         Exists
-        :param user_id:
+        :param user_username:
         :return:
         """
-        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).count() > 0
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(User.user_username == user_username).count() > 0
     # end exists
 
     # Is follower
@@ -103,13 +103,13 @@ class User(Base):
 
     # Get user
     @staticmethod
-    def get(user_id):
+    def get(user_username):
         """
         Get user
-        :param user_id:
+        :param user_username:
         :return:
         """
-        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_id == user_id).all()[0]
+        return pyInstaBot.db.DBConnector().get_session().query(User).filter(user_username == user_username).all()[0]
     # end get
 
     ############################################
@@ -147,4 +147,4 @@ class User(Base):
                    self.user_following_date)
     # end __str__
 
-# end Action
+# end User

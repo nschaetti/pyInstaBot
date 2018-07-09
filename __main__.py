@@ -225,7 +225,7 @@ if __name__ == "__main__":
         dbc = config.database
         mysql_connector = DBConnector(host=dbc["host"], username=dbc["username"], password=dbc["password"],
                                       db_name=dbc["database"])
-
+        
         # Login instagram
         instagram_connector = InstagramConnector(args.session, config)
 
@@ -238,7 +238,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(args.add, args.caption, args.filter, args.hashtags, action_scheduler)
+        add_medias(args.add, args.caption, None, None, action_scheduler)
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)

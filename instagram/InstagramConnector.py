@@ -29,6 +29,7 @@ import pyInstaBot.tools.strings as pystr
 from InstagramAPI import InstagramAPI
 import os
 import json
+import time
 
 
 # Request limits reached.
@@ -63,6 +64,7 @@ class InstagramConnector(object):
         self._followers = list()
         self._current_follower = 0
         self._config = config
+        self._queries = 0
 
         # Login
         self.login()
@@ -167,6 +169,7 @@ class InstagramConnector(object):
         # end if
 
         # Inc counter
+        self._inc_queries()
         self._inc_counter('post')
 
         return True
@@ -185,6 +188,7 @@ class InstagramConnector(object):
         self._instagram.comment(mediaId=str(media_id), commentText=comment)
 
         # Inc count
+        self._inc_queries()
         self._inc_counter('comment')
     # end comment
 
@@ -200,6 +204,7 @@ class InstagramConnector(object):
         self._instagram.like(mediaId=str(media_id))
 
         # Inc count
+        self._inc_queries()
         self._inc_counter('comment')
     # end like
 
@@ -215,6 +220,7 @@ class InstagramConnector(object):
         self._instagram.follow(user_id)
 
         # Inc count
+        self._inc_queries()
         self._inc_counter('follow')
     # end follow
 
@@ -227,8 +233,10 @@ class InstagramConnector(object):
         """
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Unfollow {}".format(user_id))
+        self._instagram.unfollow(user_id)
 
         # Inc count
+        self._inc_queries()
         self._inc_counter('unfollow')
     # end unfollow
 
@@ -240,7 +248,13 @@ class InstagramConnector(object):
         :param maxid:
         :return:
         """
-        return self._instagram.getHashtagFeed(hashtag, maxid)
+        self._inc_queries()
+        response = self._instagram.getHashtagFeed(hashtag, maxid)
+        if response:
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
     # end hashtag_feed
 
     # Get username info
@@ -250,7 +264,12 @@ class InstagramConnector(object):
         :param username_id:
         :return:
         """
-        return self._instagram.getUsernameInfo(username_id)
+        self._inc_queries()
+        if self._instagram.getUsernameInfo(username_id):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
     # end username_info
 
     # Get followers
@@ -259,6 +278,7 @@ class InstagramConnector(object):
         Get followers
         :return:
         """
+        self._inc_queries()
         return self._instagram.getTotalSelfFollowers()
     # end followers
 
@@ -268,7 +288,8 @@ class InstagramConnector(object):
         Get following
         :return:
         """
-        return self._instagram.getTotalSelfFollowing()
+        self._inc_queries()
+        return self._instagram.getTotalSelfFollowings()
     # end following
 
     ###########################################
@@ -278,6 +299,31 @@ class InstagramConnector(object):
     ###########################################
     # Private
     ###########################################
+
+    # Wait
+    def _wait(self):
+        """
+        Wait
+        :return:
+        """
+        logging.getLogger(pystr.LOGGER).info(u"Waiting 60 seconds...")
+        time.sleep(60)
+    # end _wait
+
+    # Increment queries
+    def _inc_queries(self):
+        """
+        Increment queries
+        :return:
+        """
+        # Increment
+        self._queries += 1
+
+        # Wait
+        if self._queries % 15 == 0:
+            self._wait()
+        # end if
+    # end _inc_queries
 
     # Increment counter
     def _inc_counter(self, action_type):
