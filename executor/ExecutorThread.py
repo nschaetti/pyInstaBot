@@ -124,17 +124,17 @@ class ExecutorThread(Thread):
                     # Execute
                     action.execute()
 
+                    # If loop, add again
+                    if action.action_loop:
+                        logging.getLogger(pystr.LOGGER).info(u"Adding action {}/{} as a loop".format(
+                            action.action_id,
+                            action.action_type)
+                        )
+                        self._scheduler.add(action, generate_order=True)
+                    # end if
+
                     # Delete
                     self._scheduler.delete(action)
-                # end if
-
-                # If loop, add again
-                if action.action_loop:
-                    logging.getLogger(pystr.LOGGER).info(u"Adding action {}/{} as a loop".format(
-                        action.action_id,
-                        action.action_type)
-                    )
-                    self._scheduler.add(action, generate_order=True)
                 # end if
             # end mutex
         except RequestLimitReached as e:
