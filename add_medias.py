@@ -39,11 +39,6 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
     :param caption:
     :return:
     """
-    # Album
-    if os.path.isdir(directory_path) and album:
-        # Reframe each pictures
-        pass
-        # Add post
     # List directory
     if os.path.isdir(directory_path):
         # List dir
@@ -54,16 +49,15 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
                 med.rotate_picture(os.path.join(directory_path, file_path))
 
                 # Make sure it is compatible with Instagram
-                """med.reframe_picture(os.path.join(directory_path, file_path))
+                med.reframe_picture(os.path.join(directory_path, file_path))
 
                 # Add post
                 try:
                     action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption, action_loop)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
-                # end try"""
+                # end try"
             elif ".mp4" in file_path:
-                continue
                 # Thumbnail path
                 thumbnail_path = os.path.join(directory_path, file_path).decode('utf-8')
                 thumbnail_path = thumbnail_path[:-4] + u"_thumbnail.jpeg"
@@ -85,15 +79,18 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
     else:
         # If jpeg
         if ".jpg" in directory_path or ".jpeg" in directory_path:
+            # Rotate image to its original angle
+            med.rotate_picture(directory_path)
+
             # Make sure it is compatible with Instagram
-            """med.reframe_picture(directory_path)
+            med.reframe_picture(directory_path)
 
             # Add post
             try:
                 action_scheduler.add_post(directory_path, u"", caption, action_loop)
             except executor.ActionScheduler.ActionAlreadyExists:
                 logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
-            # end try"""
+            # end try
         else:
             logging.getLogger(pystr.LOGGER).warning(u"File {} is not a supported format (jpeg, mp4), rejected".format(directory_path))
         # end if
