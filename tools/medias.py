@@ -24,6 +24,7 @@
 
 # Imports
 import skimage.io
+import skimage.transform
 from PIL import Image
 from PIL.ExifTags import TAGS
 import math
@@ -38,13 +39,60 @@ def rotate_picture(path_to_image):
     :param path_to_image:
     :return:
     """
-    print(path_to_image)
-    # Import image
+    # Transformation
+    rotation = 0.0
+    vertical_flip = False
+    horizontal_flip = False
+    orientation = 1
+
+    # Get orientation
     for (k, v) in Image.open(path_to_image)._getexif().iteritems():
         if TAGS.get(k) == "Orientation":
-            print '%s = %s' % (TAGS.get(k), v)
+            orientation = v
         # end if
     # end for
+
+    # Get transformation
+    if orientation == 2:
+        vertical_flip = True
+    elif orientation == 3:
+        rotation = 180.0
+    elif orientation == 4:
+        rotation = 180.0
+        vertical_flip = True
+    elif orientation == 5:
+        rotation = 270.0
+        horizontal_flip = True
+    elif orientation == 6:
+        rotation = 270.0
+    elif orientation == 7:
+        rotation = 270.0
+        vertical_flip = True
+    elif orientation == 8:
+        rotation = 90.0
+    # end if
+
+    # Load image
+    im = skimage.io.imread(path_to_image)
+
+    # Apply rotation
+    if rotation != 0.0:
+        im = skimage.transform.rotate(im, rotation)
+    # end if
+
+    # Apply horizontal flip
+    if horizontal_flip:
+        im = im[:, ::-1]
+    # end if
+
+    # Apply vertical flip
+    if vertical_flip:
+        im = im[::-1, :]
+    # end if
+
+    # Save
+    logging.getLogger(pystr.LOGGER).info(u"Changing orientation of {}".format(path_to_image.decode('utf-8', errors='ignore')))
+    skimage.io.imsave(path_to_image, im)
 # end rotate_picture
 
 
