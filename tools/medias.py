@@ -42,8 +42,8 @@ def rotate_picture(path_to_image):
         # Import image
         img = PIL.Image.open(path_to_image)
         print(u"{} x {}".format(img.width, img.height))
-        # print(img._getexif())
-        # print(img.info)
+        print(img._getexif())
+        print(img.info)
     # end if
 # end rotate_picture
 
