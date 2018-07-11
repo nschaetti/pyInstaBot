@@ -38,13 +38,13 @@ def rotate_picture(path_to_image):
     :param path_to_image:
     :return:
     """
-    if "4745" in path_to_image:
-        print(path_to_image)
-        # Import image
-        for (k, v) in Image.open(path_to_image)._getexif().iteritems():
+    print(path_to_image)
+    # Import image
+    for (k, v) in Image.open(path_to_image)._getexif().iteritems():
+        if TAGS.get(k) == "Orientation":
             print '%s = %s' % (TAGS.get(k), v)
-        # end for
-    # end if
+        # end if
+    # end for
 # end rotate_picture
 
 
