@@ -99,6 +99,7 @@ def rotate_picture(path_to_image):
     # Save
     logging.getLogger(pystr.LOGGER).info(u"Changing orientation of {}".format(path_to_image.decode('utf-8', errors='ignore')))
     skimage.io.imsave(path_to_image, im)
+    exit()
 # end rotate_picture
 
 
