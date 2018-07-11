@@ -37,7 +37,7 @@ def rotate_picture(path_to_image):
     :param path_to_image:
     :return:
     """
-    if "4747" in path_to_image:
+    if "4745" in path_to_image:
         print(path_to_image)
         # Import image
         img = PIL.Image.open(path_to_image)
