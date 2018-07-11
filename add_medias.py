@@ -63,7 +63,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try"""
             elif ".mp4" in file_path:
-                pass
+                continue
                 # Thumbnail path
                 thumbnail_path = os.path.join(directory_path, file_path).decode('utf-8')
                 thumbnail_path = thumbnail_path[:-4] + u"_thumbnail.jpeg"
