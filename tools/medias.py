@@ -37,12 +37,14 @@ def rotate_picture(path_to_image):
     :param path_to_image:
     :return:
     """
-    print(path_to_image)
-    # Import image
-    img = PIL.Image.open(path_to_image)
-    print(u"{} x {}".format(img.width, img.height))
-    # print(img._getexif())
-    # print(img.info)
+    if "4747" in path_to_image:
+        print(path_to_image)
+        # Import image
+        img = PIL.Image.open(path_to_image)
+        print(u"{} x {}".format(img.width, img.height))
+        # print(img._getexif())
+        # print(img.info)
+    # end if
 # end rotate_picture
 
 
