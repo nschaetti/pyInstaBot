@@ -24,9 +24,23 @@
 
 # Imports
 import skimage.io
+import PIL.Image
 import math
 import logging
 import tools.strings as pystr
+
+
+# Rotate picture
+def rotate_picture(path_to_image):
+    """
+    Rotate picture to its original angle.
+    :param path_to_image:
+    :return:
+    """
+    # Import image
+    img = PIL.Image.open(path_to_image)
+    print(img._getexif())
+# end rotate_picture
 
 
 # Reframe a picture to be compatible with Instagram
