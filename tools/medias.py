@@ -24,7 +24,8 @@
 
 # Imports
 import skimage.io
-import PIL.Image
+from PIL import Image
+from PIL.ExifTags import TAGS
 import math
 import logging
 import tools.strings as pystr
@@ -40,10 +41,9 @@ def rotate_picture(path_to_image):
     if "4745" in path_to_image:
         print(path_to_image)
         # Import image
-        img = PIL.Image.open(path_to_image)
-        print(u"{} x {}".format(img.width, img.height))
-        print(img._getexif())
-        print(img.info)
+        for (k, v) in Image.open(path_to_image)._getexif().iteritems():
+            print '%s = %s' % (TAGS.get(k), v)
+        # end for
     # end if
 # end rotate_picture
 
