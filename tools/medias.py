@@ -30,6 +30,7 @@ from PIL.ExifTags import TAGS
 import math
 import logging
 import tools.strings as pystr
+import numpy as np
 
 
 # Rotate picture
@@ -46,30 +47,34 @@ def rotate_picture(path_to_image):
     orientation = 1
 
     # Get orientation
-    for (k, v) in Image.open(path_to_image)._getexif().iteritems():
-        if TAGS.get(k) == "Orientation":
-            orientation = v
-        # end if
-    # end for
+    try:
+        for (k, v) in Image.open(path_to_image)._getexif().iteritems():
+            if TAGS.get(k) == "Orientation":
+                orientation = v
+            # end if
+        # end for
+    except AttributeError:
+        return
+    # end try
 
     # Get transformation
     if orientation == 2:
         vertical_flip = True
     elif orientation == 3:
-        rotation = 180.0
+        rotation = 2
     elif orientation == 4:
-        rotation = 180.0
+        rotation = 2
         vertical_flip = True
     elif orientation == 5:
-        rotation = 270.0
+        rotation = 3
         horizontal_flip = True
     elif orientation == 6:
-        rotation = 270.0
+        rotation = 3
     elif orientation == 7:
-        rotation = 270.0
+        rotation = 3
         vertical_flip = True
     elif orientation == 8:
-        rotation = 90.0
+        rotation = 1
     # end if
 
     # Load image
@@ -77,7 +82,8 @@ def rotate_picture(path_to_image):
 
     # Apply rotation
     if rotation != 0.0:
-        im = skimage.transform.rotate(im, rotation)
+        # im = skimage.transform.rotate(im, rotation)
+        im = np.rot90(im, rotation)
     # end if
 
     # Apply horizontal flip
