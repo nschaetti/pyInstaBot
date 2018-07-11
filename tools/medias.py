@@ -28,7 +28,6 @@ import PIL.Image
 import math
 import logging
 import tools.strings as pystr
-import exifread
 
 
 # Rotate picture
@@ -38,11 +37,10 @@ def rotate_picture(path_to_image):
     :param path_to_image:
     :return:
     """
-    # Open image file for reading (binary mode)
-    f = open(path_to_image, 'rb')
-
-    # Return Exif tags
-    print(exifread.process_file(f))
+    # Import image
+    img = PIL.Image.open(path_to_image)
+    print(img._getexif())
+    print(img.info)
 # end rotate_picture
 
 
