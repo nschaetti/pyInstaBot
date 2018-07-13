@@ -239,7 +239,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(config, args.add, args.caption, None, None, action_scheduler, args.album, args.loop)
+        add_medias(config, args.add, args.caption, action_scheduler, args.album, args.loop)
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)

@@ -32,7 +32,7 @@ import executor.ActionScheduler
 
 
 # Add media
-def add_medias(config, directory_path, caption, filter, hashtags, action_scheduler):
+def add_medias(config, directory_path, caption, action_scheduler, is_album, action_loop):
     """
     Add medias from directory or file
     :param directory_path:
