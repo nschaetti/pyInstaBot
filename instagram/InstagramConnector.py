@@ -141,7 +141,7 @@ class InstagramConnector(object):
     # end login
 
     # Post
-    def post(self, media_path, media_caption):
+    def post(self, media_path, media_caption, media_thumbnail=""):
         """
         Post
         :param media_path: Media's path
@@ -151,28 +151,42 @@ class InstagramConnector(object):
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Posting {}".format(media_path))
 
-        # Check file
-        if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
-            response = self._instagram.uploadPhoto(media_path, media_caption)
-        elif ".mp4" in media_path:
-            response = self._instagram.uploadVideo(media_path, media_caption)
-        elif type(media_path) is list:
-            response = self._instagram.uploadAlbum(media_path, media_caption)
-        else:
-            logging.getLogger(pystr.LOGGER).info(u"Invalid media type {}".format(media_path))
-            return False
-        # end if
+        # Success
+        success = False
 
-        # Check response
-        if not response:
-            return False
-        # end if
+        # Tries
+        for i in range(5):
+            # Check file
+            if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
+                self._instagram.uploadPhoto(media_path, media_caption)
+                response = self._instagram.LastResponse
+            elif ".mp4" in media_path:
+                self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
+                response = self._instagram.LastResponse
+            elif type(media_path) is list:
+                self._instagram.uploadAlbum(media_path, media_caption)
+                response = self._instagram.LastResponse
+            else:
+                logging.getLogger(pystr.LOGGER).info(u"Invalid media type {}".format(media_path))
+                return False
+            # end if
+
+            # Check response
+            if response.status_code == 200:
+                success = True
+                break
+            # end if
+
+            # Sleep
+            logging.getLogger(pystr.LOGGER).info(u"Post failed, waiting 15 seconds to retry...")
+            time.sleep(15)
+        # end for
 
         # Inc counter
         self._inc_queries()
         self._inc_counter('post')
 
-        return True
+        return success
     # end post
 
     # Comment
@@ -187,9 +201,16 @@ class InstagramConnector(object):
         logging.getLogger(pystr.LOGGER).info(u"Commenting {} : \"{}\" ({})".format(media_id, comment, media_code))
         self._instagram.comment(mediaId=str(media_id), commentText=comment)
 
+        # Check response
+        if self._instagram.LastResponse.status_code != 200:
+            return False
+        # end if
+
         # Inc count
         self._inc_queries()
         self._inc_counter('comment')
+
+        return True
     # end comment
 
     # Like
@@ -203,9 +224,16 @@ class InstagramConnector(object):
         logging.getLogger(pystr.LOGGER).info(u"Liking {} ({})".format(media_id, media_code))
         self._instagram.like(mediaId=str(media_id))
 
+        # Check response
+        if self._instagram.LastResponse.status_code != 200:
+            return False
+        # end if
+
         # Inc count
         self._inc_queries()
         self._inc_counter('comment')
+
+        return True
     # end like
 
     # Follow
@@ -219,9 +247,16 @@ class InstagramConnector(object):
         logging.getLogger(pystr.LOGGER).info(u"Following {}".format(user_id))
         self._instagram.follow(user_id)
 
+        # Check response
+        if self._instagram.LastResponse.status_code != 200:
+            return False
+        # end if
+
         # Inc count
         self._inc_queries()
         self._inc_counter('follow')
+
+        return True
     # end follow
 
     # Unfollow
@@ -235,9 +270,16 @@ class InstagramConnector(object):
         logging.getLogger(pystr.LOGGER).info(u"Unfollow {}".format(user_id))
         self._instagram.unfollow(user_id)
 
+        # Check response
+        if self._instagram.LastResponse.status_code != 200:
+            return False
+        # end if
+
         # Inc count
         self._inc_queries()
         self._inc_counter('unfollow')
+
+        return True
     # end unfollow
 
     # Get hashtag feed

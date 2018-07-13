@@ -121,11 +121,36 @@ class ExecutorThread(Thread):
 
                 # Execute if found
                 if action is not None:
+                    # Action type and loop
+                    action_type = action.action_type
+                    action_loop = action.action_loop
+
                     # Execute
-                    action.execute()
+                    response = action.execute()
+
+                    # Log
+                    if not response:
+                        logging.getLogger(pystr.LOGGER).error(u"Executing action failed...")
+                    # end if
 
                     # Delete
                     self._scheduler.delete(action)
+
+                    # If loop, add again
+                    if action_loop and action_type == 'Post':
+                        logging.getLogger(pystr.LOGGER).info(u"Adding action {}/{} as a loop".format(
+                            action.action_id,
+                            action.action_type)
+                        )
+
+                        # Add post
+                        self._scheduler.add_post(
+                            action.action_post_image,
+                            action.action_post_thumbnail,
+                            action.action_post_text,
+                            action_loop=True
+                        )
+                    # end if
                 # end if
             # end mutex
         except RequestLimitReached as e:

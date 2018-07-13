@@ -102,12 +102,17 @@ class ActionScheduler(object):
     ##############################################
 
     # Add an action to the DB
-    def add(self, action):
+    def add(self, action, generate_order=False):
         """
         Add an action to the DB
         :param action:
         :return:
         """
+        # Generate order
+        if generate_order:
+            action.action_order = self._generate_random_order()
+        # end if
+
         # Check that the reservoir is not full
         if not self.full(action.action_type):
             # Add action
@@ -180,7 +185,7 @@ class ActionScheduler(object):
     # end add_like
 
     # Add a post action in the DB
-    def add_post(self, media_path, media_caption):
+    def add_post(self, media_path, media_thumbnail, media_caption, action_loop=False):
         """
         Add a post action in the DB
         :param media_path:
@@ -189,8 +194,9 @@ class ActionScheduler(object):
         """
         if not self.exists_post_action(action_post_image=media_path, action_post_text=media_caption):
             action = pyInstaBot.db.obj.Action(action_type='Post', action_order=self._generate_random_order(),
-                                              action_post_image=media_path, action_post_text=media_caption)
-            logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path))
+                                              action_post_image=media_path, action_post_text=media_caption,
+                                              action_post_thumbnail=media_thumbnail, action_loop=action_loop)
+            logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path.decode('utf-8')))
             self._session.add(action)
             self._session.commit()
         else:
@@ -209,9 +215,13 @@ class ActionScheduler(object):
         :return:
         """
         if not self.exists_comment_action(action_post_id=media_id):
-            action = pyInstaBot.db.obj.Action(action_type='Comment', action_order=self._generate_random_order(),
-                                              action_post_id=media_id, action_post_text=comment_text,
-                                              action_post_image=media_code)
+            action = pyInstaBot.db.obj.Action(
+                action_type='Comment',
+                action_order=self._generate_random_order(),
+                action_post_id=media_id,
+                action_post_text=comment_text,
+                action_post_image=media_code
+            )
             logging.getLogger(pystr.LOGGER).info(
                 u"New comment {} ({}) action add to the database".format(media_id, media_code))
             self._session.add(action)

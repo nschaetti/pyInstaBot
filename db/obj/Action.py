@@ -49,6 +49,8 @@ class Action(Base):
     action_post_id = Column(BigInteger, nullable=True)
     action_post_text = Column(String(5000), nullable=True)
     action_post_image = Column(String(500), nullable=True)
+    action_post_thumbnail = Column(String(500), nullable=True)
+    action_loop = Column(Boolean, default=False)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
     action_executed = Column(Boolean, nullable=False, default=False)
 
@@ -64,26 +66,28 @@ class Action(Base):
         """
         if self.action_type == "Follow":
             # Follow
-            pyInstaBot.instagram.InstagramConnector().follow(str(self.action_post_id))
+            response = pyInstaBot.instagram.InstagramConnector().follow(str(self.action_post_id))
         elif self.action_type == "Unfollow":
             # Unfollow
-            pyInstaBot.instagram.InstagramConnector().unfollow(str(self.action_post_id))
+            response = pyInstaBot.instagram.InstagramConnector().unfollow(str(self.action_post_id))
         elif self.action_type == "Like":
             # Like
-            pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
-            # update(Action).where(and_(Action.action_post_id == self.act))
+            response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
             # Post
-            pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text)
+            response = pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text,
+                                                                      self.action_post_thumbnail)
         elif self.action_type == "Comment":
             # Comment
-            pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
+            response = pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
                                                               self.action_post_image)
         # end if
 
         # Set executed
         self.action_executed = True
         pyInstaBot.db.DBConnector().get_session().commit()
+
+        return response
     # end
 
     ############################################

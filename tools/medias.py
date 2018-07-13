@@ -24,9 +24,82 @@
 
 # Imports
 import skimage.io
+import skimage.transform
+from PIL import Image
+from PIL.ExifTags import TAGS
 import math
 import logging
 import tools.strings as pystr
+import numpy as np
+
+
+# Rotate picture
+def rotate_picture(path_to_image):
+    """
+    Rotate picture to its original angle.
+    :param path_to_image:
+    :return:
+    """
+    # Transformation
+    rotation = 0.0
+    vertical_flip = False
+    horizontal_flip = False
+    orientation = 1
+
+    # Get orientation
+    try:
+        for (k, v) in Image.open(path_to_image)._getexif().iteritems():
+            if TAGS.get(k) == "Orientation":
+                orientation = v
+            # end if
+        # end for
+    except AttributeError:
+        return
+    # end try
+
+    # Get transformation
+    if orientation == 2:
+        vertical_flip = True
+    elif orientation == 3:
+        rotation = 2
+    elif orientation == 4:
+        rotation = 2
+        vertical_flip = True
+    elif orientation == 5:
+        rotation = 3
+        horizontal_flip = True
+    elif orientation == 6:
+        rotation = 3
+    elif orientation == 7:
+        rotation = 3
+        vertical_flip = True
+    elif orientation == 8:
+        rotation = 1
+    # end if
+
+    # Load image
+    im = skimage.io.imread(path_to_image)
+
+    # Apply rotation
+    if rotation != 0.0:
+        # im = skimage.transform.rotate(im, rotation)
+        im = np.rot90(im, rotation)
+    # end if
+
+    # Apply horizontal flip
+    if horizontal_flip:
+        im = im[:, ::-1]
+    # end if
+
+    # Apply vertical flip
+    if vertical_flip:
+        im = im[::-1, :]
+    # end if
+
+    # Save
+    logging.getLogger(pystr.LOGGER).info(u"Changing orientation of {}".format(path_to_image.decode('utf-8', errors='ignore')))
+    skimage.io.imsave(path_to_image, im)
+# end rotate_picture
 
 
 # Reframe a picture to be compatible with Instagram
@@ -37,26 +110,23 @@ def reframe_picture(path_to_image):
     Arguments:
         path_to_image (str): Path to the image to reframe.
     """
-    # print(path_to_image)
     # Load image
     im = skimage.io.imread(path_to_image)
 
     # Size
     height = float(im.shape[0])
     width = float(im.shape[1])
-    # print(u"Height : {}".format(height))
-    # print(u"Width : {}".format(width))
+
     # Portrait or landscape
     if height > width:
         # Check ratio
-        # print(round(height / width, 2))
         if round(height / width, 2) == 1.25:
             return
         # end if
-        # print(u"Portrait")
+
         # Height for 4:5
         new_height = int(math.ceil(width * 1.25))
-        # print(u"New height : {}".format(new_height))
+
         # Apply if ok
         if new_height < height:
             # Size
@@ -67,7 +137,7 @@ def reframe_picture(path_to_image):
         else:
             # New width
             new_width = int(math.ceil(height * 0.8))
-            # print(u"New width : {}".format(new_width))
+
             # Size
             padding_half = int((width - new_width) / 2.0)
 
@@ -75,15 +145,14 @@ def reframe_picture(path_to_image):
             im = im[:, padding_half:-padding_half-1]
         # end if
     else:
-        # print(round(width / height, 2))
         # Check ratio
         if round(width / height, 2) == 1.91:
             return
         # end if
-        # print(u"Landscape")
+
         # Width for 1.91:1
         new_width = int(math.ceil(height * 1.91))
-        # print(u"New width : {}".format(new_width))
+
         # Apply if ok
         if new_width < width:
             # Size
@@ -94,7 +163,7 @@ def reframe_picture(path_to_image):
         else:
             # New height
             new_height = int(math.ceil(width * 0.5235602094))
-            # print(u"New height : {}".format(new_height))
+
             # Size
             padding_half = int((height - new_height) / 2.0)
 
@@ -104,6 +173,6 @@ def reframe_picture(path_to_image):
     # end if
 
     # Save
-    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio to {}".format(path_to_image))
+    logging.getLogger(pystr.LOGGER).info(u"Changing aspect ratio of {}".format(path_to_image.decode('utf-8', errors='ignore')))
     skimage.io.imsave(path_to_image, im)
 # end reframe_picture
