@@ -31,13 +31,16 @@ import executor.ActionScheduler
 
 
 # Add media
-def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
+def add_medias(config, directory_path, caption, filter, hashtags, action_scheduler):
     """
     Add medias from directory or file
     :param directory_path:
     :param caption:
     :return:
     """
+    # Additional caption
+    add_caption = config.post['caption']
+
     # List directory
     if os.path.isdir(directory_path):
         # List dir
@@ -49,7 +52,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), caption)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), caption + add_caption)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try
@@ -65,7 +68,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler):
 
             # Add post
             try:
-                action_scheduler.add_post(directory_path, caption)
+                action_scheduler.add_post(directory_path, caption + add_caption)
             except executor.ActionScheduler.ActionAlreadyExists:
                 logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
             # end try
