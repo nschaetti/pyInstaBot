@@ -85,6 +85,8 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                             # Add action
                             if action == 'comment':
                                 if Comment.exists_media(media_id) or Comment.exists_username(comment, media_username):
+                                    logging.getLogger(pystr.LOGGER).info(u"Same comment for username {} or comment for media {} already exists".format(media_username, media_id))
+                                else:
                                     logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
                                         comment,
                                         media_id,
