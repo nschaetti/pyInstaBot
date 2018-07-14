@@ -32,13 +32,16 @@ import executor.ActionScheduler
 
 
 # Add media
-def add_medias(directory_path, caption, filter, hashtags, action_scheduler, album, action_loop):
+def add_medias(config, directory_path, caption, action_scheduler, is_album, action_loop):
     """
     Add medias from directory or file
     :param directory_path:
     :param caption:
     :return:
     """
+    # Additional caption
+    add_caption = config.post['caption']
+
     # List directory
     if os.path.isdir(directory_path):
         # List dir
@@ -53,7 +56,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption, action_loop)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption + add_caption, action_loop)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try"
@@ -68,7 +71,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), thumbnail_path, caption, action_loop)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), thumbnail_path, caption + add_caption, action_loop)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try
@@ -87,7 +90,7 @@ def add_medias(directory_path, caption, filter, hashtags, action_scheduler, albu
 
             # Add post
             try:
-                action_scheduler.add_post(directory_path, u"", caption, action_loop)
+                action_scheduler.add_post(directory_path, u"", caption + add_caption, action_loop)
             except executor.ActionScheduler.ActionAlreadyExists:
                 logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
             # end try
