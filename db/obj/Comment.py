@@ -121,10 +121,10 @@ class Comment(Base):
         """
         # New comment
         comment = Comment(
-            comment_text = comment_text,
-            comment_username = comment_username,
-            comment_media = media_id,
-            comment_date = datetime.datetime.utcnow()
+            comment_text=comment_text,
+            comment_username=comment_username,
+            comment_media=media_id,
+            comment_date=datetime.datetime.utcnow()
         )
 
         # Log
@@ -137,8 +137,8 @@ class Comment(Base):
         )
 
         # Commit
-        pyInstaBot.db.DBConnector().get_session()._session.add(comment)
-        pyInstaBot.db.DBConnector().get_session()._session.commit()
+        pyInstaBot.db.DBConnector().get_session().add(comment)
+        pyInstaBot.db.DBConnector().get_session().commit()
     # end add
 
     ############################################
