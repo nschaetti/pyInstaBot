@@ -31,7 +31,7 @@ from .Base import Base
 from sqlalchemy import update
 from sqlalchemy import and_
 import pyInstaBot.db
-import Comment
+from Comment import Comment
 
 
 # Action
