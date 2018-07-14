@@ -43,9 +43,9 @@ class Comment(Base):
     # Fields
     comment_id = Column(BigInteger, primary_key=True)
     comment_text = Column(Unicode(500), nullable=False)
-    comment_username = Column(Unicode(2000), nullable=False)
-    comment_media = Column(Unicode(5000), nullable=True)
-    comment_date = Column(DateTime, nullable=True, default=None)
+    comment_username = Column(Unicode(100), nullable=False)
+    comment_media = Column(Unicode(100), nullable=False)
+    comment_date = Column(DateTime, nullable=False, default=None)
 
     ############################################
     # Public
