@@ -124,7 +124,7 @@ class Comment(Base):
             comment_text = comment_text,
             comment_username = comment_username,
             comment_media = media_id,
-            comment_data = datetime.datetime.utcnow()
+            comment_date = datetime.datetime.utcnow()
         )
 
         # Log
