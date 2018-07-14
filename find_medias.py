@@ -6,12 +6,12 @@
 import logging
 from executor.ActionScheduler import ActionReservoirFullError, ActionAlreadyExists
 from media.MediaFinder import MediaFinder
-from textblob import TextBlob
 import langdetect.lang_detect_exception
 import learning
 import tools.strings as pystr
 import random
 from langdetect import detect
+from pyInstaBot.db.obj.Comment import Comment
 
 
 ####################################################
@@ -83,12 +83,14 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                         try:
                             # Add action
                             if action == 'comment':
-                                logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
-                                    comment,
-                                    media_id,
-                                    media_code
-                                ))
-                                action_scheduler.add_comment(media_id, comment, media_code)
+                                if Comment.exists_media(media_id) or Comment.exists_username(comment, media['username']):
+                                    logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
+                                        comment,
+                                        media_id,
+                                        media_code
+                                    ))
+                                    action_scheduler.add_comment(media_id, comment, media_code)
+                                # end if
                             else:
                                 logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
                                     media_id,
