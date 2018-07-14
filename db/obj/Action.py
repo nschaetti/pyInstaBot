@@ -94,16 +94,6 @@ class Action(Base):
         return response
     # end
 
-    # Add comment
-    def add_comment(self, media_id, comment_text):
-        """
-        Add comment
-        :param media_id:
-        :param comment_text:
-        :return:
-        """
-
-
     ############################################
     # Static functions
     ############################################
