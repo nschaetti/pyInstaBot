@@ -51,6 +51,7 @@ class Action(Base):
     action_post_text = Column(String(5000), nullable=True)
     action_post_image = Column(String(500), nullable=True)
     action_post_thumbnail = Column(String(500), nullable=True)
+    action_post_username = Column(String(100), nullable=True)
     action_loop = Column(Boolean, default=False)
     action_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow())
     action_executed = Column(Boolean, nullable=False, default=False)
@@ -84,7 +85,7 @@ class Action(Base):
                                                               self.action_post_image)
 
             # Add comment
-            Comment.add(self.action_post_id, u"", self.action_post_text)
+            Comment.add(self.action_post_id, self.action_post_username, self.action_post_text)
         # end if
 
         # Set executed

@@ -207,7 +207,7 @@ class ActionScheduler(object):
     # end add_tweet
 
     # Add a "Comment" action in the DB
-    def add_comment(self, media_id, comment_text, media_code):
+    def add_comment(self, media_id, comment_text, media_code, comment_username):
         """
         Add a "Comment" action in the DB
         :param media_id:
@@ -220,7 +220,8 @@ class ActionScheduler(object):
                 action_order=self._generate_random_order(),
                 action_post_id=media_id,
                 action_post_text=comment_text,
-                action_post_image=media_code
+                action_post_image=media_code,
+                action_post_username=comment_username
             )
             logging.getLogger(pystr.LOGGER).info(
                 u"New comment {} ({}) action add to the database".format(media_id, media_code))

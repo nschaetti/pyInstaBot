@@ -64,8 +64,8 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 media_code = media['code']
                 media_caption = media['caption']['text']
                 media_id = media['pk']
-                print(media['user'])
-                exit()
+                media_username = media['user']['username']
+
                 # Predict class
                 censor_prediction, _ = censor(media_caption)
 
@@ -84,13 +84,13 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                         try:
                             # Add action
                             if action == 'comment':
-                                if Comment.exists_media(media_id) or Comment.exists_username(comment, media['username']):
+                                if Comment.exists_media(media_id) or Comment.exists_username(comment, media_username):
                                     logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_COMMENT_SCHEDULER.format(
                                         comment,
                                         media_id,
                                         media_code
                                     ))
-                                    action_scheduler.add_comment(media_id, comment, media_code)
+                                    action_scheduler.add_comment(media_id, comment, media_code, media_username)
                                 # end if
                             else:
                                 logging.getLogger(pystr.LOGGER).info(pystr.INFO_ADD_LIKE_SCHEDULER.format(
