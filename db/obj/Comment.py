@@ -130,7 +130,7 @@ class Comment(Base):
         # Log
         logging.getLogger(pystr.LOGGER).info(
             u"New comment \"{}\" for media {} and user {} added to the database".format(
-                comment_username,
+                comment_text,
                 media_id,
                 comment_username
             )
