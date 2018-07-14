@@ -31,6 +31,7 @@ from .Base import Base
 from sqlalchemy import update
 from sqlalchemy import and_
 import pyInstaBot.db
+import Comment
 
 
 # Action
@@ -81,6 +82,9 @@ class Action(Base):
             # Comment
             response = pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,
                                                               self.action_post_image)
+
+            # Add comment
+            Comment.add(self.action_post_id, u"", self.action_post_text)
         # end if
 
         # Set executed
@@ -89,6 +93,16 @@ class Action(Base):
 
         return response
     # end
+
+    # Add comment
+    def add_comment(self, media_id, comment_text):
+        """
+        Add comment
+        :param media_id:
+        :param comment_text:
+        :return:
+        """
+
 
     ############################################
     # Static functions
