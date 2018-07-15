@@ -48,7 +48,7 @@ def apply_filter(image_path, filter):
     # Output path
     file_ext =  os.path.splitext("path_to_file")[1]
     output_path = os.path.splitext("path_to_file")[0] + "_" + filter + file_ext
-
+    print(filter)
     # Check if already done
     if os.path.exists(output_path):
         return output_path
