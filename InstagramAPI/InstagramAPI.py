@@ -143,7 +143,7 @@ class InstagramAPI:
     def logout(self):
         logout = self.SendRequest('accounts/logout/')
 
-    def uploadPhoto(self, photo, caption=None, upload_id=None, is_sidecar=None):
+    def uploadPhoto(self, photo, caption=None, upload_id=None, is_sidecar=None, location=None):
         if upload_id is None:
             upload_id = str(int(time.time() * 1000))
         data = {'upload_id': upload_id,
@@ -165,7 +165,7 @@ class InstagramAPI:
                                'User-Agent': self.USER_AGENT})
         response = self.s.post(self.API_URL + "upload/photo/", data=m.to_string())
         if response.status_code == 200:
-            if self.configure(upload_id, photo, caption):
+            if self.configure(upload_id, photo, caption, location):
                 self.expose()
         return False
 

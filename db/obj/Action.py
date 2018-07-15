@@ -78,8 +78,12 @@ class Action(Base):
             response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
             # Post
-            response = pyInstaBot.instagram.InstagramConnector().post(self.action_post_image, self.action_post_text,
-                                                                      self.action_post_thumbnail)
+            response = pyInstaBot.instagram.InstagramConnector().post(
+                self.action_post_image,
+                self.action_post_text,
+                self.action_post_thumbnail,
+                self.action_post_location
+            )
         elif self.action_type == "Comment":
             # Comment
             response = pyInstaBot.instagram.InstagramConnector().comment(self.action_post_id, self.action_post_text,

@@ -151,6 +151,14 @@ class InstagramConnector(object):
         # Log
         logging.getLogger(pystr.LOGGER).info(u"Posting {}".format(media_path))
 
+        # Location
+        if media_location == "" or media_location is None:
+            location = None
+        else:
+            location = self.get_location(media_location)['location']
+        # end if
+        print(location)
+        exit()
         # Success
         success = False
 
@@ -158,7 +166,7 @@ class InstagramConnector(object):
         for i in range(5):
             # Check file
             if ".jpg" in media_path or ".jpeg" in media_path or ".png" in media_path:
-                self._instagram.uploadPhoto(media_path, media_caption)
+                self._instagram.uploadPhoto(media_path, media_caption, location=location)
                 response = self._instagram.LastResponse
             elif ".mp4" in media_path:
                 self._instagram.uploadVideo(media_path, media_thumbnail, media_caption)
