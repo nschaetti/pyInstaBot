@@ -334,6 +334,21 @@ class InstagramConnector(object):
         return self._instagram.getTotalSelfFollowings()
     # end following
 
+    # Media info
+    def media_info(self, media_id):
+        """
+        Media info
+        :param media_id:
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.mediaInfo(media_id):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
+    # end media_info
+
     ###########################################
     # Override
     ###########################################
