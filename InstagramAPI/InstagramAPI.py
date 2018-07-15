@@ -553,9 +553,9 @@ class InstagramAPI:
 
         # Geo tag enabled
         if location is None:
-            geotag_enabled = False
+            geotag_enabled = '0'
         else:
-            geotag_enabled = True
+            geotag_enabled = '1'
         # end if
 
         # Data
