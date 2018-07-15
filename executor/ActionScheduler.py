@@ -185,7 +185,7 @@ class ActionScheduler(object):
     # end add_like
 
     # Add a post action in the DB
-    def add_post(self, media_path, media_thumbnail, media_caption, media_location=None, action_loop=False):
+    def add_post(self, media_path, media_thumbnail, media_caption, media_location=None, action_loop=False, action_filter="none"):
         """
         Add a post action in the DB
         :param media_path:
@@ -200,7 +200,8 @@ class ActionScheduler(object):
                 action_post_text=media_caption,
                 action_post_thumbnail=media_thumbnail,
                 action_post_location=media_location,
-                action_loop=action_loop
+                action_post_filter=action_filter,
+                action_loop=action_loop,
             )
             logging.getLogger(pystr.LOGGER).info(u"New post {} action add to the database".format(media_path.decode('utf-8')))
             self._session.add(action)
