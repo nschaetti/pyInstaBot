@@ -549,7 +549,7 @@ class InstagramAPI:
 
         # Lng and lat
         lng = None if location is None else location['lng']
-        alt = None if location is None else location['alt']
+        lat = None if location is None else location['lat']
 
         # Data
         data = json.dumps({'_csrftoken': self.token,
@@ -570,7 +570,7 @@ class InstagramAPI:
                                'source_height': h
                            },
                            'lng': lng,
-                           'alt': alt,
+                           'lat': lat,
                            'location': location
                            })
         return self.SendRequest('media/configure/?', self.generateSignature(data))
