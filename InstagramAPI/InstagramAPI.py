@@ -596,14 +596,7 @@ class InstagramAPI:
                                'source_width': w,
                                'source_height': h
                            },
-                           'location': {
-                                'address': location['address'],
-                                'lat': location['lat'],
-                                'lng': location['lng'],
-                                'name': location['name'],
-                                'facebook_places_id': location['facebook_places_id'],
-                                'external_source': location['external_source'],
-                            },
+                           # 'location': location_data,
                            'geotag_enabled': geotag_enabled,
                            'posting_latitude': lat,
                            'posting_longitude': lng,
