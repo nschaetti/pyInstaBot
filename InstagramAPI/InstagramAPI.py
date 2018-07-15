@@ -572,7 +572,7 @@ class InstagramAPI:
         for key in location_data.keys():
             print(u"Key : {}, hashcode : {}".format(key, self.java_string_hashcode(key)))
         # end for
-        exit()
+
         # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
@@ -591,7 +591,7 @@ class InstagramAPI:
                                'source_width': w,
                                'source_height': h
                            },
-                           # 'location': location_data,
+                           'location': location_data,
                            'geotag_enabled': geotag_enabled,
                            'posting_latitude': lat,
                            'posting_longitude': lng,
