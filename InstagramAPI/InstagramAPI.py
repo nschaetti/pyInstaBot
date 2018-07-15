@@ -563,12 +563,12 @@ class InstagramAPI:
             location_data = None
         else:
             location_data = {
-                'name': location['name'],
+                'address': location['address'],
                 'lat': location['lat'],
                 'lng': location['lng'],
-                'address': location['address'],
+                'name': location['name'],
+                'facebook_places_id': location['facebook_places_id'],
                 'external_source': location['external_source'],
-                'facebook_places_id': location['facebook_places_id']
             }
         # end if
         print(lng)
