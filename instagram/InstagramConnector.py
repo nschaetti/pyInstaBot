@@ -157,8 +157,7 @@ class InstagramConnector(object):
         else:
             location = self.get_location(media_location)['location']
         # end if
-        print(location)
-        exit()
+
         # Success
         success = False
 
