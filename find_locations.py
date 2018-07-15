@@ -37,5 +37,5 @@ def find_locations(instagram_connector, config, query):
     :return:
     """
     # Print result
-    print(instagram_connector.search_locations(query))
+    print(instagram_connector.search_location(query))
 # end find_locations
