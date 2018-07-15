@@ -29,6 +29,8 @@ import tools.strings as pystr
 import skimage
 import skimage.io
 from filters import *
+import logging
+import tools.strings as pystr
 
 
 # Filters
@@ -56,6 +58,9 @@ def apply_filter(image_path, filter):
     if filter == "none":
         return image_path
     # end if
+
+    # Log
+    logging.getLogger(u"Applying filter {} to {}".format(filter, image_path))
 
     # Load image
     img = skimage.io.imread(image_path)
