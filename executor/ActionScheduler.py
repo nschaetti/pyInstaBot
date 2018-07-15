@@ -193,8 +193,6 @@ class ActionScheduler(object):
         :return:
         """
         if not self.exists_post_action(action_post_image=media_path, action_post_text=media_caption):
-            print(u"Media location : {}".format(media_location))
-            exit()
             action = pyInstaBot.db.obj.Action(
                 action_type='Post',
                 action_order=self._generate_random_order(),
