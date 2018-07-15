@@ -34,6 +34,7 @@ def geneva(img, params):
     :param blackoutside:
     :return:
     """
+    print(img.shape)
     # Info
     image_width = img.shape[1]
     image_height = img.shape[0]
@@ -94,7 +95,6 @@ def geneva(img, params):
             b = checkColor(b)
 
             if len(pixel) >= 3:
-                print(pixel)
                 # Create a new tuple representing the new color.
                 newColor = np.array([int(r), int(g), int(b)])
                 img[x, y, 0] = newColor[0]
