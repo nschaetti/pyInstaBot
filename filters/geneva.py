@@ -36,8 +36,8 @@ def geneva(img, params):
     """
     print(img.shape)
     # Info
-    image_width = img.shape[1]
-    image_height = img.shape[0]
+    image_width = img.shape[0]
+    image_height = img.shape[1]
 
     # Initialize value
     alpha = 1.775
