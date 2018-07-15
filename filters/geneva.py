@@ -4,6 +4,7 @@
 
 # Imports
 import math
+import numpy as np
 import sys, os
 
 
@@ -95,7 +96,7 @@ def geneva(img, params):
             if len(pixel) >= 3:
                 print(pixel)
                 # Create a new tuple representing the new color.
-                newColor = (int(r), int(g), int(b)) + pixel[3:]
+                newColor = np.array([int(r), int(g), int(b)])
                 img[x, y, 0] = newColor[0]
                 img[x, y, 1] = newColor[1]
                 img[x, y, 2] = newColor[2]
