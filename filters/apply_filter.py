@@ -55,9 +55,9 @@ def apply_filter(image_path, filter):
     # end if
 
     # None
-    if filter == "none":
+    """if filter == "none":
         return image_path
-    # end if
+    # end if"""
 
     # Log
     logging.getLogger(u"Applying filter {} to {}".format(filter, image_path))
