@@ -62,6 +62,7 @@ def geneva(img, params):
 
     # Iterate over all the pixels and convert them to gray.
     for x in range(image_width):
+        print(x)
         for y in range(image_height):
             # Distance
             dx = math.fabs(x - (image_width / 2.0))
