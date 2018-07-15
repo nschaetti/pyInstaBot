@@ -570,13 +570,6 @@ class InstagramAPI:
                 "facebook_places_id": location['facebook_places_id']
             }
         # end if
-        print(lng)
-        print(lat)
-        print(geotag_enabled)
-        print(location_data)
-        for key in location_data.keys():
-            print(u"Key : {}, hashcode : {}".format(key, self.java_string_hashcode(key)))
-        # end for
 
         # Data
         data = json.dumps({'_csrftoken': self.token,
@@ -596,7 +589,7 @@ class InstagramAPI:
                                'source_width': w,
                                'source_height': h
                            },
-                           'location': location_data,
+                           # 'location': location_data,
                            'geotag_enabled': geotag_enabled,
                            'posting_latitude': lat,
                            'posting_longitude': lng,
