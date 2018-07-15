@@ -31,7 +31,9 @@ from .Base import Base
 from sqlalchemy import update
 from sqlalchemy import and_
 import pyInstaBot.db
+import pyInstaBot.filters
 from Comment import Comment
+import random
 
 
 # Action
@@ -78,9 +80,12 @@ class Action(Base):
             # Like
             response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
+            # Filter
+            image_path = pyInstaBot.filters.apply_filter(self.action_post_image, random.choice(pyInstaBot.filters.filters))
+
             # Post
             response = pyInstaBot.instagram.InstagramConnector().post(
-                self.action_post_image,
+                image_path,
                 self.action_post_text,
                 self.action_post_thumbnail,
                 self.action_post_location
