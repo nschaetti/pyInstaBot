@@ -26,7 +26,7 @@ import datetime
 import logging
 from pyInstaBot.patterns.singleton import singleton
 import pyInstaBot.tools.strings as pystr
-from InstagramAPI import InstagramAPI
+from pyInstaBot.InstagramAPI import InstagramAPI
 import os
 import json
 import time
@@ -363,6 +363,21 @@ class InstagramConnector(object):
             return False
         # end if
     # end search_locations
+
+    # Get location
+    def get_location(self, location):
+        """
+        Get location
+        :param location:
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.searchLocation(location):
+            return self._instagram.LastJson['items'][0]
+        else:
+            return False
+        # end if
+    # end get_location
 
     ###########################################
     # Override

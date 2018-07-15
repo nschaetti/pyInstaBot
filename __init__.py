@@ -28,8 +28,9 @@ import db
 import followers
 import gui
 import instagram
+import InstagramAPI
 import learning
 import patterns
 
 # All
-__all__ = ['config', 'db', 'followers', 'gui', 'instagram', 'learning', 'patterns']
+__all__ = ['config', 'db', 'followers', 'gui', 'instagram', 'InstagramAPI' ,'learning', 'patterns']
