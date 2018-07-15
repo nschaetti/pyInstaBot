@@ -63,7 +63,7 @@ def add_medias(instagram_connector, config, directory_path, caption, action_sche
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption + add_caption, action_loop)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), u"", caption + add_caption, action_loop, location)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try"
@@ -78,7 +78,7 @@ def add_medias(instagram_connector, config, directory_path, caption, action_sche
 
                 # Add post
                 try:
-                    action_scheduler.add_post(os.path.join(directory_path, file_path), thumbnail_path, caption + add_caption, action_loop)
+                    action_scheduler.add_post(os.path.join(directory_path, file_path), thumbnail_path, caption + add_caption, action_loop, location)
                 except executor.ActionScheduler.ActionAlreadyExists:
                     logging.getLogger(pystr.LOGGER).error(u"Action already in the database")
                 # end try
