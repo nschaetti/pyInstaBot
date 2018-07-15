@@ -557,7 +557,10 @@ class InstagramAPI:
         else:
             geotag_enabled = '1'
         # end if
-
+        print(lng)
+        print(lat)
+        print(geotag_enabled)
+        print(location)
         # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
@@ -580,8 +583,8 @@ class InstagramAPI:
                            'posting_longitude': lng,
                            'posting_latitude': lat,
                            'media_longitude': lng,
-                           'media_latitude': lat,
-                           'location': location
+                           'media_latitude': lat
+                           # 'location': location
                            })
         return self.SendRequest('media/configure/?', self.generateSignature(data))
     # end configure
