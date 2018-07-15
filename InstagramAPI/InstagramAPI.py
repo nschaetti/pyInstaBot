@@ -562,6 +562,7 @@ class InstagramAPI:
         if location is None:
             location_data = None
         else:
+            location['address'] = 'Chemin du Canal'
             location_data = self.validate_location(location)
         # end if
         print(lng)
@@ -634,10 +635,7 @@ class InstagramAPI:
 
         # Check informations
         for k in location_keys:
-            print(k)
-            print(location.get(k))
             if not location.get(k):
-                print(location)
                 raise ValueError('Location dict must contain "{0!s}".'.format(k))
             # end if
         # end for
