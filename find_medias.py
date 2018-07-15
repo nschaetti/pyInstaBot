@@ -30,7 +30,7 @@ from pyInstaBot.db.obj.Comment import Comment
 
 
 # Find new medias from various sources
-def find_medias(config, model_file, action_scheduler, action='comment', min_length=50, threshold=0.5):
+def find_medias(instagram_connector, config, model_file, action_scheduler, action='comment', min_length=50, threshold=0.5):
     """
     Find new medias from various sources
     :param config:
@@ -65,7 +65,9 @@ def find_medias(config, model_file, action_scheduler, action='comment', min_leng
                 media_caption = media['caption']['text']
                 media_id = media['pk']
                 media_username = media['user']['username']
-
+                instagram_connector.mediaInfo(media_id)
+                print(instagram_connector.LastJson)
+                exit()
                 # Predict class
                 censor_prediction, _ = censor(media_caption)
 
