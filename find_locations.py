@@ -36,6 +36,8 @@ def find_locations(instagram_connector, config, query):
     :param config:
     :return:
     """
-    # Print result
-    print(instagram_connector.search_location(query))
+    # For each result
+    for item in instagram_connector.search_location(query)['items']:
+        print(u"Title: \"{}\", Subtitle: \"{}\"".format(item['title'], item['subtitle']))
+    # end for
 # end find_locations
