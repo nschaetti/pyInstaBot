@@ -553,17 +553,22 @@ class InstagramAPI:
 
         # Geo tag enabled
         if location is None:
-            geotag_enabled = '0'
+            geotag_enabled = False
         else:
-            geotag_enabled = '1'
+            geotag_enabled = True
         # end if
 
         # Location data
         if location is None:
             location_data = None
         else:
-            location['address'] = 'Chemin du Canal'
-            location_data = self.validate_location(location)
+            # location['address'] = 'Chemin du Canal'
+            # location_data = self.validate_location(location)
+            location_data = {
+                "lat": location['lat'],
+                "lng": location['lng'],
+                "facebook_places_id": location['facebook_places_id']
+            }
         # end if
         print(lng)
         print(lat)
@@ -572,7 +577,7 @@ class InstagramAPI:
         for key in location_data.keys():
             print(u"Key : {}, hashcode : {}".format(key, self.java_string_hashcode(key)))
         # end for
-
+        exit()
         # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
