@@ -42,13 +42,6 @@ def add_medias(instagram_connector, config, directory_path, caption, action_sche
     # Additional caption
     add_caption = config.post['caption']
 
-    # Get location
-    if location != "":
-        location = instagram_connector.get_location(location)
-    else:
-        location = None
-    # end  if
-
     # List directory
     if os.path.isdir(directory_path):
         # List dir
