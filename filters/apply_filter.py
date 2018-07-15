@@ -48,16 +48,16 @@ def apply_filter(image_path, filter):
     # Output path
     file_ext =  os.path.splitext(image_path)[1]
     output_path = os.path.splitext(image_path)[0] + "_" + filter + file_ext
-    print(filter)
+
     # Check if already done
     if os.path.exists(output_path):
         return output_path
     # end if
 
     # None
-    """if filter == "none":
+    if filter == "none":
         return image_path
-    # end if"""
+    # end if"
 
     # Log
     logging.getLogger(pystr.LOGGER).info(u"Applying filter {} to {}".format(filter, image_path))
@@ -67,10 +67,10 @@ def apply_filter(image_path, filter):
 
     # Filter function
     img = geneva(img, {})
-    print(output_path)
+
     # Save image
     skimage.io.imsave(output_path, img)
-    exit()
+
     return output_path
 # end apply_filter
 

@@ -80,17 +80,16 @@ class Action(Base):
             # Like
             response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
-            print(self.action_post_filter)
             # Filter
-            if self.action_post_filter == "random":
+            """if self.action_post_filter == "random":
                 image_path = pyInstaBot.filters.apply_filter(self.action_post_image, random.choice(pyInstaBot.filters.filters))
             else:
                 image_path = pyInstaBot.filters.apply_filter(self.action_post_image, self.action_post_filter)
-            # end if
+            # end if"""
 
             # Post
             response = pyInstaBot.instagram.InstagramConnector().post(
-                image_path,
+                self.action_post_image,
                 self.action_post_text,
                 self.action_post_thumbnail,
                 self.action_post_location
