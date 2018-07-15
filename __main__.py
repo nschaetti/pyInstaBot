@@ -239,7 +239,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(instagram_connector, config, args.add, args.caption, action_scheduler, args.album, args.loop)
+        add_medias(config, args.add, args.caption, action_scheduler, args.album, args.loop)
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)
@@ -248,10 +248,10 @@ if __name__ == "__main__":
         find_unfollows(config, action_scheduler, friends_manager, args.model)
     # Find comments
     elif args.command == "find-comments":
-        find_medias(config, args.model, action_scheduler, 'comment', args.threshold)
+        find_medias(instagram_connector, config, args.model, action_scheduler, 'comment', args.threshold)
     # Find likes
     elif args.command == "find-likes":
-        find_medias(config, args.model, action_scheduler, 'like', args.threshold)
+        find_medias(instagram_connector, config, args.model, action_scheduler, 'like', args.threshold)
     elif args.command == "tools":
         # Create database
         if args.create_database:
