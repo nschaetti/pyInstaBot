@@ -349,6 +349,21 @@ class InstagramConnector(object):
         # end if
     # end media_info
 
+    # Search locations
+    def search_location(self, query):
+        """
+        Search locations
+        :param query:
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.searchLocation(query):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
+    # end search_locations
+
     ###########################################
     # Override
     ###########################################

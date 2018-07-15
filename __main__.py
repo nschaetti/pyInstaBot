@@ -41,6 +41,7 @@ from .apply_filter import apply_filter
 from .find_follows import find_follows
 from .find_medias import find_medias
 from .find_unfollows import find_unfollows
+from .find_locations import find_locations
 
 
 ####################################################
@@ -171,6 +172,12 @@ if __name__ == "__main__":
     add_default_arguments(find_likes_parser)
     add_model_argument(find_likes_parser, True)
 
+    # Find locations
+    find_locations_parser = command_subparser.add_parser("find-locations")
+    add_default_arguments(find_locations_parser)
+    find_locations_parser.add_argument("--location", type=str, help="Location term to search")
+    add_model_argument(find_locations_parser, True)
+
     # List and update followers/friends list
     list_friends_parser = command_subparser.add_parser("friends")
     add_default_arguments(list_friends_parser)
@@ -252,6 +259,9 @@ if __name__ == "__main__":
     # Find likes
     elif args.command == "find-likes":
         find_medias(instagram_connector, config, args.model, action_scheduler, 'like', args.threshold)
+    # Find locations
+    elif args.command == "find-locations":
+        find_locations(instagram_connector, config, args.location)
     elif args.command == "tools":
         # Create database
         if args.create_database:
