@@ -65,9 +65,7 @@ def find_medias(instagram_connector, config, model_file, action_scheduler, actio
                 media_caption = media['caption']['text']
                 media_id = media['pk']
                 media_username = media['user']['username']
-                print(instagram_connector.media_info(media_id))
-                print(u"")
-                continue
+
                 # Predict class
                 censor_prediction, _ = censor(media_caption)
 
