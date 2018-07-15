@@ -562,14 +562,7 @@ class InstagramAPI:
         if location is None:
             location_data = None
         else:
-            location_data = {
-                'address': location['address'],
-                'lat': location['lat'],
-                'lng': location['lng'],
-                'name': location['name'],
-                'facebook_places_id': location['facebook_places_id'],
-                'external_source': location['external_source'],
-            }
+            location_data = self.validate_location(location)
         # end if
         print(lng)
         print(lat)
@@ -578,6 +571,7 @@ class InstagramAPI:
         for key in location_data.keys():
             print(u"Key : {}, hashcode : {}".format(key, self.java_string_hashcode(key)))
         # end for
+        exit()
         # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
@@ -605,6 +599,77 @@ class InstagramAPI:
                            })
         return self.SendRequest('media/configure/?', self.generateSignature(data))
     # end configure
+
+    # Validate location
+    def validate_location(self, location):
+        """
+        Validates and patches a location dict for use with the upload functions
+
+        :param location: dict containing location info
+        :return:
+        """
+        # External location sources
+        EXTERNAL_LOC_SOURCES = {
+            'foursquare': 'foursquare_v2_id',
+            'facebook_places': 'facebook_places_id',
+            'facebook_events': 'facebook_events_id'
+        }
+
+        # Location keys
+        location_keys = ['external_source', 'name', 'address']
+
+        # Only dict
+        if not isinstance(location, dict):
+            raise ValueError('Location must be a dict.')
+        # end if
+
+        # Patch location object returned from location_search
+        if 'external_source' not in location and 'external_id_source' in location and 'external_id' in location:
+            external_source = location['external_id_source']
+            location['external_source'] = external_source
+            if external_source in EXTERNAL_LOC_SOURCES:
+                location[EXTERNAL_LOC_SOURCES[external_source]] = location['external_id']
+            # end if
+        # end if
+
+        # Check informations
+        for k in location_keys:
+            if not location.get(k):
+                raise ValueError('Location dict must contain "{0!s}".'.format(k))
+            # end if
+        # end for
+
+        # Check external source
+        for k, val in EXTERNAL_LOC_SOURCES.items():
+            if location['external_source'] == k and not location.get(val):
+                raise ValueError('Location dict must contain "{0!s}".'.format(val))
+            # end if
+        # end for
+
+        # Media location
+        media_loc = {
+            'name': location['name'],
+            'address': location['lat'],
+            'external_source': location['external_source'],
+        }
+
+        # Add lat and lng
+        if 'lat' in location and 'lng' in location:
+            media_loc['lat'] = location['lat']
+            media_loc['lng'] = location['lng']
+        # end if
+
+        # Add external location
+        for k, val in EXTERNAL_LOC_SOURCES.items():
+            if location['external_source'] == k:
+                media_loc['external_source'] = k
+                media_loc[val] = location[val]
+            # end if
+        # end for
+
+        # Return results
+        return media_loc
+    # end validate_location
 
     # Hashcode
     def java_string_hashcode(self, s):
