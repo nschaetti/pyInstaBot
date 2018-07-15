@@ -575,6 +575,9 @@ class InstagramAPI:
         print(lat)
         print(geotag_enabled)
         print(location_data)
+        for key in location_data.keys():
+            print(u"Key : {}, hashcode : {}".format(key, self.java_string_hashcode(key)))
+        # end for
         # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
@@ -593,15 +596,23 @@ class InstagramAPI:
                                'source_width': w,
                                'source_height': h
                            },
+                           'location': location_data,
                            'geotag_enabled': geotag_enabled,
-                           'posting_longitude': lng,
                            'posting_latitude': lat,
-                           'media_longitude': lng,
+                           'posting_longitude': lng,
                            'media_latitude': lat,
-                           'location': location_data
+                           'media_longitude': lng
                            })
         return self.SendRequest('media/configure/?', self.generateSignature(data))
     # end configure
+
+    # Hashcode
+    def java_string_hashcode(self, s):
+        h = 0
+        for c in s:
+            h = (31 * h + ord(c)) & 0xFFFFFFFF
+        return ((h + 0x80000000) & 0xFFFFFFFF) - 0x80000000
+    # end java_string_hashcode
 
     def editMedia(self, mediaId, captionText=''):
         data = json.dumps({'_uuid': self.uuid,
