@@ -650,7 +650,7 @@ class InstagramAPI:
         # Media location
         media_loc = {
             'name': location['name'],
-            'address': location['lat'],
+            'address': location['address'],
             'external_source': location['external_source'],
         }
 
