@@ -634,6 +634,7 @@ class InstagramAPI:
 
         # Check informations
         for k in location_keys:
+            print(k)
             if not location.get(k):
                 print(location)
                 raise ValueError('Location dict must contain "{0!s}".'.format(k))
