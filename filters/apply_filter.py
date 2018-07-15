@@ -60,7 +60,7 @@ def apply_filter(image_path, filter):
     # end if"""
 
     # Log
-    logging.getLogger(u"Applying filter {} to {}".format(filter, image_path))
+    logging.getLogger(pystr.LOGGER).info(u"Applying filter {} to {}".format(filter, image_path))
 
     # Load image
     img = skimage.io.imread(image_path)
