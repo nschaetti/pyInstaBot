@@ -93,6 +93,7 @@ def geneva(img, params):
             b = checkColor(b)
 
             if len(pixel) >= 3:
+                print(pixel)
                 # Create a new tuple representing the new color.
                 newColor = (int(r), int(g), int(b)) + pixel[3:]
                 img[x, y, 0] = newColor[0]
