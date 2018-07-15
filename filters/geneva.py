@@ -33,6 +33,10 @@ def geneva(img, params):
     :param blackoutside:
     :return:
     """
+    # Info
+    image_width = img.shape[1]
+    image_height = img.shape[0]
+
     # Initialize value
     alpha = 1.775
     beta = -40
@@ -52,14 +56,14 @@ def geneva(img, params):
     # end if
 
     # Distance max
-    dmax = math.sqrt(math.pow(img.width, 2) + math.pow(img.height, 2))
+    dmax = math.sqrt(math.pow(image_width, 2) + math.pow(image_height, 2))
 
     # Iterate over all the pixels and convert them to gray.
-    for x in range(img.width):
-        for y in range(img.height):
+    for x in range(image_width):
+        for y in range(image_height):
             # Distance
-            dx = math.fabs(x - (img.width / 2.0))
-            dy = math.fabs(y - (img.height / 2.0))
+            dx = math.fabs(x - (image_width / 2.0))
+            dy = math.fabs(y - (image_height / 2.0))
             distance = math.sqrt(math.pow(dx, 2) + math.pow(dy, 2))
 
             # Get the pixel and verify that is an RGB value
