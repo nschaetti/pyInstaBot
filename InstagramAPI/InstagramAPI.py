@@ -567,7 +567,8 @@ class InstagramAPI:
                 'lat': location['lat'],
                 'lng': location['lng'],
                 'address': location['address'],
-                'external_source': location['external_source']
+                'external_source': location['external_source'],
+                'facebook_places_id': location['facebook_places_id']
             }
         # end if
         print(lng)
