@@ -27,28 +27,34 @@ import os
 import logging
 import tools.strings as pystr
 import skimage
+import skimage.io
 from filters import *
 
 
+#
+
+
 # Apply filter
-def apply_filter(input, output, filter):
+def apply_filter(image_path, filter):
     """
     Apply filter
     :param input:
-    :param output:
     :param filter:
     :return:
     """
+    # Output path
+    file_ext =  os.path.splitext("path_to_file")[1]
+    output_path = os.path.splitext("path_to_file")[0] + "_" + filter + file_ext
+
     # Load image
-    img = skimage.io.imread(input)
+    img = skimage.io.imread(image_path)
 
     # Filter function
-    filter_function = globals()["myfunction"]
-
-    # Apply
-    img = filter_function()
-
+    img = geneva(img, {})
+    print(output_path)
     # Save image
-    skimage.io.imsave(img)
+    skimage.io.imsave(output_path, img)
+    exit()
+    return output_path
 # end apply_filter
 
