@@ -534,8 +534,24 @@ class InstagramAPI:
         })
         return self.SendRequest('media/configure/?video=1', self.generateSignature(data))
 
-    def configure(self, upload_id, photo, caption=''):
+    # Configure upload
+    def configure(self, upload_id, photo, caption='', location=None):
+        """
+        Configure upload
+        :param upload_id:
+        :param photo:
+        :param caption:
+        :param location:
+        :return:
+        """
+        # Image's width and height
         (w, h) = getImageSize(photo)
+
+        # Lng and lat
+        lng = None if location is None else location['lng']
+        alt = None if location is None else location['alt']
+
+        # Data
         data = json.dumps({'_csrftoken': self.token,
                            'media_folder': 'Instagram',
                            'source_type': 4,
@@ -552,8 +568,13 @@ class InstagramAPI:
                            'extra': {
                                'source_width': w,
                                'source_height': h
-                           }})
+                           },
+                           'lng': lng,
+                           'alt': alt,
+                           'location': location
+                           })
         return self.SendRequest('media/configure/?', self.generateSignature(data))
+    # end configure
 
     def editMedia(self, mediaId, captionText=''):
         data = json.dumps({'_uuid': self.uuid,

@@ -141,7 +141,7 @@ class InstagramConnector(object):
     # end login
 
     # Post
-    def post(self, media_path, media_caption, media_thumbnail=""):
+    def post(self, media_path, media_caption, media_thumbnail="", media_location=""):
         """
         Post
         :param media_path: Media's path

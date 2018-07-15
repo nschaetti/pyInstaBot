@@ -197,6 +197,7 @@ if __name__ == "__main__":
     add_default_arguments(medias_parser)
     medias_parser.add_argument("--add", type=str, help="A directory of medias or a file to add")
     medias_parser.add_argument("--caption", type=str, help="The media's caption")
+    medias_parser.add_argument("--location", type=str, help="Media's location", default="")
     medias_parser.add_argument("--fitler", type=str, help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays, random")
     medias_parser.add_argument("--hashtags", type=str, help="List of filters to add separated by comma")
     medias_parser.add_argument("--album", action='store_true', help="Create an album with the medias", default=False)
@@ -246,7 +247,7 @@ if __name__ == "__main__":
 
     # Different possible command
     if args.command == "medias":
-        add_medias(config, args.add, args.caption, action_scheduler, args.album, args.loop)
+        add_medias(config, args.add, args.caption, args.location, action_scheduler, args.album, args.loop)
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)
