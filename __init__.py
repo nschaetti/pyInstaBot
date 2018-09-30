@@ -27,10 +27,11 @@ import config
 import db
 import followers
 import gui
+import hashtags
 import instagram
 import InstagramAPI
 import learning
 import patterns
 
 # All
-__all__ = ['config', 'db', 'followers', 'gui', 'instagram', 'InstagramAPI' ,'learning', 'patterns']
+__all__ = ['config', 'db', 'followers', 'hashtags', 'gui', 'instagram', 'InstagramAPI' ,'learning', 'patterns']

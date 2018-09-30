@@ -212,6 +212,7 @@ class BotConfig(object):
 
         # Wait
         time.sleep(waiting_seconds)
+        print(u"End sleeping {}".format(setting))
     # end wait_next_action
 
     # Is the scheduler awake?

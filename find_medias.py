@@ -57,6 +57,9 @@ def find_medias(instagram_connector, config, model_file, action_scheduler, actio
 
     # For each tags
     for hashtag in config.hashtags:
+        # Log
+        logging.getLogger(pystr.LOGGER).info(u"Finding medias from {}".format(hashtag))
+
         # For each media
         for media in MediaFinder(search_keywords=hashtag, shuffle=True):
             if media is not None and media['caption'] is not None:

@@ -264,6 +264,54 @@ class FriendsManager(object):
         self._update_follower()
     # end update
 
+    # Update followers statistics
+    def update_statistics(self, instagram_connector):
+        """
+        Update followers statistics
+        :param instagram_connector:
+        :return:
+        """
+        # Follower count
+        follower_count = len(pyInstaBot.instagram.InstagramConnector().followers())
+
+        # Following count
+        following_count = len(pyInstaBot.instagram.InstagramConnector().following())
+
+        # Get user feed
+        next_max_id=''
+        like_count = 0
+        comment_count = 0
+        while True:
+            user_feed = instagram_connector.user_feed(max_id=next_max_id)
+
+            # For each feed item
+            for item in user_feed['items']:
+                # Add
+                like_count += item['like_count']
+                comment_count += item['comment_count']
+            # end for
+
+            # Next max id
+            if 'next_max_id' in user_feed.keys():
+                next_max_id = user_feed['next_max_id']
+            else:
+                break
+            # end if
+        # end while
+
+        # Create object
+        stat = pyInstaBot.db.obj.Statistic(
+            statistic_followers_count=follower_count,
+            statistic_followings_count=following_count,
+            statistic_likes_count=like_count,
+            statistic_comments_count=comment_count
+        )
+
+        # Add
+        self._session.add(stat)
+        self._session.commit()
+    # end update_statistics
+
     ######################################################
     # PRIVATE FUNCTIONS
     ######################################################

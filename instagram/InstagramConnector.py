@@ -297,8 +297,16 @@ class InstagramConnector(object):
         :param maxid:
         :return:
         """
+        # Counters
         self._inc_queries()
-        response = self._instagram.getHashtagFeed(hashtag, maxid)
+
+        # Try
+        try:
+            response = self._instagram.getHashtagFeed(hashtag, maxid)
+        except ValueError:
+            return False
+        # end try
+
         if response:
             return self._instagram.LastJson
         else:
@@ -385,6 +393,34 @@ class InstagramConnector(object):
             return False
         # end if
     # end get_location
+
+    # Get timeline
+    def timeline(self):
+        """
+        Timeline
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.getTimeline():
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
+    # end timeline
+
+    # Get user feed
+    def user_feed(self, max_id=''):
+        """
+        Get user feed
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.getUserFeed(usernameId=self._config['user_id'], maxid=max_id):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
+    # end user_feed
 
     ###########################################
     # Override

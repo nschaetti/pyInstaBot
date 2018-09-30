@@ -25,12 +25,10 @@
 # Import
 import os
 import logging
-import tools.strings as pystr
 import skimage
 import skimage.io
-from filters import *
 import logging
-import tools.strings as pystr
+import pyInstaBot.tools.strings as pystr
 
 
 # Filters

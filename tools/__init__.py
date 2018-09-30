@@ -22,4 +22,5 @@
 # along with pyTweetBar.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
+from medias import *
+from strings import *

@@ -19,7 +19,7 @@ class MediaFinder(object):
     """
 
     # Constructor
-    def __init__(self, search_keywords="", shuffle=False, polarity=0.0, subjectivity=0.5, languages=['en']):
+    def __init__(self, search_keywords="", depth=20, shuffle=False, polarity=0.0, subjectivity=0.5, languages=['en']):
         """
         Constructor
         """
@@ -28,10 +28,14 @@ class MediaFinder(object):
         self._polarity = polarity
         self._subjectivity = subjectivity
         self._languages = languages
+        self._depth = depth
+        self._level = 0
 
         # Feed
-        self._medias = pyInstaBot.instagram.InstagramConnector().hashtag_feed(search_keywords)
-        self._medias = self._medias['ranked_items']
+        self._medias = list()
+
+        # Pagination
+        self._max_id = ''
 
         # Shuffle
         if shuffle:
@@ -59,7 +63,34 @@ class MediaFinder(object):
         :return:
         """
         if len(self._medias) <= 0:
-            raise StopIteration()
+            # Stop if end
+            if self._max_id is None:
+                raise StopIteration()
+            # end if
+
+            # Get medias
+            hashtag_feed = pyInstaBot.instagram.InstagramConnector().hashtag_feed(self._search_keywords, maxid=self._max_id)
+
+            # Type
+            if type(hashtag_feed) is bool:
+                raise StopIteration()
+            # end if
+
+            # Items
+            self._medias = hashtag_feed['items']
+            self._level += 1
+
+            # Stop
+            if self._level >= self._depth:
+                raise StopIteration()
+            # end if
+
+            # Next max id
+            if 'next_max_id' in hashtag_feed:
+                self._max_id = hashtag_feed['next_max_id']
+            else:
+                self._max_id = None
+            # end if
         # end if
 
         # Current media

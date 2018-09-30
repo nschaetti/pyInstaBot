@@ -27,7 +27,6 @@ import pyInstaBot.friends.FriendsManager
 from pyInstaBot.instagram.InstagramConnector import RequestLimitReached
 import pyInstaBot.tools.strings as pystr
 import logging
-import tweepy
 from threading import Thread, Lock
 
 # Mutex

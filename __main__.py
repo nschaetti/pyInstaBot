@@ -31,17 +31,21 @@ import tools.strings as pystr
 import friends
 from executor.ActionScheduler import ActionScheduler
 from db.DBConnector import DBConnector
+from db.Neo4jConnector import Neo4jConnector
 from config.BotConfig import BotConfig, MissingRequiredField
 from execute_actions import execute_actions
 from create_database import create_database
 from instagram.InstagramConnector import InstagramConnector
+from hashtags.HashtagManager import HashtagManager
 import codecs
 from .add_medias import add_medias
+from .clean_medias import clean_medias
 from .apply_filter import apply_filter
 from .find_follows import find_follows
 from .find_medias import find_medias
 from .find_unfollows import find_unfollows
 from .find_locations import find_locations
+from .hashtag_analysis import hashtag_analysis, export_graphML, analyse_hashtags, get_advisable_hashtags
 
 
 ####################################################
@@ -133,7 +137,6 @@ def create_config(config_filename):
 
 
 if __name__ == "__main__":
-
     # Argument parser
     parser = argparse.ArgumentParser(prog="pyInstaBot",
                                      description="pyInstaBot - A smart Instagram bot to replace yourself")
@@ -202,6 +205,7 @@ if __name__ == "__main__":
     medias_parser.add_argument("--hashtags", type=str, help="List of filters to add separated by comma")
     medias_parser.add_argument("--album", action='store_true', help="Create an album with the medias", default=False)
     medias_parser.add_argument("--loop", action='store_true', help="Post medias again and again", default=False)
+    medias_parser.add_argument("--clean", action='store_true', help='Delete all medias', default=False)
 
     # Apply filters
     filters_parser = command_subparser.add_parser("filters")
@@ -210,6 +214,26 @@ if __name__ == "__main__":
     filters_parser.add_argument("--output", type=str, help="Path to output image")
     filters_parser.add_argument("--filter", type=str,
                                help="Filter (none, andromeda, chicago, geneva, ghost, sanfrancisco, sixties, sunnydays")
+
+    # Hashtags analytics
+    hashtags_analytics_parser = command_subparser.add_parser("hashtags-analytics")
+    add_default_arguments(hashtags_analytics_parser)
+    hashtags_analytics_parser.add_argument("--export", type=str, help="Export hashtags analytic")
+    hashtags_analytics_parser.add_argument("--related", type=str, help="Get related hashtags")
+    hashtags_analytics_parser.add_argument("--advisable", type=str, help="Get advisable hashtags")
+    hashtags_analytics_parser.add_argument("--hashtag", type=str, help="Hashtag to update")
+    hashtags_analytics_parser.add_argument("--depth", type=int, help="Research depth", default=5)
+    hashtags_analytics_parser.add_argument("--min-count", type=int, help="Minimum count to keep a hashtag", default=3)
+
+    # Statistics
+    statistics_parser = command_subparser.add_parser("statistics")
+    add_default_arguments(statistics_parser)
+    statistics_parser.add_argument("--followers", action='store_true', help="Update followers statistics", default=False)
+    statistics_parser.add_argument("--followings", action='store_true', help="Update followings statistics", default=False)
+    statistics_parser.add_argument("--likes", action='store_true', help="Update likes statistics",
+                                   default=False)
+    statistics_parser.add_argument("--comments", action='store_true', help="Update comments statistics",
+                                   default=False)
 
     # Parse
     args = parser.parse_args()
@@ -243,11 +267,21 @@ if __name__ == "__main__":
 
         # Action scheduler
         action_scheduler = ActionScheduler(config=config)
+
+        # Neo4j connector
+        neo4j_connector = Neo4jConnector(user="neo4j", password="1234")
+
+        # Hashtag manager
+        hashtag_manager = HashtagManager(config)
     # end if
 
     # Different possible command
     if args.command == "medias":
-        add_medias(instagram_connector, config, args.add, args.caption, action_scheduler, args.album, args.loop, args.location, args.filter)
+        if args.add:
+            add_medias(instagram_connector, config, args.add, args.caption, action_scheduler, args.album, args.loop, args.location, args.filter)
+        elif args.clean:
+            clean_medias(action_scheduler)
+        # end if
     # Find follows
     elif args.command == "find-follows":
         find_follows(config, args.model, action_scheduler, args.text_size)
@@ -282,6 +316,16 @@ if __name__ == "__main__":
     # Apply filter to an image
     elif args.command == "filter":
         apply_filter(args.input, args.output, args.fitler)
+    elif args.command == "hashtags-analytics" and args.export is None and args.related is None and args.advisable is None:
+        hashtag_analysis(instagram_connector, config, args.hashtag, args.depth, args.min_count)
+    elif args.command == "hashtags-analytics" and args.export is not None:
+        export_graphML(args.export)
+    elif args.command == "hashtags-analytics" and args.related is not None:
+        analyse_hashtags(args.related)
+    elif args.command == "hashtags-analytics" and args.advisable is not None:
+        get_advisable_hashtags(hashtag_manager, args.advisable)
+    elif args.command == "statistics":
+        friends_manager.update_statistics(instagram_connector)
     else:
         sys.stderr.write(pystr.ERROR_UNKNOWN_COMMAND.format(args.command))
     # end if

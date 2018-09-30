@@ -31,9 +31,9 @@ from .Base import Base
 from sqlalchemy import update
 from sqlalchemy import and_
 import pyInstaBot.db
-import pyInstaBot.filters
 from Comment import Comment
 import random
+import pyInstaBot.hashtags
 
 
 # Action
@@ -80,17 +80,21 @@ class Action(Base):
             # Like
             response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
-            # Filter
-            """if self.action_post_filter == "random":
-                image_path = pyInstaBot.filters.apply_filter(self.action_post_image, random.choice(pyInstaBot.filters.filters))
-            else:
-                image_path = pyInstaBot.filters.apply_filter(self.action_post_image, self.action_post_filter)
-            # end if"""
+            # Hashtag manager
+            hashtag_manager = pyInstaBot.hashtags.HashtagManager()
+
+            # Get hashtags
+            post_text_hashtags = hashtag_manager.parse_hashtags(self.action_post_text)
+
+            # Add advised hashtags
+            post_caption = self.action_post_text
+            post_caption += u"\n\n"
+            post_caption += hashtag_manager.advisable_hashtags(post_text_hashtags)
 
             # Post
             response = pyInstaBot.instagram.InstagramConnector().post(
                 self.action_post_image,
-                self.action_post_text,
+                post_caption,
                 self.action_post_thumbnail,
                 self.action_post_location
             )

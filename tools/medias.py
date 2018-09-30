@@ -29,7 +29,7 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 import math
 import logging
-import tools.strings as pystr
+import strings as pystr
 import numpy as np
 
 

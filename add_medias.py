@@ -29,16 +29,20 @@ from moviepy.editor import *
 import tools.strings as pystr
 import tools.medias as med
 import executor.ActionScheduler
+import codecs
 
 
 # Add media
-def add_medias(instagram_connector, config, directory_path, caption, action_scheduler, is_album, action_loop, location="", filter="none"):
+def add_medias(instagram_connector, config, directory_path, caption_file, action_scheduler, is_album, action_loop, location="", filter="none"):
     """
     Add medias from directory or file
     :param directory_path:
     :param caption:
     :return:
     """
+    # Load caption from file
+    caption = codecs.open(caption_file, 'r', encoding='utf-8').read()
+
     # Additional caption
     add_caption = config.post['caption']
 

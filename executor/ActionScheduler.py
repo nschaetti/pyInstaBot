@@ -321,6 +321,21 @@ class ActionScheduler(object):
         self._session.commit()
     # end delete
 
+    # Clean actions
+    def clean_actions(self, action_type=''):
+        """
+        Clean actions
+        :param action_type:
+        :return:
+        """
+        if action_type != '':
+            self._session.query(pyInstaBot.db.obj.Action).filter(pyInstaBot.db.obj.Action.action_type == action_type).delete()
+        else:
+            self._session.query(pyInstaBot.db.obj.Action).delete()
+        # end if
+        self._session.commit()
+    # end clean_actions
+
     # Execute next actions
     def exec_next_actions(self):
         """
