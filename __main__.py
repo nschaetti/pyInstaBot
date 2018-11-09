@@ -269,7 +269,7 @@ if __name__ == "__main__":
         action_scheduler = ActionScheduler(config=config)
 
         # Neo4j connector
-        neo4j_connector = Neo4jConnector(user="neo4j", password="1234")
+        # neo4j_connector = Neo4jConnector(user="neo4j", password="1234")
 
         # Hashtag manager
         hashtag_manager = HashtagManager(config)
