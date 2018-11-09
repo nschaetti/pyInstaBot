@@ -272,7 +272,7 @@ if __name__ == "__main__":
         # neo4j_connector = Neo4jConnector(user="neo4j", password="1234")
 
         # Hashtag manager
-        hashtag_manager = HashtagManager(config)
+        # hashtag_manager = HashtagManager(config)
     # end if
 
     # Different possible command
@@ -323,7 +323,8 @@ if __name__ == "__main__":
     elif args.command == "hashtags-analytics" and args.related is not None:
         analyse_hashtags(args.related)
     elif args.command == "hashtags-analytics" and args.advisable is not None:
-        get_advisable_hashtags(hashtag_manager, args.advisable)
+        # get_advisable_hashtags(hashtag_manager, args.advisable)
+        pass
     elif args.command == "statistics":
         friends_manager.update_statistics(instagram_connector)
     else:
