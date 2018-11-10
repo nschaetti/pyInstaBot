@@ -81,15 +81,15 @@ class Action(Base):
             response = pyInstaBot.instagram.InstagramConnector().like(self.action_post_id, self.action_post_image)
         elif self.action_type == "Post":
             # Hashtag manager
-            hashtag_manager = pyInstaBot.hashtags.HashtagManager()
+            # hashtag_manager = pyInstaBot.hashtags.HashtagManager()
 
             # Get hashtags
-            post_text_hashtags = hashtag_manager.parse_hashtags(self.action_post_text)
+            # post_text_hashtags = hashtag_manager.parse_hashtags(self.action_post_text)
 
             # Add advised hashtags
             post_caption = self.action_post_text
-            post_caption += u"\n\n"
-            post_caption += hashtag_manager.advisable_hashtags(post_text_hashtags)
+            # post_caption += u"\n\n"
+            # post_caption += hashtag_manager.advisable_hashtags(post_text_hashtags)
 
             # Post
             response = pyInstaBot.instagram.InstagramConnector().post(
