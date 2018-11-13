@@ -75,7 +75,7 @@ def find_unfollows(instagram_connector, config, action_scheduler, friends_manage
 
         if type(username_info) is not bool:
             # Get user id
-            user_id = username_info['pk']
+            user_id = username_info['user']['pk']
             try:
                 logging.getLogger(pystr.LOGGER).info(
                     u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
