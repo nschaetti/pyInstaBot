@@ -287,7 +287,7 @@ if __name__ == "__main__":
         find_follows(config, args.model, action_scheduler, args.text_size)
     # Find unfollows
     elif args.command == "find-unfollows":
-        find_unfollows(config, action_scheduler, friends_manager, args.model)
+        find_unfollows(instagram_connector, config, action_scheduler, friends_manager, args.model)
     # Find comments
     elif args.command == "find-comments":
         find_medias(instagram_connector, config, args.model, action_scheduler, 'comment', args.threshold)
