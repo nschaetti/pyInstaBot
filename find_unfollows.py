@@ -70,21 +70,26 @@ def find_unfollows(instagram_connector, config, action_scheduler, friends_manage
     # First find friends who are not following back after defined period
     logging.getLogger(pystr.LOGGER).info(u"Searching obsolete friends to unfollow")
     for friend in friends_manager.get_obsolete_friends(unfollow_day):
-        print(instagram_connector.search_username(friend.user_username))
-        exit()
-        try:
-            logging.getLogger(pystr.LOGGER).info(
-                u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
-            action_scheduler.add_unfollow(friend.user_username)
-        except ActionReservoirFullError:
-            logging.getLogger(pystr.LOGGER).error(u"Reservoir full for Unfollow action, exiting...")
-            exit()
-            pass
-        except ActionAlreadyExists:
-            logging.getLogger(pystr.LOGGER).error(
-                u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
-            pass
-        # end try
+        # Get information
+        username_info = instagram_connector.search_username(friend.user_username)
+
+        if type(username_info) is not bool:
+            # Get user id
+            user_id = username_info['pk']
+            try:
+                logging.getLogger(pystr.LOGGER).info(
+                    u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
+                action_scheduler.add_unfollow(user_id)
+            except ActionReservoirFullError:
+                logging.getLogger(pystr.LOGGER).error(u"Reservoir full for Unfollow action, exiting...")
+                exit()
+                pass
+            except ActionAlreadyExists:
+                logging.getLogger(pystr.LOGGER).error(
+                    u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
+                pass
+            # end try
+        # end if
     # end for
 
     # Find friends to unfollow (because they don't follow back and they don't meet our criterias)
@@ -96,22 +101,29 @@ def find_unfollows(instagram_connector, config, action_scheduler, friends_manage
             probs = model.predict_proba([friend.friend_description])[0]"""
             censor_prediction, _ = censor(friend.friend_description)
 
-            # Predicted as unfollow
-            # if prediction == 'neg' or censor_prediction == 'neg' or probs[1] < threshold:
-            if censor_prediction == 'neg':
-                try:
-                    logging.getLogger(pystr.LOGGER).info(
-                        u"Adding Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
-                    action_scheduler.add_unfollow(friend.friend_screen_name)
-                except ActionReservoirFullError:
-                    logging.getLogger(pystr.LOGGER).error(u"Reservoir full for unfollow action, exiting...")
-                    exit()
-                    pass
-                except ActionAlreadyExists:
-                    logging.getLogger(pystr.LOGGER).error(
-                        u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
-                    pass
-                # end try
+            # Get information
+            username_info = instagram_connector.search_username(friend.user_username)
+
+            if type(username_info) is not bool:
+                # Get user id
+                user_id = username_info['pk']
+                # Predicted as unfollow
+                # if prediction == 'neg' or censor_prediction == 'neg' or probs[1] < threshold:
+                if censor_prediction == 'neg':
+                    try:
+                        logging.getLogger(pystr.LOGGER).info(
+                            u"Adding Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
+                        action_scheduler.add_unfollow(friend.friend_screen_name)
+                    except ActionReservoirFullError:
+                        logging.getLogger(pystr.LOGGER).error(u"Reservoir full for unfollow action, exiting...")
+                        exit()
+                        pass
+                    except ActionAlreadyExists:
+                        logging.getLogger(pystr.LOGGER).error(
+                            u"Unfollow action for \"{}\" already exists in the database".format(friend.user_username))
+                        pass
+                    # end try
+                # end if
             # end if
         # end if
     # end for
