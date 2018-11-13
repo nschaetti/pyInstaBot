@@ -116,35 +116,4 @@ class User(Base):
     # Override Functions
     ############################################
 
-    # To unicode
-    def __unicode__(self):
-        """
-        To unicode
-        :return:
-        """
-        return u"(user_id={},  username={}, full_name={}, pic_url={}, " \
-               u"is_verified={}, followed_by_viewer={}, requested_by_viewer={}, "\
-               u"is_follower={}, is_following={}, follower_date={}, following_date={})".\
-            format(self.user_id, self.user_username, self.user_full_name, self.user_profile_pic_url,
-                   self.user_is_verified, self.user_followed_by_viewer, self.user_requested_by_viewer,
-                   self.user_is_follower, self.user_is_following, self.user_follower_date,
-                   self.user_following_date)
-    # end __unicode__
-
-    # To string
-    def __str__(self):
-        """
-        To unicode
-        :return:
-        """
-        return "(user_id={},  username={}, full_name={}, pic_url={}, " \
-               "is_verified={}, followed_by_viewer={}, requested_by_viewer={})" \
-               "is_follower={}, is_following={}, follower_date={}, following_date={})".\
-            format(self.user_id, self.user_username, self.user_full_name.encode('utf-8', errors='ignore'),
-                   self.user_profile_pic_url,
-                   self.user_is_verified, self.user_followed_by_viewer, self.user_requested_by_viewer,
-                   self.user_is_follower, self.user_is_following, self.user_follower_date,
-                   self.user_following_date)
-    # end __str__
-
 # end User
