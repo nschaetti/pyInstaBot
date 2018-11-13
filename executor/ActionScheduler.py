@@ -151,7 +151,7 @@ class ActionScheduler(object):
         Add an "unfollow" action in the DB:
         :param friend_id: Twitter account0's ID.
         """
-        if not self.exists(action_type="Unfollow", action_post_id=user_id):
+        if not self.exists_friend_action(action_type="Unfollow", action_post_id=user_id):
             # Insert
             new_action = pyInstaBot.db.obj.Action(action_type='Unfollow', action_order=self._generate_random_order(),
                                                   action_tweet_text=user_id)
