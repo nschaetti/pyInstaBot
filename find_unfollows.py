@@ -70,7 +70,7 @@ def find_unfollows(instagram_connector, config, action_scheduler, friends_manage
     # First find friends who are not following back after defined period
     logging.getLogger(pystr.LOGGER).info(u"Searching obsolete friends to unfollow")
     for friend in friends_manager.get_obsolete_friends(unfollow_day):
-        print(instagram_connector.searchUsername(friend.user_name))
+        print(instagram_connector.username_info(friend.user_name))
         exit()
         try:
             logging.getLogger(pystr.LOGGER).info(
