@@ -329,6 +329,21 @@ class InstagramConnector(object):
         # end if
     # end username_info
 
+    # Search username
+    def search_username(self, username):
+        """
+        Search username
+        :param username:
+        :return:
+        """
+        self._inc_queries()
+        if self._instagram.searchUsername(username):
+            return self._instagram.LastJson
+        else:
+            return False
+        # end if
+    # end search_username
+
     # Get followers
     def followers(self):
         """
