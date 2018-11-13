@@ -70,6 +70,8 @@ def find_unfollows(config, action_scheduler, friends_manager, model_file):
     # First find friends who are not following back after defined period
     logging.getLogger(pystr.LOGGER).info(u"Searching obsolete friends to unfollow")
     for friend in friends_manager.get_obsolete_friends(unfollow_day):
+        print(friend)
+        exit()
         try:
             logging.getLogger(pystr.LOGGER).info(
                 u"Adding obsolete Friend \"{}\" to unfollow to the scheduler".format(friend.user_username))
