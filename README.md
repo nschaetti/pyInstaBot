@@ -40,8 +40,42 @@ for details.
 pyTweetBot takes its configuration in a JSON file which looks as follow :
 
 ```
-javascript
 {
+    "instagram" :
+	{
+        "username": "",
+        "password": "",
+		"data_path": ""
+    },
+	"scheduler" :
+	{
+		"sleep": [6, 13]
+	},
+	"hashtags":
+	[
+	],
+	"friends" :
+	{
+		"max_new_followers" : 40,
+		"max_new_unfollow" : 40,
+		"interval" : [30, 45],
+		"ratio" : 0.8
+	},
+	"post":
+	{
+		"post_interval": [30, 90],
+		"like_interval": [0, 4],
+		"comment_interval": [0, 8],
+        "max_posts": 24,
+        "max_likes": 700,
+        "max_comments": 300,
+		"languages": ["en", "fr"],
+		"comments": ["Nice!", "Nice feed!", "Keep going", "Good work", "👊🏻😎", "😅😅😅", "❤❤❤❤", "Nice! 😅😅😅", "Keep going 😅😅😅"]
+	},
+	"forbidden_words" :
+	[
+	]
+}
 ```
 
 Their is two required sections :
