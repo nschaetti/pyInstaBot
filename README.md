@@ -35,7 +35,7 @@ for details.
 
 ### Configuration file
 
-pyTweetBot takes its configuration in a JSON file which looks as follow :
+pyInstaBot takes its configuration in a JSON file which looks as follow :
 
 ```
 {
@@ -78,7 +78,7 @@ pyTweetBot takes its configuration in a JSON file which looks as follow :
 
 Their is two required sections :
 * Database : contains the information to connect to the MySQL database (host, username, password, database)
-* Twitter : contains the information for the Twitter API (auth and access tokens)
+* Instagram : contains the information for the Twitter API (auth and access tokens)
 
 ## Command line
 
