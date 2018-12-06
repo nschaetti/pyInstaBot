@@ -12,16 +12,14 @@ This repository consists of:
 * db : MySQL database management;
 * docs : Documentation;
 * executor : Function and objects to execute actions;
-* filters : 
-* followers : 
+* filters : Function and objects for image filters ;
 * friends : Function and objects to manage friends and followers;
-* gui : 
-* hashtags : 
-* instagram : 
-* instagramAPI : 
-* learning : 
-* media : 
-* patterns : 
+* hashtags : Function and objects to manage hashtags ;
+* instagram : Function and objects for Instagram ;
+* instagramAPI : The instagram API ;
+* learning : Functions and objects for image and text classification ;
+* media : Functions and objects to manage medias ;
+* patterns : Object patterns ;
 * tools : Tools;
 
 ## Authors
